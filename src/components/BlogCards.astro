@@ -1,0 +1,141 @@
+---
+// src/components/BlogCards.astro
+// Client-side Firestore fetch for blog posts
+---
+<div class="blog-cards" id="blogCards">
+  <!-- Loading skeleton -->
+  <div class="blog-card skeleton"></div>
+  <div class="blog-card skeleton"></div>
+  <div class="blog-card skeleton"></div>
+</div>
+
+<style>
+.blog-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.blog-card {
+  background: var(--white);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.blog-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.1); }
+
+.blog-card__img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover;
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.blog-card__img svg { width: 48px; height: 48px; opacity: .35; }
+
+.blog-card__body { padding: 1.25rem 1.5rem 1.5rem; }
+
+.blog-card__tags { display: flex; gap: .5rem; margin-bottom: .75rem; }
+
+.blog-card__tag {
+  display: inline-block;
+  background: var(--green-dark);
+  color: var(--white);
+  font-size: .68rem;
+  padding: .2rem .6rem;
+  letter-spacing: .05em;
+}
+
+.blog-card__date { font-size: .75rem; color: var(--text-light); margin-bottom: .5rem; }
+.blog-card__title { font-family: var(--serif); font-size: .95rem; line-height: 1.7; color: var(--text-dark); }
+
+/* Skeleton */
+.skeleton {
+  background: #eee;
+  border-radius: 2px;
+  min-height: 280px;
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+@media (max-width: 768px) {
+  .blog-cards { grid-template-columns: 1fr; }
+}
+</style>
+
+<script>
+import { initializeApp, getApps } from 'firebase/app';
+import { getFirestore, collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
+
+// Inline config for static build (replace with your actual config)
+const firebaseConfig = {
+  apiKey:            '__FIREBASE_API_KEY__',
+  authDomain:        '__FIREBASE_AUTH_DOMAIN__',
+  projectId:         '__FIREBASE_PROJECT_ID__',
+  storageBucket:     '__FIREBASE_STORAGE_BUCKET__',
+  messagingSenderId: '__FIREBASE_SENDER_ID__',
+  appId:             '__FIREBASE_APP_ID__',
+};
+
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const db  = getFirestore(app);
+
+async function loadPosts() {
+  const container = document.getElementById('blogCards');
+  if (!container) return;
+
+  try {
+    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(3));
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      container.innerHTML = '<p style="color:#888;font-size:.9rem;grid-column:1/-1;text-align:center;padding:3rem 0">記事を準備中です</p>';
+      return;
+    }
+
+    container.innerHTML = snap.docs.map(doc => {
+      const d = doc.data();
+      const date = d.createdAt?.toDate?.()?.toLocaleDateString('ja-JP', { year:'numeric', month:'2-digit', day:'2-digit' }) ?? '';
+      const tag  = d.category ?? 'お知らせ';
+      const img  = d.thumbnail ?? '';
+
+      return `
+        <a href="/blog/${doc.id}" class="blog-card">
+          <div class="blog-card__img">
+            ${img
+              ? `<img src="${img}" alt="${d.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
+              : `<svg viewBox="0 0 24 24" fill="none" stroke="#2d5a3d" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>`
+            }
+          </div>
+          <div class="blog-card__body">
+            <div class="blog-card__tags"><span class="blog-card__tag">${tag}</span></div>
+            <p class="blog-card__date">${date}</p>
+            <h3 class="blog-card__title">${d.title}</h3>
+          </div>
+        </a>`;
+    }).join('');
+  } catch(e) {
+    console.warn('Blog load error:', e);
+    container.innerHTML = `
+      ${[
+        { tag:'現場レポート', date:'2026.03.10', title:'穏やかな春の海で——初めての海洋散骨をご家族5名でご依頼いただきました' },
+        { tag:'現場レポート', date:'2026.03.05', title:'築40年の実家を整理。「ありがとう」と言いながら作業を終えることができました' },
+        { tag:'豆知識',       date:'2026.02.28', title:'「墓じまい」の前に知っておきたい3つのこと——行政手続きと費用の目安' },
+      ].map(p => `
+        <div class="blog-card">
+          <div class="blog-card__img">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2d5a3d" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <div class="blog-card__body">
+            <div class="blog-card__tags"><span class="blog-card__tag">${p.tag}</span></div>
+            <p class="blog-card__date">${p.date}</p>
+            <h3 class="blog-card__title">${p.title}</h3>
+          </div>
+        </div>`).join('')}`;
+  }
+}
+
+loadPosts();
+</script>

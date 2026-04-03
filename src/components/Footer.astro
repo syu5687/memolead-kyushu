@@ -1,0 +1,112 @@
+---
+// src/components/Footer.astro
+---
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <div class="footer__logo">
+        <span class="footer__logo-en">Angel Center</span>
+        <span class="footer__logo-ja">ぶっこうどう</span>
+      </div>
+      <p class="footer__tagline">葬儀後の供養事をトータルでサポートする<br>専門の窓口サービスです。</p>
+      <address>
+        <p>〒XXX-XXXX ○○県○○市○○町X-X-X</p>
+        <p>TEL: <a href="tel:0120XXXXXX">0120-XXX-XXX</a></p>
+        <p>受付時間 9:00〜18:00（年中無休）</p>
+      </address>
+    </div>
+
+    <div class="footer__links">
+      <div class="footer__col">
+        <h3>SERVICES</h3>
+        <a href="/services/estate">遺品整理</a>
+        <a href="/services/junk">不用品回収</a>
+        <a href="/services/antique">古物買取（4月〜）</a>
+        <a href="/services/altar">仏壇・仏具販売</a>
+        <a href="/services/cemetery">墓地・霊園紹介</a>
+      </div>
+      <div class="footer__col">
+        <h3>MORE SERVICES</h3>
+        <a href="/services/altar-remake">仏壇リメイク</a>
+        <a href="/services/grave-closure">墓じまい</a>
+        <a href="/services/grave-keeping">墓守代行</a>
+        <a href="/services/ocean">海洋散骨</a>
+        <a href="/services/memento">手元供養品販売</a>
+      </div>
+      <div class="footer__col">
+        <h3>COMPANY</h3>
+        <a href="/about">会社概要</a>
+        <a href="/staff">スタッフ紹介</a>
+        <a href="/blog">ブログ</a>
+        <a href="/voices">お客様の声</a>
+        <a href="/contact">お問合せ</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>© 2026 エンジェルセンター ぶっこうどう All Rights Reserved.</p>
+  </div>
+</footer>
+
+<style>
+.footer {
+  background: var(--green-dark);
+  color: rgba(255,255,255,.85);
+  font-family: var(--sans);
+}
+
+.footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+}
+
+.footer__logo {
+  display: flex; flex-direction: column; line-height: 1.3; margin-bottom: 1.25rem;
+}
+.footer__logo-en { font-family: var(--roman); font-size: .75rem; letter-spacing: .15em; font-style: italic; color: rgba(255,255,255,.6); }
+.footer__logo-ja { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; letter-spacing: .12em; color: #fff; }
+
+.footer__tagline { font-size: .82rem; line-height: 1.8; margin-bottom: 1.5rem; color: rgba(255,255,255,.7); }
+
+address {
+  font-style: normal; font-size: .8rem; line-height: 2; color: rgba(255,255,255,.65);
+}
+address a { color: rgba(255,255,255,.85); }
+
+.footer__links {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+}
+
+.footer__col h3 {
+  font-family: var(--roman); font-size: .72rem; letter-spacing: .2em;
+  color: rgba(255,255,255,.5); margin-bottom: 1rem; padding-bottom: .5rem;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.footer__col a {
+  display: block; font-size: .8rem; color: rgba(255,255,255,.7);
+  padding: .3rem 0; transition: color .2s;
+}
+.footer__col a:hover { color: #fff; }
+
+.footer__bottom {
+  border-top: 1px solid rgba(255,255,255,.15);
+  text-align: center;
+  padding: 1.25rem;
+  font-size: .72rem;
+  color: rgba(255,255,255,.45);
+}
+
+@media (max-width: 768px) {
+  .footer__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer__links { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .footer__links { grid-template-columns: 1fr; }
+}
+</style>

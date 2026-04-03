@@ -1,0 +1,185 @@
+---
+// src/components/Header.astro
+---
+<header class="header" id="header">
+  <div class="header__top">
+    <span>受付時間 9:00〜18:00（年中無休）</span>
+    <a href="tel:0120XXXXXX" class="header__tel">0120-XXX-XXX</a>
+  </div>
+  <div class="header__main">
+    <a href="/" class="header__logo">
+      <span class="header__logo-en">Angel Center</span>
+      <span class="header__logo-ja">ぶっこうどう</span>
+    </a>
+    <nav class="header__nav">
+      <a href="#services">サービス</a>
+      <a href="#estimate">仮見積り</a>
+      <a href="#blog">ブログ</a>
+      <a href="#voices">お客様の声</a>
+      <a href="#flow">ご相談の流れ</a>
+      <a href="#contact">お問合せ</a>
+    </nav>
+    <a href="#contact" class="btn-cta">無料相談はこちら</a>
+    <button class="header__hamburger" id="hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile nav drawer -->
+<div class="drawer" id="drawer">
+  <button class="drawer__close" id="drawerClose">✕</button>
+  <nav class="drawer__nav">
+    <a href="#services">サービス</a>
+    <a href="#estimate">仮見積り</a>
+    <a href="#blog">ブログ</a>
+    <a href="#voices">お客様の声</a>
+    <a href="#flow">ご相談の流れ</a>
+    <a href="#contact">お問合せ</a>
+    <a href="#contact" class="btn-cta" style="margin-top:1rem;text-align:center">無料相談はこちら</a>
+  </nav>
+</div>
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<style>
+.header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--white);
+  box-shadow: 0 1px 12px rgba(0,0,0,.06);
+}
+
+.header__top {
+  background: var(--green-dark);
+  color: var(--white);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+  padding: .35rem 2rem;
+  font-size: .78rem;
+  font-family: var(--sans);
+}
+
+.header__tel {
+  font-family: var(--roman);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: .05em;
+  color: var(--white);
+}
+
+.header__main {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: .75rem 2rem;
+}
+
+.header__logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  margin-right: auto;
+}
+
+.header__logo-en {
+  font-family: var(--roman);
+  font-size: .72rem;
+  letter-spacing: .15em;
+  color: var(--green-dark);
+  font-style: italic;
+}
+
+.header__logo-ja {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--green-dark);
+  letter-spacing: .12em;
+}
+
+.header__nav {
+  display: flex;
+  gap: 1.25rem;
+  font-size: .82rem;
+  color: var(--text-mid);
+}
+
+.header__nav a:hover { color: var(--green-dark); }
+
+.btn-cta {
+  display: inline-block;
+  background: var(--green-dark);
+  color: var(--white);
+  padding: .6rem 1.4rem;
+  font-size: .82rem;
+  font-family: var(--sans);
+  letter-spacing: .08em;
+  white-space: nowrap;
+  transition: background .2s;
+}
+.btn-cta:hover { background: var(--green-mid); }
+
+.header__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.header__hamburger span {
+  display: block; width: 24px; height: 2px; background: var(--green-dark);
+  transition: .3s;
+}
+
+/* Drawer */
+.drawer {
+  position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+  background: var(--white); z-index: 2000; padding: 4rem 2rem 2rem;
+  transition: right .3s ease; box-shadow: -4px 0 20px rgba(0,0,0,.1);
+}
+.drawer.open { right: 0; }
+.drawer__close {
+  position: absolute; top: 1rem; right: 1.25rem;
+  background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-mid);
+}
+.drawer__nav { display: flex; flex-direction: column; gap: .5rem; }
+.drawer__nav a {
+  display: block; padding: .75rem 0; border-bottom: 1px solid #eee;
+  font-size: .95rem; color: var(--text-mid);
+}
+.drawer-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 1500;
+}
+.drawer-overlay.open { display: block; }
+
+@media (max-width: 900px) {
+  .header__nav, .btn-cta { display: none; }
+  .header__hamburger { display: flex; }
+  .header__main { padding: .75rem 1.25rem; }
+}
+</style>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('drawerOverlay');
+const closeBtn = document.getElementById('drawerClose');
+
+function open() { drawer?.classList.add('open'); overlay?.classList.add('open'); }
+function close() { drawer?.classList.remove('open'); overlay?.classList.remove('open'); }
+
+hamburger?.addEventListener('click', open);
+closeBtn?.addEventListener('click', close);
+overlay?.addEventListener('click', close);
+
+// Drawer link click → close
+drawer?.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+
+// Shrink header on scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('header')?.classList.toggle('scrolled', window.scrollY > 60);
+});
+</script>

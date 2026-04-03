@@ -1,0 +1,586 @@
+---
+// src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BlogCards from '../components/BlogCards.astro';
+---
+<BaseLayout>
+  <Header />
+
+  <main>
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+      <div class="hero__content">
+        <p class="hero__label">葬儀後の供養、まるごとお任せください</p>
+        <h1 class="hero__title">
+          大切な方を送った後の<br>
+          <em>すべての手続き・供養を</em><br>
+          ひとつの窓口でご相談できます。
+        </h1>
+        <p class="hero__desc">
+          遺品整理・お墓・仏壇・海洋散骨など、葬儀後にやるべきことは思いのほかたくさんあります。<br>
+          エンジェルセンター ぶっこうどうは、そんな時に頼れる「街の供養の相談窓口」です。
+        </p>
+        <div class="hero__actions">
+          <a href="#services" class="hero__btn hero__btn--primary">サービス一覧を見る</a>
+          <a href="#estimate" class="hero__btn hero__btn--outline">まず仮見積りしてみる</a>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="hero__illustration">
+          <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
+            <!-- Sky -->
+            <rect width="480" height="360" fill="#d4e8dc"/>
+            <!-- Sun -->
+            <circle cx="360" cy="80" r="48" fill="#f5c842" opacity=".85"/>
+            <!-- Hills back -->
+            <ellipse cx="120" cy="280" rx="180" ry="90" fill="#3d7a52" opacity=".6"/>
+            <ellipse cx="380" cy="290" rx="160" ry="80" fill="#3d7a52" opacity=".5"/>
+            <!-- Water -->
+            <ellipse cx="240" cy="330" rx="260" ry="60" fill="#6ab4b4" opacity=".55"/>
+            <ellipse cx="240" cy="340" rx="270" ry="55" fill="#8ecfcf" opacity=".4"/>
+            <!-- Trees left -->
+            <rect x="88" y="210" width="10" height="55" fill="#3a2a1a"/>
+            <ellipse cx="93" cy="198" rx="30" ry="35" fill="#2d5a3d"/>
+            <!-- Trees right -->
+            <rect x="348" y="215" width="10" height="50" fill="#3a2a1a"/>
+            <ellipse cx="353" cy="202" rx="28" ry="32" fill="#2d5a3d"/>
+            <!-- Small tree -->
+            <rect x="280" y="240" width="7" height="35" fill="#3a2a1a"/>
+            <ellipse cx="283" cy="232" rx="20" ry="24" fill="#3d7a52"/>
+            <!-- Birds -->
+            <path d="M200 60 Q205 55 210 60" stroke="#555" stroke-width="1.5" fill="none"/>
+            <path d="M220 48 Q226 42 232 48" stroke="#555" stroke-width="1.5" fill="none"/>
+            <path d="M240 66 Q245 60 250 66" stroke="#555" stroke-width="1.5" fill="none"/>
+            <!-- Boat -->
+            <path d="M200 318 Q240 310 280 318 L275 328 L205 328 Z" fill="#fff" opacity=".8"/>
+            <rect x="237" y="295" width="2" height="22" fill="#888"/>
+            <path d="M239 295 L260 305 L239 305 Z" fill="#e8a" opacity=".7"/>
+            <!-- Fish -->
+            <ellipse cx="170" cy="335" rx="10" ry="5" fill="#ff8c7a" opacity=".7"/>
+            <path d="M160 335 L150 330 L150 340 Z" fill="#ff8c7a" opacity=".7"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wave divider -->
+    <div class="wave-divider">
+      <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#2d5a3d"/>
+      </svg>
+    </div>
+
+    <!-- ========== POINTS ========== -->
+    <section class="points">
+      <div class="points__inner">
+        <div class="point">
+          <p class="point__num">POINT 01</p>
+          <h3 class="point__title">ワンストップ対応</h3>
+          <p class="point__desc">遺品整理・お墓・仏壇・散骨まで、複数の業者に連絡する必要はありません。一か所でまとめてご相談いただけます。</p>
+        </div>
+        <div class="point">
+          <p class="point__num">POINT 02</p>
+          <h3 class="point__title">事前に料金の目安が分かる</h3>
+          <p class="point__desc">仮見積りシステムで費用の目安をご確認いただけます。いきなり高額な請求が来ないよう、透明な料金体系を徹底しています。</p>
+        </div>
+        <div class="point">
+          <p class="point__num">POINT 03</p>
+          <h3 class="point__title">何でも気軽に相談できる</h3>
+          <p class="point__desc">「こんなこと聞いていいのかな？」という小さな疑問も大歓迎。どんなことでも丁寧にお答えするスタッフが対応いたします。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wave divider bottom -->
+    <div class="wave-divider wave-divider--bottom">
+      <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,30 C360,0 1080,60 1440,30 L1440,0 L0,0 Z" fill="#2d5a3d"/>
+      </svg>
+    </div>
+
+    <!-- ========== SERVICES ========== -->
+    <section class="services" id="services">
+      <div class="section-header">
+        <p class="section-label">SERVICES</p>
+        <h2 class="section-title">サービス一覧</h2>
+        <p class="section-desc">葬儀後のさまざまなお悩みに対応する12のサービスをご用意しています。<br>まずはお気軽にご相談ください。</p>
+      </div>
+
+      <div class="services__grid">
+        {[
+          { num:'01', en:'Estate Clearance',         ja:'遺品整理',        desc:'故人のお部屋や自宅を丁寧に整理します。大切な品の仕分けから不用品の処分まで、心を込めて対応いたします。', tags:[], link:true },
+          { num:'02', en:'Unwanted Items Removal',   ja:'不用品回収',      desc:'家具・家電から日用品まで、迅速・丁寧に回収します。分別・搬出・処分まで一括対応可能です。', tags:[], link:true },
+          { num:'03', en:'Antique Purchase',         ja:'古物買取',        desc:'遺品の中から価値ある品を査定・買取。専門スタッフが丁寧に評価し、適正価格でお買い取りします。', tags:['4月〜'], link:true },
+          { num:'04', en:'Buddhist Altar & Items',   ja:'仏壇・仏具販売',  desc:'コンパクトな現代仏壇から伝統的な仏壇まで幅広くご用意。仏具一式もご予算に合わせてご提案します。', tags:[], link:true },
+          { num:'05', en:'Cemetery & Garden Burial', ja:'墓地・霊園ご紹介', desc:'墓地・墓石・納骨堂・樹木葬など、ご希望に合った埋葬の方法を丁寧にご案内します。', tags:[], link:false },
+          { num:'06', en:'Altar Closing Ceremony',   ja:'仏壇（神棚）じまい', desc:'閉眼供養から搬出・処分まで、心を込めた儀式とともに丁寧に対応いたします。', tags:[], link:true },
+          { num:'07', en:'Altar Remake',             ja:'仏壇リメイク',    desc:'代々受け継いだ仏壇をモダンにリメイク。お部屋のインテリアに馴染むデザインへの改装が可能です。', tags:['人気サービス'], link:true },
+          { num:'08', en:'Grave Closure',            ja:'墓じまい',        desc:'改葬許可申請から石材の撤去、閉眼供養まで。複雑な手続きをまとめてサポートします。', tags:[], link:true },
+          { num:'09', en:'Grave Keeping Agency',     ja:'墓守代行サービス', desc:'遠方にお住まいの方に代わり、お墓参り・清掃・献花などを定期的に代行いたします。', tags:[], link:true },
+          { num:'10', en:'Ocean Scattering',         ja:'海洋散骨',        desc:'大海原に還る自然葬。チャータープランと合同プランをご用意。海を愛した方への新しい供養のかたちです。', tags:[], link:true },
+          { num:'11', en:'Memento Items',            ja:'手元供養品販売',  desc:'遺骨・遺灰を活用したペンダントやミニ骨壺など、手元でご供養いただける品をご提案します。', tags:[], link:false },
+          { num:'12', en:'Inheritance Consultation', ja:'相続（不動産）相談', desc:'不動産の相続・売却・活用など、専門家と連携しながら最善の選択肢をご案内します。', tags:[], link:false },
+        ].map(s => (
+          <div class="service-card">
+            <div class="service-card__header">
+              <span class="service-card__num">{s.num}</span>
+              <div>
+                <h3 class="service-card__title">{s.ja}</h3>
+                <p class="service-card__en">{s.en}</p>
+              </div>
+            </div>
+            <p class="service-card__desc">{s.desc}</p>
+            <div class="service-card__footer">
+              {s.tags.map(t => (
+                <span class:list={['service-tag', t === '人気サービス' ? 'service-tag--hot' : 'service-tag--new']}>{t}</span>
+              ))}
+              {s.link
+                ? <a href={`/services/${s.num}`} class="service-card__link">詳細・仮見積りへ ›</a>
+                : <a href="#contact" class="service-card__link">詳細を見る ›</a>
+              }
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ========== ESTIMATE ========== -->
+    <section class="estimate" id="estimate">
+      <div class="estimate__inner">
+        <div class="estimate__text">
+          <p class="section-label" style="color:var(--green-dark)">QUICK ESTIMATE</p>
+          <h2 class="estimate__title">料金の目安を、今すぐ確認できます</h2>
+          <p class="estimate__desc">
+            いきなり業者に連絡するのは不安…という方でも大丈夫。<br>まずは仮見積りシステムで費用の目安を確認してみてください。
+          </p>
+          <p class="estimate__note">※仮見積りはあくまでも概算です。正式なお見積りは現地確認後に確定いたします。</p>
+        </div>
+        <div class="estimate__links">
+          {[
+            '遺品整理の仮見積り',
+            '不用品回収の仮見積り',
+            '墓じまいの仮見積り',
+            '海洋散骨の仮見積り',
+            '墓守代行の仮見積り',
+          ].map(label => (
+            <a href={`/estimate/${label.replace('の仮見積り','')}`} class="estimate__item">
+              <span>{label}</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== BLOG ========== -->
+    <section class="blog" id="blog">
+      <div class="section-header">
+        <p class="section-label">BLOG &amp; NEWS</p>
+        <h2 class="section-title">ブログ・お知らせ</h2>
+        <p class="section-desc">現場の様子やお客様の声、知って得する供養の豆知識をお届けします。</p>
+      </div>
+      <div class="blog__inner">
+        <BlogCards />
+        <div class="blog__more">
+          <a href="/blog" class="btn-outline">記事をもっと見る</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== VOICES ========== -->
+    <section class="voices" id="voices">
+      <div class="section-header">
+        <p class="section-label">CUSTOMER VOICE</p>
+        <h2 class="section-title">お客様の声</h2>
+      </div>
+      <div class="voices__grid">
+        {[
+          { text:'母が亡くなった後、何をどうすればいいか分からず途方に暮れていました。ぶっこうどうさんに相談したら、遺品整理から仏壇の選定まで全部まとめて対応してくれて本当に助かりました。', name:'K.S様（60代・女性）', service:'遺品整理・仏壇購入' },
+          { text:'父の遺志で海洋散骨を選びました。当日のスタッフの方々がとても温かく、家族みんなで穏やかに見送ることができました。事前の説明も丁寧で安心でした。', name:'T.M様（50代・男性）', service:'海洋散骨' },
+          { text:'実家の墓じまいを急に依頼したにも関わらず、行政手続きから石材の撤去まで迅速に対応していただきました。費用の目安を最初に提示してくれたのが特に助かりました。', name:'A.F様（40代・女性）', service:'墓じまい' },
+        ].map(v => (
+          <div class="voice-card">
+            <span class="voice-card__quote">"</span>
+            <p class="voice-card__text">{v.text}</p>
+            <div class="voice-card__author">
+              <strong>{v.name}</strong>
+              <span>{v.service}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ========== FLOW ========== -->
+    <section class="flow" id="flow">
+      <div class="section-header">
+        <p class="section-label">HOW TO START</p>
+        <h2 class="section-title">ご相談の流れ</h2>
+        <p class="section-desc">はじめての方でも安心してご利用いただけるよう、丁寧にサポートします。</p>
+      </div>
+      <div class="flow__steps">
+        {[
+          { step:'1', title:'お電話またはWebでご連絡', desc:'お電話・Webフォームでお気軽にご相談ください。仮見積りシステムで費用の目安もご確認いただけます。どんな小さな疑問でも歓迎です。' },
+          { step:'2', title:'ヒアリング・現地確認',     desc:'ご要望を詳しくお聞きし、必要に応じて現地調査を行います。個人情報は厳重に管理いたします。' },
+          { step:'3', title:'正式お見積り・ご提案',     desc:'詳細なお見積りと最適なプランをご提案します。ご納得いただくまで何度でもご相談いただけます。' },
+          { step:'4', title:'ご契約・サービス実施',     desc:'ご納得いただきましたらご契約。丁寧・迅速にサービスを実施いたします。終了後のアフターフォローもおまかせください。' },
+        ].map((f, i) => (
+          <div class="flow__step">
+            <div class="flow__step-num">
+              <span>STEP</span>
+              <strong>{f.step}</strong>
+            </div>
+            <div class="flow__step-body">
+              <h3>{f.title}</h3>
+              <p>{f.desc}</p>
+            </div>
+            {i < 3 && <div class="flow__step-arrow">↓</div>}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section class="contact" id="contact">
+      <h2 class="contact__title">お問合せ・無料相談</h2>
+      <p class="contact__sub">どんな小さなことでも、まずはお気軽にご連絡ください。</p>
+      <div class="contact__cards">
+        <div class="contact__card">
+          <h3>お電話でのご相談</h3>
+          <p>スタッフが直接ご対応します。<br>お急ぎの場合はお電話が便利です。</p>
+          <a href="tel:0120XXXXXX" class="contact__tel">0120-XXX-XXX</a>
+          <p class="contact__hours">受付時間 9:00〜18:00（年中無休）</p>
+        </div>
+        <div class="contact__card">
+          <h3>Webからのご相談</h3>
+          <p>24時間受付中。内容を確認後、<br>1営業日以内にご連絡いたします。</p>
+          <a href="/contact" class="btn-cta" style="margin-top:1.5rem;display:inline-block;padding:.85rem 2rem">無料相談フォームへ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+/* ── Shared ── */
+.section-header { text-align: center; margin-bottom: 3.5rem; }
+.section-label  { font-family: var(--roman); font-size: .78rem; letter-spacing: .25em; color: var(--green-dark); margin-bottom: .75rem; }
+.section-title  { font-family: var(--serif); font-size: 2rem; font-weight: 400; letter-spacing: .1em; margin-bottom: 1rem; }
+.section-desc   { font-size: .9rem; color: var(--text-mid); line-height: 1.9; }
+
+.btn-outline {
+  display: inline-block; border: 1px solid var(--green-dark); color: var(--green-dark);
+  padding: .75rem 2.5rem; font-size: .85rem; letter-spacing: .08em;
+  transition: background .2s, color .2s;
+}
+.btn-outline:hover { background: var(--green-dark); color: #fff; }
+
+/* ── HERO ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  padding-top: 100px;
+  background: var(--cream-light);
+}
+
+.hero__content {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 4rem 3rem 4rem 6rem;
+}
+
+.hero__label {
+  display: inline-block;
+  background: var(--green-dark);
+  color: #fff;
+  font-size: .75rem;
+  padding: .35rem .85rem;
+  letter-spacing: .08em;
+  margin-bottom: 1.75rem;
+}
+
+.hero__title {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: .06em;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+}
+
+.hero__title em {
+  font-style: normal;
+  color: var(--green-dark);
+}
+
+.hero__desc {
+  font-size: .88rem;
+  line-height: 2;
+  color: var(--text-mid);
+  margin-bottom: 2.5rem;
+}
+
+.hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.hero__btn {
+  display: inline-block;
+  padding: .85rem 2rem;
+  font-size: .85rem;
+  letter-spacing: .08em;
+  transition: .2s;
+}
+.hero__btn--primary  { background: var(--green-dark); color: #fff; }
+.hero__btn--primary:hover { background: var(--green-mid); }
+.hero__btn--outline  { border: 1px solid var(--green-dark); color: var(--green-dark); }
+.hero__btn--outline:hover { background: var(--green-dark); color: #fff; }
+
+.hero__visual {
+  display: flex; align-items: center; justify-content: center;
+  background: var(--green-light);
+  padding: 2rem;
+}
+
+.hero__illustration { width: 100%; max-width: 480px; }
+.hero__illustration svg { width: 100%; height: auto; border-radius: 4px; }
+
+/* ── Wave ── */
+.wave-divider { line-height: 0; }
+.wave-divider svg { display: block; width: 100%; }
+.wave-divider--bottom { transform: translateY(0); }
+
+/* ── POINTS ── */
+.points { background: var(--green-dark); }
+.points__inner {
+  max-width: 1200px; margin: 0 auto; padding: 5rem 2rem;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+
+.point {
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  color: #fff;
+}
+
+.point__num { font-family: var(--roman); font-size: .75rem; letter-spacing: .2em; opacity: .6; margin-bottom: .75rem; }
+.point__title { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; margin-bottom: 1rem; letter-spacing: .06em; }
+.point__desc  { font-size: .82rem; line-height: 1.9; opacity: .85; }
+
+/* ── SERVICES ── */
+.services {
+  background: var(--cream-light);
+  padding: 6rem 2rem;
+}
+
+.services__grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+}
+
+.service-card {
+  background: var(--white);
+  border: 1px solid #e8e8e0;
+  padding: 1.75rem 1.5rem;
+  display: flex; flex-direction: column;
+  transition: box-shadow .2s;
+}
+.service-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+
+.service-card__header { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; }
+.service-card__num {
+  font-family: var(--roman); font-size: 1.25rem; color: var(--green-light);
+  font-weight: 300; letter-spacing: .05em; line-height: 1;
+}
+
+.service-card__title { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; letter-spacing: .06em; }
+.service-card__en    { font-family: var(--roman); font-size: .7rem; color: var(--text-light); letter-spacing: .1em; margin-top: .2rem; }
+.service-card__desc  { font-size: .8rem; line-height: 1.9; color: var(--text-mid); flex: 1; margin-bottom: 1rem; }
+
+.service-card__footer { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin-top: auto; }
+
+.service-tag {
+  font-size: .68rem; padding: .2rem .6rem; border-radius: 2px;
+}
+.service-tag--hot { background: #c0392b; color: #fff; }
+.service-tag--new { background: var(--green-dark); color: #fff; }
+
+.service-card__link { font-size: .78rem; color: var(--green-dark); margin-left: auto; }
+.service-card__link:hover { text-decoration: underline; }
+
+/* ── ESTIMATE ── */
+.estimate {
+  background: var(--white);
+  padding: 6rem 2rem;
+}
+.estimate__inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+
+.estimate__title { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; margin: .75rem 0 1rem; letter-spacing: .06em; }
+.estimate__desc  { font-size: .88rem; line-height: 2; color: var(--text-mid); margin-bottom: 1rem; }
+.estimate__note  { font-size: .75rem; color: var(--text-light); line-height: 1.8; }
+
+.estimate__links { display: flex; flex-direction: column; gap: .75rem; }
+
+.estimate__item {
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid #e0e0d8;
+  padding: 1rem 1.25rem;
+  font-size: .9rem; color: var(--text-dark);
+  transition: background .2s, border-color .2s;
+}
+.estimate__item:hover { background: var(--green-light); border-color: var(--green-mid); }
+.estimate__item svg { color: var(--green-dark); }
+
+/* ── BLOG ── */
+.blog { background: var(--green-light); padding: 6rem 2rem; }
+.blog__inner { max-width: 1200px; margin: 0 auto; }
+.blog__more  { text-align: center; margin-top: 2.5rem; }
+
+/* ── VOICES ── */
+.voices { background: var(--white); padding: 6rem 2rem; }
+
+.voices__grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+
+.voice-card {
+  border: 1px solid #e8e8e0;
+  padding: 2rem 1.75rem;
+  position: relative;
+}
+
+.voice-card__quote {
+  font-family: var(--roman); font-size: 3.5rem; color: var(--green-dark);
+  opacity: .25; position: absolute; top: .5rem; left: 1.25rem; line-height: 1;
+}
+
+.voice-card__text {
+  font-size: .85rem; line-height: 2; color: var(--text-mid);
+  margin-bottom: 1.25rem; padding-top: 1rem;
+}
+
+.voice-card__author { border-top: 1px solid #eee; padding-top: .75rem; }
+.voice-card__author strong { display: block; font-size: .85rem; color: var(--green-dark); margin-bottom: .2rem; }
+.voice-card__author span   { font-size: .75rem; color: var(--text-light); }
+
+/* ── FLOW ── */
+.flow { background: var(--cream-light); padding: 6rem 2rem; }
+
+.flow__steps {
+  max-width: 700px; margin: 0 auto;
+  display: flex; flex-direction: column;
+}
+
+.flow__step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  position: relative;
+}
+
+.flow__step-num {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--green-dark); color: #fff; text-align: center;
+}
+.flow__step-num span  { font-family: var(--roman); font-size: .6rem; letter-spacing: .1em; opacity: .8; }
+.flow__step-num strong{ font-size: 1.35rem; font-family: var(--roman); font-weight: 400; line-height: 1; }
+
+.flow__step-body { padding: .5rem 0 2rem; }
+.flow__step-body h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; margin-bottom: .6rem; }
+.flow__step-body p  { font-size: .84rem; line-height: 2; color: var(--text-mid); }
+
+.flow__step-arrow {
+  grid-column: 1;
+  text-align: center;
+  font-size: 1.25rem;
+  color: var(--green-dark);
+  opacity: .5;
+  margin-top: -1rem;
+  margin-bottom: .5rem;
+}
+
+/* ── CONTACT ── */
+.contact {
+  background: var(--white);
+  padding: 6rem 2rem;
+  text-align: center;
+}
+.contact__title { font-family: var(--serif); font-size: 2rem; font-weight: 400; letter-spacing: .1em; margin-bottom: .75rem; }
+.contact__sub   { font-size: .88rem; color: var(--text-mid); margin-bottom: 3rem; }
+
+.contact__cards {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+}
+
+.contact__card {
+  border: 1px solid #e0e0d8;
+  padding: 2.5rem 2rem;
+}
+.contact__card h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; margin-bottom: 1rem; }
+.contact__card p  { font-size: .84rem; line-height: 1.9; color: var(--text-mid); }
+
+.contact__tel {
+  display: block;
+  font-family: var(--roman);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--green-dark);
+  letter-spacing: .08em;
+  margin: 1.25rem 0 .5rem;
+}
+.contact__hours { font-size: .78rem; color: var(--text-light); margin-top: .25rem; }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .hero__content { padding: 4rem 2rem 4rem 3rem; }
+  .services__grid { grid-template-columns: repeat(2, 1fr); }
+  .voices__grid   { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero__visual { order: -1; min-height: 260px; }
+  .hero__content { padding: 3rem 1.5rem; }
+  .points__inner { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+  .services__grid { grid-template-columns: 1fr; }
+  .estimate__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .voices__grid   { grid-template-columns: 1fr; }
+  .contact__cards { grid-template-columns: 1fr; }
+  .section-title  { font-size: 1.5rem; }
+  .services, .estimate, .blog, .voices, .flow, .contact { padding: 4rem 1.25rem; }
+}
+</style>
+
+<script>
+// Scroll animation (Intersection Observer)
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.service-card, .point, .voice-card, .flow__step, .estimate__item, .blog-card')
+  .forEach(el => {
+    el.classList.add('fade-in');
+    observer.observe(el);
+  });
+</script>
+
+<style is:global>
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+.fade-in.visible { opacity: 1; transform: none; }
+</style>

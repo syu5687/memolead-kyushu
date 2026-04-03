@@ -1,26 +1,32 @@
+# ── Stage 1: Astro ビルド ──────────────────────────
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# ── Stage 2: php:8.1-apache で配信 ────────────────
 FROM php:8.1-apache
 
 ENV PORT=8080
 EXPOSE 8080
 
-# Cloud Run用Apache設定
-RUN sed -i "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf \
+# ポート設定（ports.conf + 000-default.conf 両方）
+RUN sed -i "s/Listen 80/Listen 8080/" /etc/apache2/ports.conf \
+ && sed -i "s/:80>/:8080>/" /etc/apache2/sites-enabled/000-default.conf \
  && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# .htaccess対応とmod_rewrite
+# mod_rewrite 有効化 + AllowOverride
 RUN a2enmod rewrite \
- && sed -i "s/AllowOverride None/AllowOverride All/" /etc/apache2/apache2.conf
+ && sed -i "s/AllowOverride None/AllowOverride All/g" /etc/apache2/apache2.conf
 
-# /var/www/html にアクセス許可
-RUN printf '%s\n' \
-  '<Directory /var/www/html>' \
-  '    Options Indexes FollowSymLinks' \
-  '    AllowOverride All' \
-  '    Require all granted' \
-  '</Directory>' >> /etc/apache2/apache2.conf
+# /var/www/html アクセス許可
+RUN printf '<Directory /var/www/html>\n  Options FollowSymLinks\n  AllowOverride All\n  Require all granted\n</Directory>\n' \
+    >> /etc/apache2/apache2.conf
 
-# ファイル配置
-COPY . /var/www/html
+# Astro ビルド成果物だけをコピー（Dockerfile等は含まない）
+COPY --from=builder /app/dist /var/www/html
 
 # パーミッション
 RUN chown -R www-data:www-data /var/www/html \
