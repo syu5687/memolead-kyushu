@@ -1,0 +1,426 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const features = [
+  { icon: '🙏', title: '供養してから処分', desc: '大切な遺品や思い出の品を、ただ捨てるのではなく、お寺様による御供養を経てから責任を持って処分いたします。' },
+  { icon: '📋', title: '供養証明書を発行', desc: 'ご希望のご遺族に「供養証明書」を郵送いたします。大切な品が丁寧に処分されたという証明になります。' },
+  { icon: '💰', title: '明確な料金体系', desc: 'エンゼル号1台11,000円〜と明確な料金体系。少量の場合も金額等ご相談に応じます。まずはお気軽にご連絡ください。' },
+  { icon: '🏠', title: '家屋の解体まで対応', desc: '不用品回収だけでなく、ハウスクリーニングや家屋の解体・整地まで幅広く対応。窓口をひとつにまとめられます。' },
+];
+
+const steps = [
+  { num: 1, icon: '👨‍💼', title: 'ご遺族のお手元に',     desc: '御葬儀代精算時、葬儀社担当者が速やかに御供養遺品収納ケースをお持参します。' },
+  { num: 2, icon: '🏷️',  title: '名札の記入',           desc: 'ご遺族様に、名札の記入をお願いいたします。供養証明書の発行に必要です。' },
+  { num: 3, icon: '📦',  title: 'パッケージ',           desc: 'ご遺族様に、ご供養したい品物を御供養袋にお入れいただきます（実用新案登録 第3154655号）。' },
+  { num: 4, icon: '🏢',  title: '回収・保管',           desc: 'エンゼルセンター担当者がお預かりして、所定の場所に保管いたします。' },
+  { num: 5, icon: '⛩️',  title: '御供養（合同供養）', desc: '当社指定の寺院の僧侶により、読経・御供養をしていただきます。' },
+  { num: 6, icon: '🚛',  title: '輸送',                desc: '御供養終了後、都道府県知事許可の運搬作業車にて輸送いたします。' },
+  { num: 7, icon: '🔥',  title: '焼却（完全焼却）',     desc: '都道府県知事許可の焼却炉に委託し完全焼却します。一部位牌・人形などは当社の焼却炉にて焼却いたします。' },
+  { num: 8, icon: '📜',  title: '供養証明書の発行',     desc: 'ご希望のご遺族に「供養証明書」を郵送いたします。' },
+];
+
+const items = [
+  { icon: '👘', title: '衣類・着物・バッグ',      desc: '故人が愛用された着物・衣類・背広などを衣類供養袋にお入れいただき、専用供養祭壇にてお寺様に御供養していただきます。' },
+  { icon: '🏮', title: '仏壇・神棚',              desc: '大切にされてきた仏壇・神棚を、閉眼供養（魂抜き）のうえ、責任を持ってお焚き上げいたします。' },
+  { icon: '🎎', title: '人形・ぬいぐるみ',        desc: '魂が宿るとされる人形・ぬいぐるみ・節句人形などを丁寧に供養します。供養証明書の発行も可能です。' },
+  { icon: '🛋️', title: '家具・家電',              desc: 'タンス・ソファ・テーブルなど大型家具から、テレビ・冷蔵庫・洗濯機・空調機などの家電まで回収します（リサイクル料別途）。' },
+  { icon: '📷', title: '写真・思い出の品',        desc: '故人が大切にしていた写真・位牌・置物・剥製なども丁寧に御供養したうえで処分いたします。' },
+  { icon: '🏠', title: 'その他不用品全般',        desc: '日用品・雑貨・書籍など、処分に困っているものはなんでもご相談ください。お布団の引き取りも可能です（有料1枚550円）。' },
+];
+
+const angelSet = [
+  { badge: '標準セット', name: '衣類供養袋',     size: '大きさ：350 × 650 × 240 mm',  desc: '故人が愛用された着物・衣類・背広などをお入れください。専用供養祭壇にてお寺様に御供養していただきます。ご希望があれば、御供養終了後に供養証明書を発行・郵送いたします。' },
+  { badge: '大型用',     name: '予備供養袋',     size: '大きさ：900 × 450 × 450 mm',  desc: '「衣類供養袋」に入りきれない品をお入れください。燃やせるもの・燃やせないもの混在可。リサイクル家電・生物を入れるのはご遠慮ください。' },
+  { badge: '必須',       name: '供養袋名札 2枚', size: '各供養袋に取り付けてください', desc: '各供養袋にお名前等をご記入の上、取り付けてください。供養証明書が必要な方は名札の最後の列の「供養証明書の要」に忘れずに○印をお付けください。' },
+];
+
+const priceRows = [
+  { service: '<strong>不用品回収（エンゼル号）</strong>',                                                              unit: '1台',     price: '11,000円〜', note: '横付け可能な場合' },
+  { service: '仏壇供養処分料',                                                                                          unit: '1台',     price: '22,000円〜', note: '税抜20,000円〜' },
+  { service: '小型仏壇供養処分料<br><span style="font-size:.72rem;color:var(--light)">（高さ50cm以下）</span>',          unit: '1台',     price: '11,000円〜', note: '税抜10,000円〜' },
+  { service: '神棚供養処分料',                                                                                          unit: '1台',     price: '11,000円〜', note: '税抜10,000円〜' },
+  { service: '節句人形供養料',                                                                                          unit: '1セット', price: '3,300円〜',  note: '税抜3,000円〜' },
+  { service: '供養袋（追加）<br><span style="font-size:.72rem;color:var(--light)">900×450×450mm</span>',                 unit: '1袋',     price: '3,300円〜',  note: '税抜3,000円〜' },
+  { service: 'お布団の引き取り',                                                                                        unit: '1枚',     price: '550円',      note: '有料' },
+];
+
+const areas = [
+  { icon: '🏙️', name: '長崎市', permit: '一般廃棄物収集運搬許可<br>長崎市 第471号' },
+  { icon: '🌆', name: '時津町', permit: '一般廃棄物収集運搬許可<br>時津 指令第15号' },
+  { icon: '🏘️', name: '長与町', permit: '一般廃棄物収集運搬許可<br>長与 一廃許可65号' },
+];
+---
+
+<BaseLayout
+  title="不用品回収 | エンジェルセンター ぶっこうどう"
+  description="遺品・不用品の回収、仏壇・神棚・人形などのお焚き上げ、ハウスクリーニング、家屋の解体まで。エンゼル号1台11,000円〜。長崎市・時津町・長与町対応。"
+>
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>不用品回収</span>
+    </div>
+
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <p class="page-hero-label">SERVICE 02 — Unwanted Items Removal</p>
+        <h1 class="page-hero-title">不用品回収</h1>
+        <p class="page-hero-desc">
+          遺品の整理から日常の片付けまで、家具・家電・衣類・仏壇など<br>
+          処分に困っているものをまとめて回収します。<br>
+          仏壇・神棚・人形などは心を込めてお焚き上げいたします。
+        </p>
+        <div class="page-hero-badge">
+          <span>🚚</span>
+          <span>エンゼル号 1台 <strong style="font-family:var(--roman);font-size:1.1rem">11,000円〜</strong>（税込）</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">FEATURES</p>
+          <h2 class="sec-title">選ばれる4つの理由</h2>
+        </div>
+        <div class="features fi">
+          {features.map(f => (
+            <div class="feature">
+              <div class="feature-icon">{f.icon}</div>
+              <h3 class="feature-title">{f.title}</h3>
+              <p class="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <div class="price-hero fi">
+      <div class="price-hero-inner">
+        <p class="price-hero-label">ANGEL 号（エンゼル号）</p>
+        <p class="price-hero-name">遺品・不用品回収車</p>
+        <div class="price-big">¥11,000<span class="price-unit">〜（税込）</span></div>
+        <p style="font-size:.82rem;opacity:.75">トラックがご自宅横付けの場合 / 1台あたり</p>
+        <ul class="price-notes">
+          <li>停車場所からご自宅まで距離がある場合、人件費をいただく場合があります</li>
+          <li>リサイクル料金・人件費等の別途料金が発生する場合があります</li>
+          <li>少量の回収品においては、金額等ご相談に応じます</li>
+          <li>生ゴミについてはご遠慮ください</li>
+          <li>「不要品」については【当日処分】となります</li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">PROCESS</p>
+          <h2 class="sec-title">遺品御供養サービスの流れ</h2>
+          <p class="sec-desc">ご葬儀終了後から供養証明書の発行まで、8つのステップで丁寧に対応いたします。</p>
+        </div>
+        <div class="steps-grid fi">
+          {steps.map(s => (
+            <div class="step">
+              <div class="step-num">{s.num}</div>
+              <div class="step-icon">{s.icon}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">ITEMS</p>
+          <h2 class="sec-title">回収・お焚き上げ対応品目</h2>
+          <p class="sec-desc">大切なものだから、ただ処分するのではなく、心を込めた御供養のあとに処分いたします。</p>
+        </div>
+        <div class="items-grid fi">
+          {items.map(it => (
+            <div class="item-card">
+              <div class="item-icon">{it.icon}</div>
+              <div>
+                <h3 class="item-title">{it.title}</h3>
+                <p class="item-desc">{it.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="note-block" style="margin-top:1.5rem">
+          ※お焚き上げ品によっては、燃納出来ない場合がございます。その場合はご供養後、法条例などに基づいた処理をさせていただきます。<br>
+          ※リサイクル家電（テレビ・冷蔵庫・洗濯機・空調機）を入れるのはご遠慮ください。
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">ANGEL SET</p>
+          <h2 class="sec-title">エンゼルセットのご利用について</h2>
+          <p class="sec-desc">御葬儀の際にお渡しする専用の供養袋セットです。ご供養したい品物をお入れください。</p>
+        </div>
+        <div class="angel-set fi">
+          {angelSet.map(set => (
+            <div class="set-card">
+              <span class="set-badge">{set.badge}</span>
+              <h3 class="set-name">{set.name}</h3>
+              <p class="set-size">{set.size}</p>
+              <p class="set-desc">{set.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div class="note-block">
+          上記の衣類・予備供養袋に関しましては無料で回収に伺いますので、お気軽にエンゼルセンターまでご連絡ください。<br>
+          ※供養袋回収後、遺品返還の希望がありましたら、1週間以内にご連絡ください。1・3・5・7・9・11月の10日前後に執り行われる供養祭終了後は供養品のご返却は出来かねますのでご了承ください。
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">PRICE</p>
+          <h2 class="sec-title">料金表</h2>
+          <p class="sec-desc">明確な料金体系で、いきなり高額な請求はありません。まず仮見積りをご利用ください。</p>
+        </div>
+        <div class="fi" style="overflow-x:auto">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th style="width:40%">サービス内容</th>
+                <th style="width:15%">単位</th>
+                <th style="width:30%">料金（税込）</th>
+                <th style="width:15%">備考</th>
+              </tr>
+            </thead>
+            <tbody>
+              {priceRows.map(row => (
+                <tr>
+                  <td set:html={row.service}></td>
+                  <td>{row.unit}</td>
+                  <td class="price-cell">{row.price}</td>
+                  <td class="note-cell">{row.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:.72rem;color:var(--light);margin-top:.85rem;line-height:1.9">※令和7年7月現在の料金です。内容により異なりますのでご確認ください。<br>※リサイクル料金が掛かる電化製品（テレビ・冷蔵庫・洗濯機・空調機）等については別途料金を申し受けます。<br>※トラック等、1台では積めない不用品がある場合はお見積りしてから回収します。</p>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">SERVICE AREA</p>
+          <h2 class="sec-title">回収対応エリア</h2>
+          <p class="sec-desc">下記エリアにて回収のお伺いが可能です。エリア外の方もまずはご相談ください。</p>
+        </div>
+        <div class="area-cards fi">
+          {areas.map(a => (
+            <div class="area-card">
+              <div style="font-size:1.5rem;margin-bottom:.5rem">{a.icon}</div>
+              <h3 class="area-name">{a.name}</h3>
+              <p class="area-permit" set:html={a.permit}></p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-sec fi">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-desc">お見積りは無料です。「エンゼル号の件で…」とお伝えください。<br>電話一本でお取りに伺います。</p>
+      <a href="tel:0958654400" class="cta-tel-num">095-865-4400</a>
+      <p class="cta-hours">受付時間 午前9時〜午後5時</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn">📞 今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn">✉ Webで相談する</a>
+        <a href="/estimate/junk" class="cta-web-btn">📋 仮見積りを依頼する</a>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f">📞 電話で相談</a>
+    <a href="/#contact" class="web-f">✉ Webで相談</a>
+  </div>
+</BaseLayout>
+
+<style>
+  :root{--gold:#c8a84b}
+
+  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.72rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:var(--gd)}
+  .breadcrumb a:hover{text-decoration:underline}
+  .breadcrumb span{opacity:.5}
+
+  .page-hero{background:var(--gd);color:#fff;padding:3.5rem 1.5rem;position:relative;overflow:hidden}
+  .page-hero::before{content:'';position:absolute;top:-40px;right:-60px;width:300px;height:300px;border:1px solid rgba(255,255,255,.08);border-radius:50%}
+  .page-hero::after{content:'';position:absolute;bottom:-60px;left:-40px;width:200px;height:200px;border:1px solid rgba(255,255,255,.06);border-radius:50%}
+  .page-hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .page-hero-label{font-family:var(--roman);font-size:.72rem;letter-spacing:.25em;opacity:.65;margin-bottom:.6rem}
+  .page-hero-title{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);font-weight:400;letter-spacing:.1em;margin-bottom:1rem}
+  .page-hero-desc{font-size:.88rem;line-height:2;opacity:.88;max-width:600px}
+  .page-hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:.45rem 1rem;font-size:.78rem;margin-top:1.25rem;backdrop-filter:blur(4px)}
+
+  .sec{padding:5rem 1.5rem}
+  .sec.bg-cream{background:var(--clight)}
+  .sec.bg-gl{background:var(--gl)}
+  .sec.bg-dark{background:#1e3d2a;color:#fff}
+  .sec-inner{max-width:1100px;margin:0 auto}
+  .sec-head{text-align:center;margin-bottom:3rem}
+  .sec-label{font-family:var(--roman);font-size:.7rem;letter-spacing:.26em;color:var(--gd);margin-bottom:.55rem}
+  .sec-label.white{color:rgba(255,255,255,.6)}
+  .sec-title{font-family:var(--serif);font-size:clamp(1.35rem,3vw,1.75rem);font-weight:400;letter-spacing:.1em;margin-bottom:.8rem}
+  .sec-desc{font-size:.85rem;color:var(--mid);line-height:2}
+  .sec-desc.white{color:rgba(255,255,255,.75)}
+
+  .features{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:3rem}
+  .feature{background:var(--white);border:1px solid var(--border);padding:1.75rem 1.25rem;text-align:center;transition:.2s}
+  .feature:hover{border-color:var(--gd);box-shadow:0 4px 20px rgba(0,0,0,.08)}
+  .feature-icon{width:52px;height:52px;background:var(--gl);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.4rem}
+  .feature-title{font-family:var(--serif);font-size:.95rem;font-weight:400;color:var(--gd);margin-bottom:.6rem}
+  .feature-desc{font-size:.76rem;line-height:1.9;color:var(--mid)}
+
+  .price-hero{background:var(--gd);padding:3rem 1.5rem;text-align:center;color:#fff}
+  .price-hero-inner{max-width:800px;margin:0 auto}
+  .price-hero-label{font-size:.78rem;opacity:.7;margin-bottom:.5rem;letter-spacing:.1em}
+  .price-hero-name{font-family:var(--serif);font-size:1.5rem;font-weight:400;margin-bottom:.5rem;letter-spacing:.1em}
+  .price-big{font-family:var(--roman);font-size:clamp(3rem,8vw,5rem);font-weight:300;color:#f5c842;line-height:1;margin:.5rem 0}
+  .price-unit{font-size:1rem;opacity:.85}
+  .price-note{font-size:.72rem;opacity:.65;margin-top:.65rem;line-height:1.8}
+  .price-notes{display:flex;flex-direction:column;gap:.35rem;margin-top:1.25rem;background:rgba(0,0,0,.2);padding:1rem 1.5rem;text-align:left}
+  .price-notes li{font-size:.76rem;opacity:.8;list-style:none;padding-left:1em;position:relative}
+  .price-notes li::before{content:'※';position:absolute;left:0;opacity:.6}
+
+  .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:step}
+  .step{background:var(--white);border:1px solid var(--border);padding:1.5rem 1.25rem;position:relative;text-align:center}
+  .step:nth-child(n+5){border-top:none}
+  .steps-grid .step:nth-child(2),
+  .steps-grid .step:nth-child(3),
+  .steps-grid .step:nth-child(4),
+  .steps-grid .step:nth-child(6),
+  .steps-grid .step:nth-child(7),
+  .steps-grid .step:nth-child(8){border-left:none}
+  .step-num{font-family:var(--roman);font-size:2.5rem;font-weight:300;color:var(--gl);line-height:1;margin-bottom:.5rem}
+  .step-title{font-family:var(--serif);font-size:.92rem;font-weight:400;color:var(--gd);margin-bottom:.65rem}
+  .step-desc{font-size:.74rem;line-height:1.85;color:var(--mid)}
+  .step-icon{font-size:1.75rem;margin-bottom:.6rem}
+
+  .items-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+  .item-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:.2s}
+  .item-card:hover{border-color:var(--gm)}
+  .item-icon{font-size:1.6rem;flex-shrink:0;width:44px;height:44px;background:var(--gl);border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .item-title{font-family:var(--serif);font-size:.92rem;font-weight:400;color:var(--gd);margin-bottom:.4rem}
+  .item-desc{font-size:.74rem;line-height:1.85;color:var(--mid)}
+
+  .price-table{width:100%;border-collapse:collapse;font-size:.85rem}
+  .price-table th{background:var(--gd);color:#fff;padding:.75rem 1.25rem;text-align:left;font-weight:400;font-size:.8rem;letter-spacing:.06em}
+  .price-table td{padding:.85rem 1.25rem;border-bottom:1px solid var(--border)}
+  .price-table tr:last-child td{border-bottom:none}
+  .price-table tr:nth-child(even) td{background:#f8f8f6}
+  .price-table .price-cell{font-family:var(--roman);font-size:1.1rem;font-weight:400;color:var(--gd);white-space:nowrap}
+  .price-table .note-cell{font-size:.72rem;color:var(--light)}
+
+  .area-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+  .area-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;text-align:center}
+  .area-name{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--gd);margin-bottom:.5rem}
+  .area-permit{font-size:.7rem;color:var(--light);line-height:1.8}
+
+  .angel-set{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-bottom:1.75rem}
+  .set-card{background:var(--white);border:1px solid var(--border);padding:1.5rem}
+  .set-badge{display:inline-block;background:var(--gd);color:#fff;font-size:.65rem;padding:.2rem .65rem;margin-bottom:.75rem;letter-spacing:.05em}
+  .set-name{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--gd);margin-bottom:.5rem}
+  .set-size{font-size:.68rem;color:var(--light);margin-bottom:.6rem}
+  .set-desc{font-size:.76rem;line-height:1.9;color:var(--mid)}
+
+  .cta-sec{background:var(--gd);padding:4rem 1.5rem;text-align:center;color:#fff}
+  .cta-title{font-family:var(--serif);font-size:clamp(1.3rem,3vw,1.75rem);font-weight:400;letter-spacing:.1em;margin-bottom:.75rem}
+  .cta-desc{font-size:.85rem;opacity:.85;margin-bottom:2.25rem;line-height:2}
+  .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .cta-tel-btn{background:#fff;color:var(--gd);padding:.85rem 2.5rem;font-size:.88rem;font-family:var(--roman);letter-spacing:.1em;transition:.2s}
+  .cta-tel-btn:hover{background:var(--gl)}
+  .cta-web-btn{border:1px solid rgba(255,255,255,.5);color:#fff;padding:.85rem 2.5rem;font-size:.82rem;letter-spacing:.08em;transition:.2s}
+  .cta-web-btn:hover{background:rgba(255,255,255,.1)}
+  .cta-tel-num{font-family:var(--roman);font-size:clamp(1.75rem,4vw,2.5rem);display:block;margin-bottom:.25rem;letter-spacing:.1em}
+  .cta-hours{font-size:.72rem;opacity:.65;margin-bottom:1.5rem}
+
+  .note-block{background:#fffbf0;border-left:3px solid var(--gold);padding:1rem 1.25rem;font-size:.78rem;line-height:1.9;color:var(--mid)}
+  .note-block.red{background:#fff5f5;border-left-color:#e74c3c;color:#c0392b;font-weight:500}
+
+  .fixed-cta{display:none}
+
+  @media(max-width:1024px){
+    .features{grid-template-columns:repeat(2,1fr)}
+    .items-grid{grid-template-columns:repeat(2,1fr)}
+    .angel-set{grid-template-columns:1fr 1fr}
+  }
+
+  @media(max-width:768px){
+    .breadcrumb{padding:.55rem 1rem}
+    .page-hero{padding:2.25rem 1rem}
+    .sec{padding:3.5rem 1rem}
+    .features{grid-template-columns:1fr 1fr;gap:1rem}
+    .steps-grid{grid-template-columns:1fr 1fr}
+    .steps-grid .step:nth-child(2n){border-left:none}
+    .steps-grid .step:nth-child(2n-1):not(:first-child){border-top:none}
+    .steps-grid .step:nth-child(n+3){border-top:none}
+    .items-grid{grid-template-columns:1fr}
+    .area-cards{grid-template-columns:1fr}
+    .angel-set{grid-template-columns:1fr}
+    .price-table{font-size:.78rem}
+    .price-table th,.price-table td{padding:.65rem .85rem}
+    .cta-sec{padding:3rem 1rem}
+    .cta-btns{flex-direction:column;align-items:center}
+    .cta-tel-btn,.cta-web-btn{width:100%;max-width:320px;text-align:center}
+
+    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
+    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:.9rem;font-size:.8rem;gap:.4rem;font-weight:500}
+    .fixed-cta .tel-f{background:var(--gd);color:#fff}
+    .fixed-cta .web-f{background:#333;color:#fff}
+  }
+
+  @media(max-width:480px){
+    .features{grid-template-columns:1fr}
+    .steps-grid{grid-template-columns:1fr}
+    .steps-grid .step{border-left:1px solid var(--border)!important;border-top:none!important}
+    .steps-grid .step:first-child{border-top:1px solid var(--border)!important}
+  }
+
+  :global(body) {
+    padding-bottom: 0;
+  }
+  @media(max-width:768px){
+    :global(body) {
+      padding-bottom: 52px;
+    }
+  }
+
+  .fi{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+  .fi.show{opacity:1;transform:none}
+</style>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('show');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: .1 });
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+</script>

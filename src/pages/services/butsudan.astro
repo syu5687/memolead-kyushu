@@ -1,0 +1,484 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const altarTypes = [
+  { banner: 'small',  icon: '🏮', name: '小型仏壇',              desc: '省スペースでも祈りの心を。コンパクトで機能的な小型仏壇は、現代の暮らしに寄り添います。家具調タイプで部屋に自然に溶け込みます。' },
+  { banner: 'modern', icon: '🪵', name: '近代仏壇',              desc: '現代の住空間に調和する、シンプルで洗練されたデザインの近代仏壇。心静かに祈る場を美しく演出します。' },
+  { banner: 'karaki', icon: '🌳', name: '近代唐木仏壇 / 唐木仏壇', desc: '銘木の風合いが美しい唐木仏壇。心安らいだお参りの空間を演出します。伝統の趣と現代の感性を融合した近代唐木仏壇も人気です。' },
+  { banner: 'kinbut', icon: '✨', name: '金仏壇',                desc: '伝統技法がひかる金仏壇。荘厳な輝きが、ご先祖への感謝と敬意をより深く伝えます。浄土真宗をはじめ各宗派に対応。' },
+];
+
+const compactAltars = [
+  { name: 'ミラー × タモ' },
+  { name: 'タモ × ホワイト' },
+  { name: '家具調上置<br>タタン ナラ' },
+  { name: '家具調上置<br>アルファ ナチュラル' },
+  { name: '家具調上置<br>アルファ ブラウン' },
+  { name: 'ティサージュ 18' },
+  { name: 'ティサージュ 18_wa' },
+  { name: 'クイント 桜 18号' },
+  { name: 'クイント<br>ウォールナット 18号' },
+  { name: 'プレシャス<br>ライトダーク' },
+  { name: 'プレシャス ホワイト' },
+  { name: 'クーペ 桜' },
+  { name: 'タタン<br>ウォールナット' },
+  { name: 'サンサ14 桜' },
+  { name: 'サンサ14<br>ウォールナット' },
+];
+
+const modernAltars = [
+  { name: 'レクサス' },
+  { name: 'ルメール 桜' },
+  { name: 'ルメール<br>ウォールナット' },
+  { name: 'シンシア40<br>ダークレッド' },
+  { name: 'ヴィエント48 タモ' },
+  { name: 'ヴィエント48<br>ウォールナット' },
+  { name: '家具調 ソナタ 桜' },
+  { name: '家具調 ソナタ<br>ウォールナット' },
+];
+
+const ihaiList = [
+  { num: '① 仏光堂オリジナル', icon: '🪨', name: '紫檀 吹蓮華位牌<br>漆仕上げ',     tag: 'ORIGINAL' },
+  { num: '②',                   icon: '🌸', name: '蒔絵位牌<br>紫檀（透漆塗）桜',   tag: null },
+  { num: '③',                   icon: '🌸', name: '蒔絵位牌<br>紫檀 桜',           tag: null },
+  { num: '④',                   icon: '🪵', name: 'ウォールナット',                tag: null },
+  { num: '⑤',                   icon: '⬛', name: 'モダン 呂色',                  tag: null },
+  { num: '⑥',                   icon: '⬛', name: '漆仕上<br>黒檀',                tag: null },
+  { num: '⑦',                   icon: '⬛', name: '黒檀 高級位牌<br>漆仕上げ',     tag: '高級' },
+  { num: '⑧',                   icon: '🌺', name: '上京中ワラビ足<br>吹蓮華',      tag: null },
+  { num: '⑨',                   icon: '🏛️', name: '唐木 雲三重回<br>黒檀・紫檀',   tag: null },
+  { num: '⑩',                   icon: '✨', name: '純三方金<br>雲三重回',          tag: null },
+  { num: '⑪',                   icon: '⬛', name: '上塗春日',                     tag: null },
+  { num: '⑫',                   icon: '⬛', name: '上塗勝美',                     tag: null },
+  { num: '⑬',                   icon: '🟫', name: '紫檀 春日',                    tag: null },
+  { num: '⑭',                   icon: '🟫', name: '紫檀 蓮付春日',                tag: null },
+  { num: '⑮',                   icon: '🟫', name: '紫檀 葵角切',                  tag: null },
+];
+
+const miscItems = [
+  { icon: '📖', title: '過去帳',         desc: '故人の名前や命日を記す過去帳は、先祖代々のご供養に欠かせない大切な記録です。蘭・ウォールナット・鳥の子など豊富なデザインをご用意。' },
+  { icon: '🕯️', title: '白木位牌',       desc: '白木の位牌はもともと野位牌といって野辺送りに必要なもので、仮の位牌です。忌明け法要には本位牌もしくは過去帳が必要となりますので、早めのご準備をお勧めします。' },
+  { icon: '✝️', title: 'キリスト教位牌', desc: 'ご希望の位牌でキリスト教の位牌をつくることができます。オリジナル「祈念碑」（総高19.5cm）もございます。各宗派に対応いたします。' },
+];
+
+const tamotoItems = [
+  { icon: '💎', name: 'ソウルジュエリー',           desc: '遺骨・遺灰を活用したペンダントや指輪など。故人をいつも傍に感じられるジュエリーとして特別なかたちに仕上げます。' },
+  { icon: '🏺', name: 'ミニ骨壺',                   desc: '小さくてかわいらしいデザインのミニ骨壺。手のひらに収まるサイズで、インテリアとしても自然に飾れます。' },
+  { icon: '🖼️', name: 'メモリアルフォトフレーム',  desc: '遺骨の一部を収納できるフォトフレーム。故人の写真と共に手元で供養できる、新しいかたちの位牌です。' },
+];
+---
+
+<BaseLayout
+  title="仏壇・位牌・仏具販売 | メモリード 仏光堂"
+  description="小型仏壇・近代仏壇・唐木仏壇・金仏壇・位牌・過去帳・手元供養品まで。大切な想いを、そっと暮らしの中に。メモリード仏光堂（長崎市幸町）"
+>
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>仏壇・仏具販売</span>
+    </div>
+
+    <section class="page-hero">
+      <div class="hero-inner">
+        <p class="hero-label">SERVICE 04 — Buddhist Altar & Items</p>
+        <h1 class="hero-title">仏壇・位牌・仏具のご案内</h1>
+        <p class="hero-catch">大切な想いを、そっと暮らしの中に。</p>
+        <p class="hero-desc">小型仏壇から金仏壇・唐木仏壇まで幅広くご用意。位牌の字彫りサービスや過去帳・手元供養品なども取り揃えています。ご予算やお部屋のスタイルに合わせて、専門スタッフがご提案いたします。</p>
+        <div class="hero-shop">
+          <span>🏪</span>
+          <span>メモリード <strong>仏光堂</strong>　長崎市幸町4-13　駐車場完備</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">COLLECTION</p>
+          <h2 class="sec-title">仏壇の種類</h2>
+          <p class="sec-desc">現代の住まいに合わせたコンパクトな小型仏壇から、伝統工芸の金仏壇・唐木仏壇まで。ご自宅のインテリアやご予算に合わせてお選びいただけます。</p>
+        </div>
+        <div class="type-grid fi">
+          {altarTypes.map(t => (
+            <div class="type-card">
+              <div class={`type-banner ${t.banner}`}></div>
+              <div class="type-body">
+                <div class="type-icon">{t.icon}</div>
+                <h3 class="type-name">{t.name}</h3>
+                <p class="type-desc">{t.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">COMPACT ALTAR</p>
+          <h2 class="sec-title">小型仏壇 ラインナップ</h2>
+          <p class="sec-desc">家具調上置タイプを中心に、豊富なカラーとデザインからお選びいただけます。</p>
+        </div>
+        <div class="lineup-grid fi">
+          {compactAltars.map(a => (
+            <div class="product-card">
+              <div class="product-img">🏮</div>
+              <p class="product-name" set:html={a.name}></p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">MODERN ALTAR</p>
+          <h2 class="sec-title">近代仏壇 ラインナップ</h2>
+          <p class="sec-desc">すっきりとした縦長デザインから家具調タイプまで、現代の住空間に馴染むラインナップ。</p>
+        </div>
+        <div class="lineup-grid fi" style="grid-template-columns:repeat(4,1fr)">
+          {modernAltars.map(a => (
+            <div class="product-card">
+              <div class="product-img" style="background:linear-gradient(135deg,#ede0d8,#d4c4ba)">🪵</div>
+              <p class="product-name" set:html={a.name}></p>
+            </div>
+          ))}
+        </div>
+        <p style="text-align:center;font-size:.78rem;color:var(--light);margin-top:1.25rem">※上記のほか、近代唐木仏壇・金仏壇・唐木仏壇も取り揃えております。店頭にてご確認ください。</p>
+      </div>
+    </section>
+
+    <section class="sec bg-gold">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label gold">MEMORIAL TABLET</p>
+          <h2 class="sec-title">位 牌</h2>
+          <p class="sec-desc">故人の魂の依り代となる位牌。豊富なラインナップからお選びいただけます。</p>
+        </div>
+        <div class="ihai-notice fi">
+          <p>🎁 お位牌ご購入時の字彫り <strong>1名様分をサービス</strong>致します</p>
+          <span>※字彫りはご注文頂いてから10日〜14日ほど必要です（お急ぎの場合はご相談に応じます）<br>
+          ご来店の際は中陰表もしくは白木位牌の表裏の画像をお持ちください。</span>
+        </div>
+        <div class="ihai-grid fi">
+          {ihaiList.map(item => (
+            <div class="ihai-card">
+              <p class="ihai-num">{item.num}</p>
+              <div class="ihai-img">{item.icon}</div>
+              <p class="ihai-name" set:html={item.name}></p>
+              {item.tag && <span class="ihai-tag">{item.tag}</span>}
+            </div>
+          ))}
+        </div>
+        <div class="note-block fi" style="margin-top:1.5rem">
+          ※表示寸法と実際の寸法は手づくりの木製品のため誤差が生じる場合がございます。また、印刷の性質上実際の色とは異なる場合がございます。
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">RELATED ITEMS</p>
+          <h2 class="sec-title">過去帳・その他位牌</h2>
+        </div>
+        <div class="misc-grid fi">
+          {miscItems.map(it => (
+            <div class="misc-card">
+              <div class="misc-icon-box">{it.icon}</div>
+              <div>
+                <h3 class="misc-title">{it.title}</h3>
+                <p class="misc-desc">{it.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">MEMORIAL KEEPSAKES</p>
+          <h2 class="sec-title">手元供養品</h2>
+          <p class="sec-desc">手元供養は、大切な故人を身近に感じながら祈る新しい供養のかたち。暮らしの中にやさしく寄り添います。</p>
+        </div>
+        <div class="tamoto-grid fi">
+          {tamotoItems.map(t => (
+            <div class="tamoto-card">
+              <div class="tamoto-icon">{t.icon}</div>
+              <h3 class="tamoto-name">{t.name}</h3>
+              <p class="tamoto-desc">{t.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">SHOP INFORMATION</p>
+          <h2 class="sec-title">店舗情報</h2>
+        </div>
+        <div class="shop-block fi">
+          <div class="shop-info">
+            <span class="shop-badge">メモリードグループ</span>
+            <h3 class="shop-name">仏 光 堂</h3>
+            <p class="shop-name-sub">仏壇・仏具・神具専門店</p>
+            <div class="shop-row">
+              <span class="shop-row-label">所在地</span>
+              <span class="shop-row-val">〒850-0046<br>長崎県長崎市幸町4-13</span>
+            </div>
+            <div class="shop-row">
+              <span class="shop-row-label">TEL</span>
+              <a href="tel:0958256386" class="shop-tel-big">095-825-6386</a>
+            </div>
+            <div class="shop-row">
+              <span class="shop-row-label">FAX</span>
+              <span class="shop-row-val">095-825-6395</span>
+            </div>
+            <div class="shop-row">
+              <span class="shop-row-label">営業時間</span>
+              <span class="shop-row-val">10:00〜17:00<br><small style="color:var(--gd)">店休日なし</small></span>
+            </div>
+            <div class="shop-row">
+              <span class="shop-row-label">メール</span>
+              <span class="shop-row-val" style="word-break:break-all;font-size:.78rem">bukkoudou@memolead.co.jp</span>
+            </div>
+            <div style="margin-top:1.25rem">
+              <span style="display:inline-block;background:var(--gl);color:var(--gd);font-size:.72rem;padding:.3rem .75rem;border:1px solid var(--gd)">🅿️ 駐車場完備（無料）</span>
+            </div>
+          </div>
+          <div class="shop-map">
+            <span class="shop-parking">駐車場完備</span>
+            <div style="background:var(--white);border:1px solid var(--border);padding:1.5rem;width:100%;text-align:center">
+              <p style="font-family:var(--serif);font-size:.9rem;margin-bottom:.5rem">メモリード 仏光堂</p>
+              <p style="font-size:.75rem;color:var(--mid)">長崎市幸町4-13</p>
+              <p style="font-size:.72rem;color:var(--light);margin-top:.5rem">長崎スタジアムシティ近く<br>NBC長崎放送 向かい付近</p>
+              <a href="https://maps.google.com/?q=長崎市幸町4-13+仏光堂" target="_blank"
+                 style="display:inline-block;margin-top:1rem;background:var(--gd);color:#fff;padding:.5rem 1.25rem;font-size:.75rem;letter-spacing:.06em">
+                Google マップで見る →
+              </a>
+            </div>
+            <p style="font-size:.7rem;color:var(--mid);margin-top:.65rem;text-align:center;line-height:1.8">
+              駐車場をご利用の際は弊社指定の駐車場を<br>ご利用ください。駐車券を店内でご提示いただければ無料。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-sec fi">
+      <h2 class="cta-title">店頭でゆっくりとご覧ください</h2>
+      <p class="cta-desc">実物を見て、触れて、専門スタッフにご相談いただけます。<br>仏壇の選び方から位牌の字彫りまで、丁寧にご対応いたします。</p>
+      <p class="cta-sub">ご来店の際は中陰表もしくは白木位牌の表裏の画像をお持ちください</p>
+      <a href="tel:0958256386" class="cta-tel-num">095-825-6386</a>
+      <p class="cta-hours">営業時間 10:00〜17:00（店休日なし）</p>
+      <div class="cta-btns">
+        <a href="tel:0958256386" class="cta-btn-gold">📞 今すぐ電話する</a>
+        <a href="/#contact" class="cta-btn-out">✉ Webで相談する</a>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+
+  <div class="fixed-cta">
+    <a href="tel:0958256386" class="tel-f">📞 電話で相談</a>
+    <a href="/#contact" class="web-f">✉ Webで相談</a>
+  </div>
+</BaseLayout>
+
+<style>
+  :root{
+    --brown:#6b3a2a;--brown-light:#f5ede8;
+    --gold:#c8a84b;--gold-light:#fdf8ec;
+  }
+
+  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.72rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:var(--gd)}
+  .breadcrumb a:hover{text-decoration:underline}
+  .breadcrumb span{opacity:.5}
+
+  .page-hero{
+    background:linear-gradient(135deg,#2c2218 0%,#4a3728 50%,#3d2e22 100%);
+    color:#fff;padding:4rem 1.5rem;position:relative;overflow:hidden
+  }
+  .page-hero::before{
+    content:'大切な想いを、そっと暮らしの中に。';
+    position:absolute;top:50%;right:5%;transform:translateY(-50%);
+    font-family:var(--serif);font-size:clamp(1rem,2.5vw,1.6rem);
+    color:rgba(255,255,255,.1);white-space:nowrap;letter-spacing:.2em;
+    pointer-events:none;
+  }
+  .page-hero::after{
+    content:'';position:absolute;top:-60px;right:-60px;
+    width:260px;height:260px;border:1px solid rgba(200,168,75,.15);border-radius:50%
+  }
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-label{font-family:var(--roman);font-size:.72rem;letter-spacing:.25em;color:var(--gold);margin-bottom:.65rem;opacity:.85}
+  .hero-title{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.6rem);font-weight:400;letter-spacing:.12em;margin-bottom:.85rem}
+  .hero-catch{font-family:var(--serif);font-size:clamp(1rem,2.5vw,1.4rem);color:rgba(255,255,255,.7);margin-bottom:1.25rem;letter-spacing:.15em;font-weight:300}
+  .hero-desc{font-size:.88rem;line-height:2.1;color:rgba(255,255,255,.8);max-width:560px}
+  .hero-shop{
+    display:inline-flex;align-items:center;gap:.65rem;
+    background:rgba(200,168,75,.15);border:1px solid rgba(200,168,75,.35);
+    padding:.55rem 1.25rem;margin-top:1.5rem;font-size:.8rem;color:var(--gold)
+  }
+
+  .sec{padding:5rem 1.5rem}
+  .sec.bg-cream{background:var(--clight)}
+  .sec.bg-gl{background:var(--gl)}
+  .sec.bg-brown{background:var(--brown-light)}
+  .sec.bg-gold{background:var(--gold-light)}
+  .sec.bg-dark{background:#2c2218;color:#fff}
+  .sec-inner{max-width:1100px;margin:0 auto}
+  .sec-head{text-align:center;margin-bottom:3rem}
+  .sec-label{font-family:var(--roman);font-size:.7rem;letter-spacing:.26em;color:var(--gd);margin-bottom:.55rem}
+  .sec-label.gold{color:var(--gold)}
+  .sec-title{font-family:var(--serif);font-size:clamp(1.35rem,3vw,1.75rem);font-weight:400;letter-spacing:.1em;margin-bottom:.8rem}
+  .sec-desc{font-size:.85rem;color:var(--mid);line-height:2}
+  .sec-desc.white{color:rgba(255,255,255,.75)}
+
+  .type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+  .type-card{border:1px solid var(--border);background:var(--white);padding:0;overflow:hidden;transition:.2s}
+  .type-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px)}
+  .type-banner{height:7px}
+  .type-banner.modern{background:linear-gradient(90deg,#c8a84b,#e5cc7a)}
+  .type-banner.kinbut{background:linear-gradient(90deg,#d4a017,#f5c842)}
+  .type-banner.karaki{background:linear-gradient(90deg,#6b3a2a,#9b5c42)}
+  .type-banner.small{background:linear-gradient(90deg,var(--gd),var(--gm))}
+  .type-body{padding:1.5rem 1.35rem}
+  .type-icon{font-size:1.8rem;margin-bottom:.75rem}
+  .type-name{font-family:var(--serif);font-size:1rem;font-weight:400;letter-spacing:.08em;margin-bottom:.6rem}
+  .type-desc{font-size:.74rem;line-height:1.9;color:var(--mid)}
+
+  .lineup-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.85rem}
+  .product-card{background:var(--white);border:1px solid var(--border);padding:1rem .85rem;text-align:center;transition:.2s;cursor:pointer}
+  .product-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(200,168,75,.15)}
+  .product-img{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#f5ede8,#fdf8ec);display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin-bottom:.75rem;border-radius:2px}
+  .product-name{font-size:.72rem;line-height:1.6;color:var(--mid);font-family:var(--serif)}
+
+  .ihai-notice{
+    background:linear-gradient(135deg,#fff9f0,#fffdf5);
+    border:1px solid var(--gold);
+    padding:1.25rem 1.5rem;text-align:center;margin-bottom:2.5rem
+  }
+  .ihai-notice p{font-family:var(--serif);font-size:1rem;color:var(--brown);letter-spacing:.06em}
+  .ihai-notice span{font-size:.78rem;color:var(--mid);display:block;margin-top:.4rem}
+  .ihai-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+  .ihai-card{background:var(--white);border:1px solid var(--border);padding:1.25rem .85rem;text-align:center;transition:.2s}
+  .ihai-card:hover{border-color:var(--brown);box-shadow:0 4px 16px rgba(107,58,42,.12)}
+  .ihai-num{font-family:var(--roman);font-size:.62rem;color:var(--light);margin-bottom:.35rem}
+  .ihai-img{width:100%;aspect-ratio:2/3;background:linear-gradient(180deg,#f8f0ec,#ede0d8);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:.65rem;border-radius:2px}
+  .ihai-name{font-size:.7rem;line-height:1.6;color:var(--mid);font-family:var(--serif)}
+  .ihai-tag{display:inline-block;background:var(--brown);color:#fff;font-size:.58rem;padding:.12rem .45rem;margin-bottom:.35rem}
+
+  .misc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+  .misc-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start}
+  .misc-icon-box{font-size:2rem;width:52px;height:52px;background:var(--gl);display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:50%}
+  .misc-title{font-family:var(--serif);font-size:.95rem;font-weight:400;color:var(--gd);margin-bottom:.45rem}
+  .misc-desc{font-size:.76rem;line-height:1.9;color:var(--mid)}
+
+  .tamoto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:1.75rem}
+  .tamoto-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;text-align:center;transition:.2s}
+  .tamoto-card:hover{border-color:var(--gm);box-shadow:0 4px 16px rgba(45,90,61,.1)}
+  .tamoto-icon{font-size:2.25rem;margin-bottom:.75rem}
+  .tamoto-name{font-family:var(--serif);font-size:.9rem;font-weight:400;color:var(--gd);margin-bottom:.5rem}
+  .tamoto-desc{font-size:.74rem;line-height:1.9;color:var(--mid)}
+
+  .shop-block{
+    background:var(--white);border:1px solid var(--border);
+    display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;max-width:900px;margin:0 auto
+  }
+  .shop-info{padding:2.25rem 2rem}
+  .shop-badge{display:inline-block;background:var(--gd);color:#fff;font-size:.65rem;padding:.2rem .65rem;letter-spacing:.06em;margin-bottom:.85rem}
+  .shop-name{font-family:var(--serif);font-size:1.35rem;font-weight:400;letter-spacing:.12em;margin-bottom:.2rem}
+  .shop-name-sub{font-size:.72rem;color:var(--light);margin-bottom:1.25rem;font-family:var(--roman);letter-spacing:.1em}
+  .shop-row{display:flex;gap:.75rem;margin-bottom:.6rem;font-size:.82rem;align-items:flex-start}
+  .shop-row-label{font-size:.68rem;color:var(--light);white-space:nowrap;min-width:4em;padding-top:.15rem}
+  .shop-row-val{color:var(--text)}
+  .shop-tel-big{font-family:var(--roman);font-size:1.65rem;color:var(--gd);letter-spacing:.08em}
+  .shop-map{background:var(--gl);display:flex;align-items:center;justify-content:center;min-height:250px;flex-direction:column;gap:.5rem;font-size:.82rem;color:var(--mid);padding:1.5rem}
+  .shop-parking{background:var(--gd);color:#fff;padding:.35rem .75rem;font-size:.68rem;letter-spacing:.06em}
+
+  .cta-sec{background:linear-gradient(135deg,#2c2218,#4a3728);padding:4rem 1.5rem;text-align:center;color:#fff}
+  .cta-title{font-family:var(--serif);font-size:clamp(1.3rem,3vw,1.75rem);font-weight:400;letter-spacing:.1em;margin-bottom:.75rem}
+  .cta-desc{font-size:.85rem;color:rgba(255,255,255,.75);margin-bottom:.5rem;line-height:2}
+  .cta-sub{font-size:.75rem;color:rgba(255,255,255,.5);margin-bottom:2rem}
+  .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .cta-tel-num{font-family:var(--roman);font-size:clamp(1.75rem,4vw,2.5rem);display:block;color:var(--gold);margin-bottom:.3rem;letter-spacing:.1em}
+  .cta-hours{font-size:.72rem;color:rgba(255,255,255,.5);margin-bottom:1.5rem}
+  .cta-btn-gold{background:var(--gold);color:#fff;padding:.85rem 2.25rem;font-size:.85rem;letter-spacing:.08em;transition:.2s}
+  .cta-btn-gold:hover{background:#b8943b}
+  .cta-btn-out{border:1px solid rgba(255,255,255,.35);color:#fff;padding:.85rem 2.25rem;font-size:.82rem;letter-spacing:.08em;transition:.2s}
+  .cta-btn-out:hover{background:rgba(255,255,255,.08)}
+
+  .note-block{background:#fffbf0;border-left:3px solid var(--gold);padding:1rem 1.25rem;font-size:.78rem;line-height:1.9;color:var(--mid)}
+
+  .fixed-cta{display:none}
+
+  .fi{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+  .fi.show{opacity:1;transform:none}
+
+  @media(max-width:1024px){
+    .type-grid{grid-template-columns:repeat(2,1fr)}
+    .lineup-grid{grid-template-columns:repeat(4,1fr)}
+    .ihai-grid{grid-template-columns:repeat(4,1fr)}
+  }
+  @media(max-width:768px){
+    .page-hero{padding:2.5rem 1rem}
+    .page-hero::before{display:none}
+    .sec{padding:3.5rem 1rem}
+    .type-grid{grid-template-columns:1fr 1fr;gap:1rem}
+    .lineup-grid{grid-template-columns:repeat(3,1fr);gap:.75rem}
+    .ihai-grid{grid-template-columns:repeat(3,1fr);gap:.75rem}
+    .misc-grid{grid-template-columns:1fr}
+    .tamoto-grid{grid-template-columns:1fr}
+    .shop-block{grid-template-columns:1fr}
+    .shop-map{min-height:200px}
+    .cta-btns{flex-direction:column;align-items:center}
+    .cta-btn-gold,.cta-btn-out{width:100%;max-width:320px;text-align:center}
+
+    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
+    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:.9rem;font-size:.8rem;gap:.4rem;font-weight:500}
+    .fixed-cta .tel-f{background:var(--brown);color:#fff}
+    .fixed-cta .web-f{background:#333;color:#fff}
+  }
+  @media(max-width:480px){
+    .type-grid{grid-template-columns:1fr}
+    .lineup-grid{grid-template-columns:repeat(2,1fr)}
+    .ihai-grid{grid-template-columns:repeat(2,1fr)}
+    .tamoto-grid{grid-template-columns:1fr}
+  }
+
+  :global(body) {
+    padding-bottom: 0;
+  }
+  @media(max-width:768px){
+    :global(body) {
+      padding-bottom: 52px;
+    }
+  }
+</style>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('show');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: .1 });
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+</script>
