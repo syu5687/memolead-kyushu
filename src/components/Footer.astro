@@ -1,4 +1,30 @@
 ---
+// 各リンクの定義
+// available: true なら通常リンク / false なら「準備中」のグレーアウト表示
+// 新しいページを公開したら、該当行の available を true に変更するだけでOK
+const services = [
+  { href: '/services/estate/',         label: '遺品整理',           available: false },
+  { href: '/services/junk/',           label: '不用品回収',         available: true  },
+  { href: '/services/antique/',        label: '古物買取(4月〜)',   available: false },
+  { href: '/services/butsudan/',       label: '仏壇・仏具販売',     available: true  },
+  { href: '/services/cemetery/',       label: '墓地・霊園紹介',     available: false },
+];
+
+const moreServices = [
+  { href: '/services/altar-remake/',   label: '仏壇リメイク',       available: false },
+  { href: '/services/grave-closure/',  label: '墓じまい',           available: false },
+  { href: '/services/grave-keeping/',  label: '墓守代行',           available: false },
+  { href: '/services/ocean/',          label: '海洋散骨',           available: false },
+  { href: '/services/memento/',        label: '手元供養品販売',     available: false },
+];
+
+const company = [
+  { href: '/about/',                   label: '会社概要',           available: false },
+  { href: '/staff/',                   label: 'スタッフ紹介',       available: false },
+  { href: '/blog/',                    label: 'ブログ',             available: false },
+  { href: '/voices/',                  label: 'お客様の声',         available: false },
+  { href: '/contact/',                 label: 'お問合せ',           available: false },
+];
 ---
 <footer class="footer">
   <div class="footer-inner">
@@ -9,33 +35,30 @@
       <address class="f-addr">
         〒XXX-XXXX ○○県○○市○○町X-X-X<br>
         TEL: <a href="tel:0120XXXXXX">0120-XXX-XXX</a><br>
-        受付時間 9:00〜18:00（年中無休）
+        受付時間 9:00〜18:00(年中無休)
       </address>
     </div>
     <div class="f-links">
       <div class="f-col">
         <h3>SERVICES</h3>
-        <a href="/services/estate">遺品整理</a>
-        <a href="/services/junk">不用品回収</a>
-        <a href="/services/antique">古物買取（4月〜）</a>
-        <a href="/services/butsudan">仏壇・仏具販売</a>
-        <a href="/services/cemetery">墓地・霊園紹介</a>
+        {services.map(s => s.available
+          ? <a href={s.href}>{s.label}</a>
+          : <span class="f-disabled">{s.label}<em>準備中</em></span>
+        )}
       </div>
       <div class="f-col">
         <h3>MORE SERVICES</h3>
-        <a href="/services/altar-remake">仏壇リメイク</a>
-        <a href="/services/grave-closure">墓じまい</a>
-        <a href="/services/grave-keeping">墓守代行</a>
-        <a href="/services/ocean">海洋散骨</a>
-        <a href="/services/memento">手元供養品販売</a>
+        {moreServices.map(s => s.available
+          ? <a href={s.href}>{s.label}</a>
+          : <span class="f-disabled">{s.label}<em>準備中</em></span>
+        )}
       </div>
       <div class="f-col">
         <h3>COMPANY</h3>
-        <a href="/about">会社概要</a>
-        <a href="/staff">スタッフ紹介</a>
-        <a href="/blog">ブログ</a>
-        <a href="/voices">お客様の声</a>
-        <a href="/contact">お問合せ</a>
+        {company.map(s => s.available
+          ? <a href={s.href}>{s.label}</a>
+          : <span class="f-disabled">{s.label}<em>準備中</em></span>
+        )}
       </div>
     </div>
   </div>
@@ -54,6 +77,24 @@
 .f-col h3{font-family:var(--roman);font-size:.65rem;letter-spacing:.2em;color:rgba(255,255,255,.42);margin-bottom:.85rem;padding-bottom:.42rem;border-bottom:1px solid rgba(255,255,255,.12)}
 .f-col a{display:block;font-size:.73rem;color:rgba(255,255,255,.65);padding:.28rem 0;transition:.15s}
 .f-col a:hover{color:#fff}
+
+/* 準備中(未公開ページ)のスタイル
+   グレーアウト + クリック不可 + 「準備中」バッジ表示
+   ページ公開後は available: true に変更すれば通常リンクに戻る */
+.f-col .f-disabled{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.73rem;color:rgba(255,255,255,.32);
+  padding:.28rem 0;cursor:not-allowed;
+}
+.f-col .f-disabled em{
+  font-style:normal;font-size:.58rem;
+  background:rgba(255,255,255,.08);
+  color:rgba(255,255,255,.5);
+  padding:.08rem .42rem;
+  letter-spacing:.05em;
+  border-radius:1px;
+}
+
 .f-btm{border-top:1px solid rgba(255,255,255,.12);text-align:center;padding-top:1.2rem;font-size:.66rem;color:rgba(255,255,255,.38);max-width:1100px;margin:0 auto}
 @media(max-width:1024px){.footer-inner{grid-template-columns:1fr}}
 @media(max-width:768px){
