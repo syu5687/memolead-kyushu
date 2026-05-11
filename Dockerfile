@@ -25,9 +25,8 @@ RUN a2enmod rewrite \
 RUN printf '<Directory /var/www/html>\n  Options FollowSymLinks\n  AllowOverride All\n  Require all granted\n</Directory>\n' \
     >> /etc/apache2/apache2.conf
 
-# Astro ビルド成果物だけをコピー（Dockerfile等は含まない）
+# Astro ビルド成果物のみコピー（Dockerfile等は含まない）
 COPY --from=builder /app/dist /var/www/html
 
-# パーミッション
 RUN chown -R www-data:www-data /var/www/html \
  && chmod -R 755 /var/www/html

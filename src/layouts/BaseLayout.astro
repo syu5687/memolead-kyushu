@@ -1,9 +1,5 @@
 ---
-// src/layouts/BaseLayout.astro
-export interface Props {
-  title?: string;
-  description?: string;
-}
+export interface Props { title?: string; description?: string; }
 const {
   title = 'エンジェルセンター ぶっこうどう | 葬儀後の供養・手続きをワンストップで',
   description = '遺品整理・お墓・仏壇・海洋散骨など、葬儀後にやるべきことをまとめてご相談いただける供養の専門窓口です。',
@@ -18,7 +14,7 @@ const {
   <meta name="description" content={description} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
 </head>
 <body>
   <slot />
@@ -26,37 +22,20 @@ const {
 </html>
 
 <style is:global>
-  :root {
-    --green-dark:   #2d5a3d;
-    --green-mid:    #3d7a52;
-    --green-light:  #e8f0eb;
-    --cream:        #f5f0ea;
-    --cream-light:  #faf7f3;
-    --white:        #ffffff;
-    --text-dark:    #1a1a1a;
-    --text-mid:     #4a4a4a;
-    --text-light:   #888888;
-    --gold:         #c4a35a;
-    --serif:        'Noto Serif JP', 'Cormorant Garamond', serif;
-    --sans:         'Noto Sans JP', sans-serif;
-    --roman:        'Cormorant Garamond', serif;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html {
-    scroll-behavior: smooth;
-    font-size: 16px;
-  }
-
-  body {
-    font-family: var(--sans);
-    color: var(--text-dark);
-    background: var(--white);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  img { max-width: 100%; display: block; }
-  a { text-decoration: none; color: inherit; }
+:root{
+  --gd:#2d5a3d;--gm:#3d7a52;--gl:#e8f0eb;
+  --cream:#f5f0ea;--clight:#faf7f3;
+  --text:#1a1a1a;--mid:#555;--light:#999;
+  --border:#e0e0d8;--white:#fff;
+  --serif:'Noto Serif JP',serif;
+  --sans:'Noto Sans JP',sans-serif;
+  --roman:'Cormorant Garamond',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--text);background:var(--white);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.fade-init{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}
+.fade-in{opacity:1;transform:none}
 </style>

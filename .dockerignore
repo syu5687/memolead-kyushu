@@ -1,0 +1,12 @@
+node_modules
+dist
+.astro
+.env
+.env.*
+!.env.example
+*.log
+.git
+.gitignore
+*.zip
+*.tar.gz
+.DS_Store
