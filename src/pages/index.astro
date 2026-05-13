@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BlogCards from '../components/BlogCards.astro';
+import { Image } from 'astro:assets';
+import heroImage from '../_assets/img/hero-family.jpg';
 
 const services = [
   { num:'01', en:'Estate Clearance',         ja:'遺品整理',         desc:'故人のお部屋や自宅を丁寧に整理します。大切な品の仕分けから不用品の処分まで、心を込めて対応いたします。', tags:[], link:'', estimate:true },
@@ -25,36 +27,45 @@ const services = [
 
     <!-- HERO -->
     <section class="hero">
+      <!-- 背景画像(全画面) -->
+      <div class="hero-bg">
+        <Image
+          src={heroImage}
+          alt="家族の温かい時間を大切にする ぶっこうどう のサービス"
+          widths={[800, 1200, 1600, 2000]}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
+          class="hero-img"
+        />
+      </div>
+
+      <!-- 右側のダークグリーンオーバーレイ -->
+      <div class="hero-overlay"></div>
+
+      <!-- テキストコンテンツ(右側に配置) -->
       <div class="hero-content">
-        <span class="hero-label">葬儀後の供養、まるごとお任せください</span>
-        <h1 class="hero-title">大切な方を送った後の<br><em>すべての手続き・供養を</em><br>ひとつの窓口でご相談できます。</h1>
-        <p class="hero-desc">遺品整理・お墓・仏壇・海洋散骨など、葬儀後にやるべきことは思いのほかたくさんあります。エンジェルセンター ぶっこうどうは、そんな時に頼れる「街の供養の相談窓口」です。</p>
+        <p class="hero-label">SERVICE — 葬儀後の供養</p>
+        <h1 class="hero-title">
+          葬儀後の供養、<br>
+          <em>まるごとお任せ</em>ください
+        </h1>
+        <p class="hero-desc">
+          故人を想う気持ちを大切にしながら、<br>
+          遺品整理・お墓・仏壇・散骨まで<br>
+          専門の窓口がワンストップでサポートいたします。
+        </p>
         <div class="hero-btns">
-          <a href="#services" class="btn-p">サービス一覧を見る</a>
-          <a href="#estimate" class="btn-o">まず仮見積りしてみる</a>
+          <a href="#estimate" class="btn-p">まず仮見積りしてみる</a>
+          <a href="tel:0120XXXXXX" class="btn-o">📞 電話で相談する</a>
         </div>
       </div>
-      <div class="hero-visual">
-        <svg viewBox="0 0 480 340" xmlns="http://www.w3.org/2000/svg">
-          <rect width="480" height="340" fill="#c2dccb"/>
-          <circle cx="365" cy="78" r="50" fill="#f5c842" opacity=".82"/>
-          <ellipse cx="105" cy="270" rx="185" ry="90" fill="#3d7a52" opacity=".62"/>
-          <ellipse cx="390" cy="278" rx="165" ry="82" fill="#3d7a52" opacity=".52"/>
-          <ellipse cx="240" cy="322" rx="260" ry="58" fill="#5aa4a4" opacity=".52"/>
-          <ellipse cx="240" cy="334" rx="268" ry="52" fill="#78c2c2" opacity=".36"/>
-          <rect x="78" y="200" width="10" height="52" fill="#3a2a1a"/>
-          <ellipse cx="83" cy="188" rx="30" ry="34" fill="#2d5a3d"/>
-          <rect x="320" y="206" width="9" height="46" fill="#3a2a1a"/>
-          <ellipse cx="324" cy="194" rx="27" ry="31" fill="#2d5a3d"/>
-          <rect x="258" y="228" width="7" height="34" fill="#3a2a1a"/>
-          <ellipse cx="261" cy="220" rx="20" ry="23" fill="#3d7a52"/>
-          <path d="M178 55 Q184 49 190 55" stroke="#556" stroke-width="1.3" fill="none"/>
-          <path d="M200 43 Q207 36 214 43" stroke="#556" stroke-width="1.3" fill="none"/>
-          <path d="M186 310 Q240 298 294 310 L288 320 L192 320 Z" fill="#fff" opacity=".82"/>
-          <rect x="238" y="285" width="3" height="22" fill="#888"/>
-          <path d="M240 285 L262 296 L240 296 Z" fill="#e8a" opacity=".68"/>
-        </svg>
-      </div>
+
+      <!-- スクロール促進矢印 -->
+      <a href="#services" class="hero-scroll" aria-label="サービス一覧へスクロール">
+        <span>SCROLL</span>
+        <span class="hero-scroll-arrow"></span>
+      </a>
     </section>
 
     <div class="wave"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,26 C360,52 1080,0 1440,26 L1440,52 L0,52 Z" fill="#2d5a3d"/></svg></div>
@@ -200,32 +211,242 @@ const services = [
 
   <!-- モバイル固定CTAバー -->
   <div class="fixed-cta">
-    <a href="tel:0120XXXXXX" class="tel-f">電話で相談</a>
+    <a href="tel:0120XXXXXX" class="tel-f">📞 電話で相談</a>
     <a href="#contact" class="web-f">✉ Webで相談</a>
   </div>
 </BaseLayout>
 
 <style>
 .wave{line-height:0}.wave svg{display:block;width:100%}
-/* HERO */
-.hero{display:grid;grid-template-columns:1fr 1fr;min-height:90vh;background:var(--clight)}
-.hero-content{display:flex;flex-direction:column;justify-content:center;padding:4rem 2.5rem 4rem 4.5rem}
-.hero-label{display:inline-block;background:var(--gd);color:#fff;font-size:.7rem;padding:.3rem .85rem;letter-spacing:.08em;margin-bottom:1.6rem;width:fit-content}
-.hero-title{font-family:var(--serif);font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:400;line-height:1.8;letter-spacing:.07em;margin-bottom:1.4rem}
-.hero-title em{font-style:normal;color:var(--gd)}
-.hero-desc{font-size:clamp(.78rem,.9vw,.9rem);line-height:2.1;color:var(--mid);margin-bottom:2.25rem}
-.hero-btns{display:flex;gap:.85rem;flex-wrap:wrap}
-.btn-p{background:var(--gd);color:#fff;padding:.72rem 1.6rem;font-size:.8rem;letter-spacing:.07em;transition:.2s}
-.btn-p:hover{background:var(--gm)}
-.btn-o{border:1px solid var(--gd);color:var(--gd);padding:.72rem 1.6rem;font-size:.8rem;letter-spacing:.07em;transition:.2s}
-.btn-o:hover{background:var(--gd);color:#fff}
-.hero-visual{background:var(--gl);display:flex;align-items:center;justify-content:center;padding:2rem;min-height:320px}
-.hero-visual svg{width:100%;max-width:480px;height:auto;border-radius:4px}
+
+/* ─────────────────────────────────────────
+   HERO(背景画像+右側ダークグリーンオーバーレイ)
+   ───────────────────────────────────────── */
+.hero{
+  position:relative;
+  height:calc(100vh - 60px);  /* ヘッダー高さを除いた残り全て */
+  min-height:560px;            /* 縦長スマホ対応の最低高さ */
+  overflow:hidden;
+  background:var(--clight);
+}
+
+/* 背景画像レイヤー */
+.hero-bg{
+  position:absolute;
+  inset:0;
+  z-index:1;
+}
+.hero-bg :global(.hero-img){
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 30%;
+  /* 暖色フィルター + 彩度を少し下げて葬儀後サービスの落ち着いた印象に */
+  filter:saturate(0.85) sepia(0.08) brightness(1.02);
+}
+
+/* 右側ダークグリーングラデーションオーバーレイ
+   左:透明 → 右:ダークグリーン濃いめ
+   テキストエリアの視認性を確保 */
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background:linear-gradient(
+    100deg,
+    rgba(45,90,61,0)    0%,
+    rgba(45,90,61,0)    35%,
+    rgba(45,90,61,0.65) 55%,
+    rgba(45,90,61,0.92) 80%,
+    rgba(45,90,61,0.96) 100%
+  );
+}
+
+/* テキストコンテンツ(右側に配置) */
+.hero-content{
+  position:relative;
+  z-index:3;
+  height:100%;
+  max-width:1280px;
+  margin:0 auto;
+  padding:0 4rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-end;     /* 右寄せ */
+}
+.hero-content > *{
+  max-width:520px;          /* テキスト幅を制限して読みやすく */
+  width:100%;
+  color:#fff;
+  text-align:left;
+}
+
+.hero-label{
+  font-family:var(--roman);
+  font-size:.72rem;
+  letter-spacing:.28em;
+  color:rgba(255,255,255,.72);
+  margin-bottom:1.5rem;
+  text-transform:none;
+}
+
+.hero-title{
+  font-family:var(--serif);
+  font-size:clamp(1.75rem, 3.5vw, 2.8rem);
+  font-weight:400;
+  line-height:1.65;
+  letter-spacing:.08em;
+  margin-bottom:1.5rem;
+  color:#fff;
+}
+.hero-title em{
+  font-style:normal;
+  color:#f5c842;          /* アクセントの金色(既存パレットから) */
+  font-weight:500;
+}
+
+.hero-desc{
+  font-size:clamp(.82rem, 1vw, .92rem);
+  line-height:2.1;
+  color:rgba(255,255,255,.85);
+  margin-bottom:2.5rem;
+  letter-spacing:.04em;
+}
+
+.hero-btns{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+/* メインCTA(仮見積り) */
+.hero-btns .btn-p{
+  background:#f5c842;
+  color:var(--gd);
+  padding:1rem 1.85rem;
+  font-size:.85rem;
+  letter-spacing:.08em;
+  font-weight:500;
+  transition:.2s;
+  border:1px solid #f5c842;
+}
+.hero-btns .btn-p:hover{
+  background:#fff;
+  border-color:#fff;
+  transform:translateY(-1px);
+}
+
+/* サブCTA(電話) */
+.hero-btns .btn-o{
+  border:1px solid rgba(255,255,255,.55);
+  color:#fff;
+  background:transparent;
+  padding:1rem 1.85rem;
+  font-size:.85rem;
+  letter-spacing:.08em;
+  transition:.2s;
+}
+.hero-btns .btn-o:hover{
+  background:rgba(255,255,255,.12);
+  border-color:#fff;
+}
+
+/* スクロール促進矢印(画面下中央) */
+.hero-scroll{
+  position:absolute;
+  bottom:1.75rem;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.5rem;
+  color:rgba(255,255,255,.7);
+  font-family:var(--roman);
+  font-size:.65rem;
+  letter-spacing:.32em;
+  text-decoration:none;
+  transition:.2s;
+}
+.hero-scroll:hover{color:#fff}
+.hero-scroll-arrow{
+  width:1px;
+  height:36px;
+  background:rgba(255,255,255,.7);
+  position:relative;
+  animation:scrollIndicator 2s ease-in-out infinite;
+}
+.hero-scroll-arrow::after{
+  content:'';
+  position:absolute;
+  bottom:-1px;
+  left:50%;
+  transform:translateX(-50%) rotate(45deg);
+  width:6px;
+  height:6px;
+  border-right:1px solid rgba(255,255,255,.7);
+  border-bottom:1px solid rgba(255,255,255,.7);
+}
+@keyframes scrollIndicator{
+  0%, 100%{opacity:.4; transform:translateY(0)}
+  50%     {opacity:1;  transform:translateY(4px)}
+}
+
+/* タブレット */
+@media(max-width:1024px){
+  .hero-content{padding:0 2.5rem}
+  .hero-overlay{
+    background:linear-gradient(
+      100deg,
+      rgba(45,90,61,0)    0%,
+      rgba(45,90,61,0.3)  30%,
+      rgba(45,90,61,0.8)  55%,
+      rgba(45,90,61,0.94) 100%
+    );
+  }
+}
+
+/* スマホ */
+@media(max-width:768px){
+  .hero{
+    height:auto;
+    min-height:calc(100vh - 60px);
+  }
+  .hero-bg :global(.hero-img){
+    object-position:center 25%;
+  }
+  /* スマホでは画像全体に薄めの黒、下半分にダーク背景を被せて
+     テキストエリアを下部に配置 */
+  .hero-overlay{
+    background:linear-gradient(
+      180deg,
+      rgba(45,90,61,0.1)  0%,
+      rgba(45,90,61,0.25) 35%,
+      rgba(45,90,61,0.85) 65%,
+      rgba(45,90,61,0.96) 100%
+    );
+  }
+  .hero-content{
+    padding:3rem 1.5rem 5rem;
+    align-items:flex-start;
+    justify-content:flex-end;  /* 下寄せ */
+  }
+  .hero-content > *{
+    max-width:none;
+  }
+  .hero-title{line-height:1.55; letter-spacing:.06em}
+  .hero-desc br{display:none}
+  .hero-btns{flex-direction:column; width:100%}
+  .hero-btns a{text-align:center; width:100%}
+  .hero-scroll{display:none}
+}
 /* POINTS */
 .points{background:var(--gd);padding:3.5rem 1.5rem}
 .pts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;max-width:1100px;margin:0 auto}
 .pt{border:1px solid rgba(255,255,255,.2);padding:2rem 1.5rem;text-align:center;color:#fff}
-.pt-num{font-family:var(--roman);font-size:.7rem;letter-spacing:.22em;opacity:.55;margin-bottom:.6rem}
+.pt-num{font-family:var(--num);font-size:.7rem;letter-spacing:.22em;opacity:.55;margin-bottom:.6rem}
 .pt-title{font-family:var(--serif);font-size:.95rem;font-weight:400;margin-bottom:.8rem}
 .pt-desc{font-size:.76rem;line-height:1.95;opacity:.85}
 /* SECTION */
@@ -241,10 +462,10 @@ const services = [
 .svc-card{background:var(--white);border:1px solid var(--border);padding:1.5rem 1.35rem;transition:.2s;display:flex;flex-direction:column}
 .svc-card--link:hover{box-shadow:0 6px 24px rgba(45,90,61,.15);transform:translateY(-3px);border-color:var(--gm)}
 .svc-card--link{position:relative}
-.svc-card--link::after{opacity:0;transition:opacity .2s}
+.svc-card--link::after{content:'詳細を見る →';position:absolute;bottom:.9rem;right:1rem;font-size:.68rem;color:var(--gm);opacity:0;transition:opacity .2s}
 .svc-card--link:hover::after{opacity:1}
 .svc-hd{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
-.svc-num{font-family:var(--roman);font-size:1.2rem;color:var(--gl);font-weight:300;line-height:1;min-width:2rem}
+.svc-num{font-family:var(--num);font-size:1.2rem;color:var(--gl);font-weight:300;line-height:1;min-width:2rem}
 .svc-title{font-family:var(--serif);font-size:.92rem;font-weight:400;letter-spacing:.06em}
 .svc-en{font-family:var(--roman);font-size:.62rem;color:var(--light);letter-spacing:.09em;margin-top:.18rem}
 .svc-desc{font-size:.76rem;line-height:1.95;color:var(--mid);margin-bottom:.85rem;flex:1}
@@ -278,8 +499,8 @@ const services = [
 .flow-steps{max-width:620px;margin:0 auto}
 .flow-step{display:grid;grid-template-columns:72px 1fr;gap:1.35rem;align-items:start}
 .step-num{display:flex;flex-direction:column;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;background:var(--gd);color:#fff;text-align:center;flex-shrink:0}
-.step-num span{font-family:var(--roman);font-size:.56rem;letter-spacing:.1em;opacity:.75}
-.step-num strong{font-family:var(--roman);font-size:1.35rem;font-weight:400;line-height:1}
+.step-num span{font-family:var(--num);font-size:.56rem;letter-spacing:.1em;opacity:.75}
+.step-num strong{font-family:var(--num);font-size:1.35rem;font-weight:400;line-height:1}
 .step-body{padding:.3rem 0 1.85rem}
 .step-body h3{font-family:var(--serif);font-size:.97rem;font-weight:400;margin-bottom:.48rem}
 .step-body p{font-size:.8rem;line-height:2;color:var(--mid)}
@@ -292,7 +513,7 @@ const services = [
 .contact-card{border:1px solid var(--border);padding:2.4rem 1.85rem}
 .contact-card h3{font-family:var(--serif);font-size:.97rem;font-weight:400;margin-bottom:.9rem}
 .contact-card p{font-size:.8rem;line-height:1.95;color:var(--mid)}
-.contact-tel{display:block;font-family:var(--roman);font-size:2rem;color:var(--gd);letter-spacing:.09em;margin:1.1rem 0 .38rem}
+.contact-tel{display:block;font-family:var(--num);font-size:2rem;color:var(--gd);letter-spacing:.09em;margin:1.1rem 0 .38rem}
 .contact-hours{font-size:.7rem;color:var(--light)}
 .btn-cta-contact{display:inline-block;background:var(--gd);color:#fff;padding:.8rem 2rem;font-size:.82rem;letter-spacing:.08em;transition:.2s}
 .btn-cta-contact:hover{background:var(--gm)}
