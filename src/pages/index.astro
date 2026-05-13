@@ -226,7 +226,7 @@ const services = [
 
   <!-- モバイル固定CTAバー -->
   <div class="fixed-cta">
-    <a href="tel:0120XXXXXX" class="tel-f">📞 電話で相談</a>
+    <a href="tel:0120XXXXXX" class="tel-f">電話で相談</a>
     <a href="#contact" class="web-f">✉ Webで相談</a>
   </div>
 </BaseLayout>
@@ -260,9 +260,6 @@ const services = [
   filter:saturate(0.85) sepia(0.08) brightness(1.02);
 }
 
-/* 右側ダークグリーングラデーションオーバーレイ
-   左:透明 → 右:ダークグリーン濃いめ
-   テキストエリアの視認性を確保 */
 .hero-overlay{
   position:absolute;
   inset:0;
@@ -514,19 +511,13 @@ const services = [
   object-position:center center;
 }
 
-/* ダークグリーン + 細かい白ドット のオーバーレイ
-   - 細かい白ドット(上品なテクスチャ)
-   - ダークグリーン濃いめのカラー(画像を引き締めつつブランド統一)
-   背景の重ね順: 上から書いた順に重なる(最初がいちばん上) */
 .est-overlay{
   position:absolute;
   inset:0;
   z-index:1;
   pointer-events:none;
   background:
-    /* 一番上: 細かい白ドットのテクスチャ */
     radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1.2px),
-    /* 真ん中: ダークグリーンの不透明グラデーション(画像を引き締める) */
     linear-gradient(135deg, rgba(45,90,61,0.92) 0%, rgba(45,90,61,0.88) 50%, rgba(30,61,42,0.94) 100%);
   background-size: 10px 10px, cover;
 }
@@ -543,15 +534,11 @@ const services = [
   align-items:center;
 }
 
-/* ─ テキスト周りの色を白系に上書き ─ */
-
-/* ラベル「QUICK ESTIMATE」を金色に */
 .est-label{
   color:#f5c842 !important;
   opacity:.9;
 }
 
-/* 見出し「料金の目安を、今すぐ確認できます」を白に */
 .est-head{
   font-family:var(--serif);
   font-size:clamp(1.1rem, 2.5vw, 1.45rem);
@@ -562,7 +549,7 @@ const services = [
   line-height:1.7;
 }
 
-/* 説明文を半透明白に */
+
 .est-desc{
   font-size:.84rem;
   line-height:2.05;
@@ -570,14 +557,14 @@ const services = [
   margin-bottom:.8rem;
 }
 
-/* 注釈を薄めの白に */
+
 .est-note{
   font-size:.78rem;
   color:rgba(255,255,255,.55);
   line-height:1.85;
 }
 
-/* ─ リンクボックス: ガラスモーフィズム(半透明・ぼかし) ─ */
+
 .est-item{
   display:flex;
   align-items:center;
@@ -594,9 +581,10 @@ const services = [
   transition:.2s ease;
 }
 .est-item:hover{
-  background:rgba(255,255,255,0.16);
+  background:rgba(255,255,255,1);
   border-color:rgba(245,200,66,0.5);
   transform:translateX(4px);
+  color:rgba(30,61,42);
 }
 
 /* 矢印を金色に */
