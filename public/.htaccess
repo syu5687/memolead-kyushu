@@ -1,15 +1,14 @@
-# ディレクトリ一覧表示を禁止(セキュリティ対策)
-Options -Indexes
+# ─────────────────────────────────────────
+# エンジェルセンター ぶっこうどう
+# Astro静的サイト用 .htaccess(Cloud Run対応)
+# ─────────────────────────────────────────
 
-# サーバー名の自動補完を無効化(Cloud Run のリダイレクトループ防止)
-UseCanonicalName Off
-ServerSignature Off
+# ディレクトリ一覧表示を禁止
+Options -Indexes
 
 # ─────────────────────────────────────────
 # URLリライト設定
-# Cloud Run では Apache が内部で http:8080 で動いているため
-# 絶対URLでリダイレクトすると http://...:8080 が返されてしまう。
-# そのため、相対パスでリダイレクトする必要がある。
+# Cloud Run対応: X-Forwarded-Host を使って正しい外部URLを生成
 # ─────────────────────────────────────────
 RewriteEngine On
 RewriteBase /
@@ -19,14 +18,16 @@ RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
 # ② ディレクトリで末尾スラッシュなしの場合、末尾スラッシュ付きへ301リダイレクト
-#    Cloud Run 用に %{HTTP_HOST} を使わず、相対パスのみで指定する
+#    Cloud Run の Google Frontend が送る X-Forwarded-Host を使って絶対URLを構築する
+#    これにより http://...:8080 ではなく https://memolead-k-...run.app/services/junk/ に
+#    正しくリダイレクトされる
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_URI} !/$
 RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]+$
-RewriteRule ^(.+)$ /$1/ [R=301,L]
+RewriteCond %{HTTP:X-Forwarded-Host} ^(.+)$
+RewriteRule ^(.+)$ https://%1/$1/ [R=301,L]
 
 # ③ ディレクトリで末尾スラッシュありの場合、index.html を内部的に返す
-#    例: /services/junk/ → /services/junk/index.html(URLは変わらない)
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^(.*)$ /$1index.html [L]
 
@@ -36,7 +37,7 @@ RewriteRule ^(.*)$ /$1index.html [L]
 ErrorDocument 404 /404.html
 
 # ─────────────────────────────────────────
-# ブラウザキャッシュ設定(表示速度向上)
+# ブラウザキャッシュ設定
 # ─────────────────────────────────────────
 <IfModule mod_expires.c>
   ExpiresActive On
@@ -61,7 +62,7 @@ ErrorDocument 404 /404.html
 </IfModule>
 
 # ─────────────────────────────────────────
-# gzip圧縮(転送量削減・表示速度向上)
+# gzip圧縮
 # ─────────────────────────────────────────
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css application/javascript
