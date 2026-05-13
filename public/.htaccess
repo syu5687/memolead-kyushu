@@ -1,20 +1,29 @@
+# ディレクトリ一覧表示を禁止(セキュリティ対策)
 Options -Indexes
 
+# サーバー名の自動補完を無効化(Cloud Run のリダイレクトループ防止)
+UseCanonicalName Off
+ServerSignature Off
+
 # ─────────────────────────────────────────
-# URLリライト設定(末尾スラッシュ統一)
+# URLリライト設定
+# Cloud Run では Apache が内部で http:8080 で動いているため
+# 絶対URLでリダイレクトすると http://...:8080 が返されてしまう。
+# そのため、相対パスでリダイレクトする必要がある。
 # ─────────────────────────────────────────
 RewriteEngine On
+RewriteBase /
 
 # ① 物理ファイル(.html, .css, .js, 画像等)が存在する場合はそのまま返す
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
 # ② ディレクトリで末尾スラッシュなしの場合、末尾スラッシュ付きへ301リダイレクト
-#    例: /services/junk → /services/junk/
-#    SEO上も望ましい(canonical統一)
+#    Cloud Run 用に %{HTTP_HOST} を使わず、相対パスのみで指定する
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_URI} !/$
-RewriteRule ^(.*)$ /$1/ [R=301,L]
+RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]+$
+RewriteRule ^(.+)$ /$1/ [R=301,L]
 
 # ③ ディレクトリで末尾スラッシュありの場合、index.html を内部的に返す
 #    例: /services/junk/ → /services/junk/index.html(URLは変わらない)
