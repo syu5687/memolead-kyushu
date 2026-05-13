@@ -239,8 +239,8 @@ const services = [
    ───────────────────────────────────────── */
 .hero{
   position:relative;
-  height:calc(100vh - 60px);  /* ヘッダー高さを除いた残り全て */
-  min-height:560px;            /* 縦長スマホ対応の最低高さ */
+  height:calc(100vh - 60px);
+  min-height:560px;
   overflow:hidden;
   background:var(--clight);
 }
@@ -285,10 +285,10 @@ const services = [
   display:flex;
   flex-direction:column;
   justify-content:center;
-  align-items:flex-end;     /* 右寄せ */
+  align-items:flex-end;
 }
 .hero-content > *{
-  max-width:520px;          /* テキスト幅を制限して読みやすく */
+  max-width:520px;
   width:100%;
   color:#fff;
   text-align:left;
@@ -314,7 +314,7 @@ const services = [
 }
 .hero-title em{
   font-style:normal;
-  color:#f5c842;          /* アクセントの金色(既存パレットから) */
+  color:var(--yellow);
   font-weight:500;
 }
 
@@ -334,14 +334,14 @@ const services = [
 
 /* メインCTA(仮見積り) */
 .hero-btns .btn-p{
-  background:#f5c842;
+  background:var(--yellow);
   color:var(--gd);
   padding:1rem 1.85rem;
   font-size:.85rem;
   letter-spacing:.08em;
   font-weight:500;
   transition:.2s;
-  border:1px solid #f5c842;
+  border:1px solid var(--yellow);
 }
 .hero-btns .btn-p:hover{
   background:#fff;
@@ -474,7 +474,7 @@ const services = [
 .svc-card{background:var(--white);border:1px solid var(--border);padding:1.5rem 1.35rem;transition:.2s;display:flex;flex-direction:column}
 .svc-card--link:hover{box-shadow:0 6px 24px rgba(45,90,61,.15);transform:translateY(-3px);border-color:var(--gm)}
 .svc-card--link{position:relative}
-.svc-card--link::after{content:'詳細を見る →';position:absolute;bottom:.9rem;right:1rem;font-size:.75rem;color:var(--gm);opacity:0;transition:opacity .2s}
+.svc-card--link::after{opacity:0;transition:opacity .2s}
 .svc-card--link:hover::after{opacity:1}
 .svc-hd{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
 .svc-num{font-family:var(--num);font-size:1.2rem;color:var(--gl);font-weight:300;line-height:1;min-width:2rem}
@@ -494,7 +494,7 @@ const services = [
   position:relative;
   overflow:hidden;
   padding:5rem 1.5rem;
-  /* テキストが乗るので、デフォルトの白背景は削除 */
+  
 }
 
 /* 背景画像レイヤー(最下層) */
@@ -535,7 +535,7 @@ const services = [
 }
 
 .est-label{
-  color:#f5c842 !important;
+  color:var(--yellow) !important;
   opacity:.9;
 }
 
@@ -573,7 +573,6 @@ const services = [
   font-size:.86rem;
   margin-bottom:.7rem;
   color:#fff;
-  /* ガラスのような半透明背景 */
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.18);
   backdrop-filter:blur(8px);
@@ -582,14 +581,14 @@ const services = [
 }
 .est-item:hover{
   background:rgba(255,255,255,1);
-  border-color:rgba(245,200,66,0.5);
+  border-color:var(--gd);
   transform:translateX(4px);
   color:var(--gd);
 }
 
 /* 矢印を金色に */
 .est-arr{
-  color:#f5c842;
+  color:var(--gd);
   font-size:1.1rem;
   transition:transform .2s ease;
 }
