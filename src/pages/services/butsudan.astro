@@ -2,12 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
 
 const altarTypes = [
-  { banner: 'small',  icon: '🏮', name: '小型仏壇',              desc: '省スペースでも祈りの心を。コンパクトで機能的な小型仏壇は、現代の暮らしに寄り添います。家具調タイプで部屋に自然に溶け込みます。' },
-  { banner: 'modern', icon: '🪵', name: '近代仏壇',              desc: '現代の住空間に調和する、シンプルで洗練されたデザインの近代仏壇。心静かに祈る場を美しく演出します。' },
-  { banner: 'karaki', icon: '🌳', name: '近代唐木仏壇 / 唐木仏壇', desc: '銘木の風合いが美しい唐木仏壇。心安らいだお参りの空間を演出します。伝統の趣と現代の感性を融合した近代唐木仏壇も人気です。' },
-  { banner: 'kinbut', icon: '✨', name: '金仏壇',                desc: '伝統技法がひかる金仏壇。荘厳な輝きが、ご先祖への感謝と敬意をより深く伝えます。浄土真宗をはじめ各宗派に対応。' },
+  { banner: 'small',  icon: 'altar',    name: '小型仏壇',              desc: '省スペースでも祈りの心を。コンパクトで機能的な小型仏壇は、現代の暮らしに寄り添います。家具調タイプで部屋に自然に溶け込みます。' },
+  { banner: 'modern', icon: 'box',      name: '近代仏壇',              desc: '現代の住空間に調和する、シンプルで洗練されたデザインの近代仏壇。心静かに祈る場を美しく演出します。' },
+  { banner: 'karaki', icon: 'tree',     name: '近代唐木仏壇 / 唐木仏壇', desc: '銘木の風合いが美しい唐木仏壇。心安らいだお参りの空間を演出します。伝統の趣と現代の感性を融合した近代唐木仏壇も人気です。' },
+  { banner: 'kinbut', icon: 'lotus',    name: '金仏壇',                desc: '伝統技法がひかる金仏壇。荘厳な輝きが、ご先祖への感謝と敬意をより深く伝えます。浄土真宗をはじめ各宗派に対応。' },
 ];
 
 const compactAltars = [
@@ -40,33 +41,33 @@ const modernAltars = [
 ];
 
 const ihaiList = [
-  { num: '① 仏光堂オリジナル', icon: '🪨', name: '紫檀 吹蓮華位牌<br>漆仕上げ',     tag: 'ORIGINAL' },
-  { num: '②',                   icon: '🌸', name: '蒔絵位牌<br>紫檀（透漆塗）桜',   tag: null },
-  { num: '③',                   icon: '🌸', name: '蒔絵位牌<br>紫檀 桜',           tag: null },
-  { num: '④',                   icon: '🪵', name: 'ウォールナット',                tag: null },
-  { num: '⑤',                   icon: '⬛', name: 'モダン 呂色',                  tag: null },
-  { num: '⑥',                   icon: '⬛', name: '漆仕上<br>黒檀',                tag: null },
-  { num: '⑦',                   icon: '⬛', name: '黒檀 高級位牌<br>漆仕上げ',     tag: '高級' },
-  { num: '⑧',                   icon: '🌺', name: '上京中ワラビ足<br>吹蓮華',      tag: null },
-  { num: '⑨',                   icon: '🏛️', name: '唐木 雲三重回<br>黒檀・紫檀',   tag: null },
-  { num: '⑩',                   icon: '✨', name: '純三方金<br>雲三重回',          tag: null },
-  { num: '⑪',                   icon: '⬛', name: '上塗春日',                     tag: null },
-  { num: '⑫',                   icon: '⬛', name: '上塗勝美',                     tag: null },
-  { num: '⑬',                   icon: '🟫', name: '紫檀 春日',                    tag: null },
-  { num: '⑭',                   icon: '🟫', name: '紫檀 蓮付春日',                tag: null },
-  { num: '⑮',                   icon: '🟫', name: '紫檀 葵角切',                  tag: null },
+  { num: '① 仏光堂オリジナル', name: '紫檀 吹蓮華位牌<br>漆仕上げ',     tag: 'ORIGINAL' },
+  { num: '②',                   name: '蒔絵位牌<br>紫檀（透漆塗）桜',   tag: null },
+  { num: '③',                   name: '蒔絵位牌<br>紫檀 桜',           tag: null },
+  { num: '④',                   name: 'ウォールナット',                tag: null },
+  { num: '⑤',                   name: 'モダン 呂色',                  tag: null },
+  { num: '⑥',                   name: '漆仕上<br>黒檀',                tag: null },
+  { num: '⑦',                   name: '黒檀 高級位牌<br>漆仕上げ',     tag: '高級' },
+  { num: '⑧',                   name: '上京中ワラビ足<br>吹蓮華',      tag: null },
+  { num: '⑨',                   name: '唐木 雲三重回<br>黒檀・紫檀',   tag: null },
+  { num: '⑩',                   name: '純三方金<br>雲三重回',          tag: null },
+  { num: '⑪',                   name: '上塗春日',                     tag: null },
+  { num: '⑫',                   name: '上塗勝美',                     tag: null },
+  { num: '⑬',                   name: '紫檀 春日',                    tag: null },
+  { num: '⑭',                   name: '紫檀 蓮付春日',                tag: null },
+  { num: '⑮',                   name: '紫檀 葵角切',                  tag: null },
 ];
 
 const miscItems = [
-  { icon: '📖', title: '過去帳',         desc: '故人の名前や命日を記す過去帳は、先祖代々のご供養に欠かせない大切な記録です。蘭・ウォールナット・鳥の子など豊富なデザインをご用意。' },
-  { icon: '🕯️', title: '白木位牌',       desc: '白木の位牌はもともと野位牌といって野辺送りに必要なもので、仮の位牌です。忌明け法要には本位牌もしくは過去帳が必要となりますので、早めのご準備をお勧めします。' },
-  { icon: '✝️', title: 'キリスト教位牌', desc: 'ご希望の位牌でキリスト教の位牌をつくることができます。オリジナル「祈念碑」（総高19.5cm）もございます。各宗派に対応いたします。' },
+  { icon: 'document', title: '過去帳',         desc: '故人の名前や命日を記す過去帳は、先祖代々のご供養に欠かせない大切な記録です。蘭・ウォールナット・鳥の子など豊富なデザインをご用意。' },
+  { icon: 'altar',    title: '白木位牌',       desc: '白木の位牌はもともと野位牌といって野辺送りに必要なもので、仮の位牌です。忌明け法要には本位牌もしくは過去帳が必要となりますので、早めのご準備をお勧めします。' },
+  { icon: 'lotus',    title: 'キリスト教位牌', desc: 'ご希望の位牌でキリスト教の位牌をつくることができます。オリジナル「祈念碑」（総高19.5cm）もございます。各宗派に対応いたします。' },
 ];
 
 const tamotoItems = [
-  { icon: '💎', name: 'ソウルジュエリー',           desc: '遺骨・遺灰を活用したペンダントや指輪など。故人をいつも傍に感じられるジュエリーとして特別なかたちに仕上げます。' },
-  { icon: '🏺', name: 'ミニ骨壺',                   desc: '小さくてかわいらしいデザインのミニ骨壺。手のひらに収まるサイズで、インテリアとしても自然に飾れます。' },
-  { icon: '🖼️', name: 'メモリアルフォトフレーム',  desc: '遺骨の一部を収納できるフォトフレーム。故人の写真と共に手元で供養できる、新しいかたちの位牌です。' },
+  { icon: 'lotus',  name: 'ソウルジュエリー',           desc: '遺骨・遺灰を活用したペンダントや指輪など。故人をいつも傍に感じられるジュエリーとして特別なかたちに仕上げます。' },
+  { icon: 'box',    name: 'ミニ骨壺',                   desc: '小さくてかわいらしいデザインのミニ骨壺。手のひらに収まるサイズで、インテリアとしても自然に飾れます。' },
+  { icon: 'photo',  name: 'メモリアルフォトフレーム',  desc: '遺骨の一部を収納できるフォトフレーム。故人の写真と共に手元で供養できる、新しいかたちの位牌です。' },
 ];
 ---
 
@@ -90,7 +91,7 @@ const tamotoItems = [
         <p class="hero-catch">大切な想いを、そっと暮らしの中に。</p>
         <p class="hero-desc">小型仏壇から金仏壇・唐木仏壇まで幅広くご用意。位牌の字彫りサービスや過去帳・手元供養品なども取り揃えています。ご予算やお部屋のスタイルに合わせて、専門スタッフがご提案いたします。</p>
         <div class="hero-shop">
-          <span>🏪</span>
+          <Icon name="map-pin" size={16} />
           <span>メモリード <strong>仏光堂</strong>　長崎市幸町4-13　駐車場完備</span>
         </div>
       </div>
@@ -108,7 +109,7 @@ const tamotoItems = [
             <div class="type-card">
               <div class={`type-banner ${t.banner}`}></div>
               <div class="type-body">
-                <div class="type-icon">{t.icon}</div>
+                <div class="type-icon"><Icon name={t.icon} size={28} /></div>
                 <h3 class="type-name">{t.name}</h3>
                 <p class="type-desc">{t.desc}</p>
               </div>
@@ -128,7 +129,7 @@ const tamotoItems = [
         <div class="lineup-grid fi">
           {compactAltars.map(a => (
             <div class="product-card">
-              <div class="product-img">🏮</div>
+              <div class="product-img"><Icon name="altar" size={36} /></div>
               <p class="product-name" set:html={a.name}></p>
             </div>
           ))}
@@ -146,7 +147,7 @@ const tamotoItems = [
         <div class="lineup-grid fi" style="grid-template-columns:repeat(4,1fr)">
           {modernAltars.map(a => (
             <div class="product-card">
-              <div class="product-img" style="background:linear-gradient(135deg,#ede0d8,#d4c4ba)">🪵</div>
+              <div class="product-img" style="background:linear-gradient(135deg,#ede0d8,#d4c4ba)"><Icon name="tree" size={32} /></div>
               <p class="product-name" set:html={a.name}></p>
             </div>
           ))}
@@ -163,7 +164,7 @@ const tamotoItems = [
           <p class="sec-desc">故人の魂の依り代となる位牌。豊富なラインナップからお選びいただけます。</p>
         </div>
         <div class="ihai-notice fi">
-          <p>🎁 お位牌ご購入時の字彫り <strong>1名様分をサービス</strong>致します</p>
+          <p>お位牌ご購入時の字彫り <strong>1名様分をサービス</strong>致します</p>
           <span>※字彫りはご注文頂いてから10日〜14日ほど必要です（お急ぎの場合はご相談に応じます）<br>
           ご来店の際は中陰表もしくは白木位牌の表裏の画像をお持ちください。</span>
         </div>
@@ -171,7 +172,7 @@ const tamotoItems = [
           {ihaiList.map(item => (
             <div class="ihai-card">
               <p class="ihai-num">{item.num}</p>
-              <div class="ihai-img">{item.icon}</div>
+              <div class="ihai-img"><Icon name="altar" size={32} /></div>
               <p class="ihai-name" set:html={item.name}></p>
               {item.tag && <span class="ihai-tag">{item.tag}</span>}
             </div>
@@ -192,7 +193,7 @@ const tamotoItems = [
         <div class="misc-grid fi">
           {miscItems.map(it => (
             <div class="misc-card">
-              <div class="misc-icon-box">{it.icon}</div>
+              <div class="misc-icon-box"><Icon name={it.icon} size={24} /></div>
               <div>
                 <h3 class="misc-title">{it.title}</h3>
                 <p class="misc-desc">{it.desc}</p>
@@ -213,7 +214,7 @@ const tamotoItems = [
         <div class="tamoto-grid fi">
           {tamotoItems.map(t => (
             <div class="tamoto-card">
-              <div class="tamoto-icon">{t.icon}</div>
+              <div class="tamoto-icon"><Icon name={t.icon} size={28} /></div>
               <h3 class="tamoto-name">{t.name}</h3>
               <p class="tamoto-desc">{t.desc}</p>
             </div>
@@ -254,7 +255,7 @@ const tamotoItems = [
               <span class="shop-row-val" style="word-break:break-all;font-size:.78rem">bukkoudou@memolead.co.jp</span>
             </div>
             <div style="margin-top:1.25rem">
-              <span style="display:inline-block;background:var(--gl);color:var(--gd);font-size:.78rem;padding:.32rem .78rem;border:1px solid var(--gd)">🅿️ 駐車場完備（無料）</span>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:var(--gl);color:var(--gd);font-size:.78rem;padding:.32rem .78rem;border:1px solid var(--gd)"><Icon name="parking" size={14} />駐車場完備（無料）</span>
             </div>
           </div>
           <div class="shop-map">
@@ -283,8 +284,8 @@ const tamotoItems = [
       <a href="tel:0958256386" class="cta-tel-num">095-825-6386</a>
       <p class="cta-hours">営業時間 10:00〜17:00（店休日なし）</p>
       <div class="cta-btns">
-        <a href="tel:0958256386" class="cta-btn-gold">📞 今すぐ電話する</a>
-        <a href="/#contact" class="cta-btn-out">✉ Webで相談する</a>
+        <a href="tel:0958256386" class="cta-btn-gold"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-btn-out"><Icon name="mail" size={18} />Webで相談する</a>
       </div>
     </section>
 
@@ -293,8 +294,8 @@ const tamotoItems = [
   <Footer />
 
   <div class="fixed-cta">
-    <a href="tel:0958256386" class="tel-f">📞 電話で相談</a>
-    <a href="/#contact" class="web-f">✉ Webで相談</a>
+    <a href="tel:0958256386" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
   </div>
 </BaseLayout>
 
@@ -351,21 +352,21 @@ const tamotoItems = [
 
   .type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
   .type-card{border:1px solid var(--border);background:var(--white);padding:0;overflow:hidden;transition:.2s}
-  .type-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px)}
+  .type-card:hover{background:var(--clight);border-color:var(--gd);transform:translateY(-2px)}
   .type-banner{height:7px}
   .type-banner.modern{background:linear-gradient(90deg,#c8a84b,#e5cc7a)}
   .type-banner.kinbut{background:linear-gradient(90deg,#d4a017,#f5c842)}
   .type-banner.karaki{background:linear-gradient(90deg,#6b3a2a,#9b5c42)}
   .type-banner.small{background:linear-gradient(90deg,var(--gd),var(--gm))}
   .type-body{padding:1.5rem 1.35rem}
-  .type-icon{font-size:1.8rem;margin-bottom:.75rem}
+  .type-icon{color:var(--gd);margin-bottom:.75rem}
   .type-name{font-family:var(--serif);font-size:1rem;font-weight:400;letter-spacing:.08em;margin-bottom:.6rem}
   .type-desc{font-size:.875rem;line-height:1.9;color:var(--mid)}
 
   .lineup-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.85rem}
   .product-card{background:var(--white);border:1px solid var(--border);padding:1rem .85rem;text-align:center;transition:.2s;cursor:pointer}
-  .product-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(200,168,75,.15)}
-  .product-img{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#f5ede8,#fdf8ec);display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin-bottom:.75rem;border-radius:2px}
+  .product-card:hover{border-color:var(--gold);background:#fffbf3}
+  .product-img{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#f5ede8,#fdf8ec);display:flex;align-items:center;justify-content:center;color:var(--brown);margin-bottom:.75rem;border-radius:2px}
   .product-name{font-size:.85rem;line-height:1.6;color:var(--mid);font-family:var(--serif)}
 
   .ihai-notice{
@@ -377,22 +378,22 @@ const tamotoItems = [
   .ihai-notice span{font-size:.875rem;color:var(--mid);display:block;margin-top:.4rem}
   .ihai-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
   .ihai-card{background:var(--white);border:1px solid var(--border);padding:1.25rem .85rem;text-align:center;transition:.2s}
-  .ihai-card:hover{border-color:var(--brown);box-shadow:0 4px 16px rgba(107,58,42,.12)}
+  .ihai-card:hover{border-color:var(--brown);background:#faf5f1}
   .ihai-num{font-family:var(--num);font-size:.78rem;color:var(--light);margin-bottom:.35rem}
-  .ihai-img{width:100%;aspect-ratio:2/3;background:linear-gradient(180deg,#f8f0ec,#ede0d8);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:.65rem;border-radius:2px}
+  .ihai-img{width:100%;aspect-ratio:2/3;background:linear-gradient(180deg,#f8f0ec,#ede0d8);display:flex;align-items:center;justify-content:center;color:var(--brown);margin-bottom:.65rem;border-radius:2px}
   .ihai-name{font-size:.85rem;line-height:1.6;color:var(--mid);font-family:var(--serif)}
   .ihai-tag{display:inline-block;background:var(--brown);color:#fff;font-size:.72rem;padding:.18rem .6rem;margin-bottom:.35rem}
 
   .misc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
   .misc-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start}
-  .misc-icon-box{font-size:2rem;width:52px;height:52px;background:var(--gl);display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:50%}
+  .misc-icon-box{width:52px;height:52px;background:var(--gl);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gd)}
   .misc-title{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--gd);margin-bottom:.45rem}
   .misc-desc{font-size:.875rem;line-height:1.9;color:var(--mid)}
 
   .tamoto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:1.75rem}
   .tamoto-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;text-align:center;transition:.2s}
-  .tamoto-card:hover{border-color:var(--gm);box-shadow:0 4px 16px rgba(45,90,61,.1)}
-  .tamoto-icon{font-size:2.25rem;margin-bottom:.75rem}
+  .tamoto-card:hover{border-color:var(--gm);background:var(--gl)}
+  .tamoto-icon{color:var(--gd);margin-bottom:.75rem}
   .tamoto-name{font-family:var(--serif);font-size:.95rem;font-weight:400;color:var(--gd);margin-bottom:.5rem}
   .tamoto-desc{font-size:.875rem;line-height:1.9;color:var(--mid)}
 
@@ -418,9 +419,9 @@ const tamotoItems = [
   .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
   .cta-tel-num{font-family:var(--num);font-size:clamp(1.75rem,4vw,2.5rem);display:block;color:var(--gold);margin-bottom:.3rem;letter-spacing:.1em}
   .cta-hours{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:1.5rem}
-  .cta-btn-gold{background:var(--gold);color:#fff;padding:.95rem 2.25rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
+  .cta-btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--gold);color:#fff;padding:.95rem 2.25rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
   .cta-btn-gold:hover{background:#b8943b}
-  .cta-btn-out{border:1px solid rgba(255,255,255,.35);color:#fff;padding:.95rem 2.25rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
+  .cta-btn-out{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid rgba(255,255,255,.35);color:#fff;padding:.95rem 2.25rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
   .cta-btn-out:hover{background:rgba(255,255,255,.08)}
 
   .note-block{background:#fffbf0;border-left:3px solid var(--gold);padding:1rem 1.25rem;font-size:.875rem;line-height:1.9;color:var(--mid)}

@@ -8,9 +8,10 @@
 
 <style>
 .blog-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.35rem}
-.blog-card{background:var(--white);transition:.2s;cursor:pointer}
-.blog-card:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(0,0,0,.1)}
-.blog-img{width:100%;aspect-ratio:4/3;background:var(--gl);display:flex;align-items:center;justify-content:center;font-size:2rem}
+.blog-card{background:var(--white);border:1px solid var(--border);transition:.2s;cursor:pointer}
+.blog-card:hover{border-color:var(--gd);transform:translateY(-2px)}
+.blog-img{width:100%;aspect-ratio:4/3;background:var(--gl);display:flex;align-items:center;justify-content:center;color:var(--gd);opacity:.4}
+.blog-img svg{width:42px;height:42px}
 .blog-body{padding:1.1rem 1.3rem 1.35rem}
 .blog-tag{display:inline-block;background:var(--gd);color:#fff;font-size:.72rem;padding:.2rem .6rem;margin-bottom:.5rem}
 .blog-date{font-size:.78rem;color:var(--light);margin-bottom:.4rem}
@@ -33,6 +34,7 @@ const cfg={
 };
 const app=getApps().length===0?initializeApp(cfg):getApps()[0];
 const db=getFirestore(app);
+const FALLBACK_SVG='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="14" x2="15" y2="14"/><line x1="9" y1="18" x2="13" y2="18"/></svg>';
 async function load(){
   const el=document.getElementById('blogCards');
   if(!el)return;
@@ -44,7 +46,7 @@ async function load(){
       const p=d.data();
       const date=p.createdAt?.toDate?.()?.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'})||'';
       return`<a href="/blog/${d.id}" class="blog-card">
-        <div class="blog-img">${p.thumbnail?`<img src="${p.thumbnail}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover" loading="lazy">`:'📋'}</div>
+        <div class="blog-img">${p.thumbnail?`<img src="${p.thumbnail}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover" loading="lazy">`:FALLBACK_SVG}</div>
         <div class="blog-body">
           <span class="blog-tag">${p.category||'お知らせ'}</span>
           <p class="blog-date">${date}</p>
@@ -58,7 +60,7 @@ async function load(){
       {tag:'現場レポート',date:'2026.03.05',title:'築40年の実家を整理。「ありがとう」と言いながら作業を終えることができました'},
       {tag:'豆知識',      date:'2026.02.28',title:'「墓じまい」の前に知っておきたい3つのこと——行政手続きと費用の目安'},
     ].map(p=>`<div class="blog-card">
-      <div class="blog-img">📋</div>
+      <div class="blog-img">${FALLBACK_SVG}</div>
       <div class="blog-body">
         <span class="blog-tag">${p.tag}</span>
         <p class="blog-date">${p.date}</p>

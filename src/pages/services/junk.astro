@@ -2,32 +2,33 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
 
 const features = [
-  { icon: '🙏', title: '供養してから処分', desc: '大切な遺品や思い出の品を、ただ捨てるのではなく、お寺様による御供養を経てから責任を持って処分いたします。' },
-  { icon: '📋', title: '供養証明書を発行', desc: 'ご希望のご遺族に「供養証明書」を郵送いたします。大切な品が丁寧に処分されたという証明になります。' },
-  { icon: '💰', title: '明確な料金体系', desc: 'エンゼル号1台11,000円〜と明確な料金体系。少量の場合も金額等ご相談に応じます。まずはお気軽にご連絡ください。' },
-  { icon: '🏠', title: '家屋の解体まで対応', desc: '不用品回収だけでなく、ハウスクリーニングや家屋の解体・整地まで幅広く対応。窓口をひとつにまとめられます。' },
+  { icon: 'lotus',    title: '供養してから処分', desc: '大切な遺品や思い出の品を、ただ捨てるのではなく、お寺様による御供養を経てから責任を持って処分いたします。' },
+  { icon: 'document', title: '供養証明書を発行', desc: 'ご希望のご遺族に「供養証明書」を郵送いたします。大切な品が丁寧に処分されたという証明になります。' },
+  { icon: 'tag',      title: '明確な料金体系',   desc: 'エンゼル号1台11,000円〜と明確な料金体系。少量の場合も金額等ご相談に応じます。まずはお気軽にご連絡ください。' },
+  { icon: 'home',     title: '家屋の解体まで対応', desc: '不用品回収だけでなく、ハウスクリーニングや家屋の解体・整地まで幅広く対応。窓口をひとつにまとめられます。' },
 ];
 
 const steps = [
-  { num: 1, icon: '👨‍💼', title: 'ご遺族のお手元に',     desc: '御葬儀代精算時、葬儀社担当者が速やかに御供養遺品収納ケースをお持参します。' },
-  { num: 2, icon: '🏷️',  title: '名札の記入',           desc: 'ご遺族様に、名札の記入をお願いいたします。供養証明書の発行に必要です。' },
-  { num: 3, icon: '📦',  title: 'パッケージ',           desc: 'ご遺族様に、ご供養したい品物を御供養袋にお入れいただきます（実用新案登録 第3154655号）。' },
-  { num: 4, icon: '🏢',  title: '回収・保管',           desc: 'エンゼルセンター担当者がお預かりして、所定の場所に保管いたします。' },
-  { num: 5, icon: '⛩️',  title: '御供養（合同供養）', desc: '当社指定の寺院の僧侶により、読経・御供養をしていただきます。' },
-  { num: 6, icon: '🚛',  title: '輸送',                desc: '御供養終了後、都道府県知事許可の運搬作業車にて輸送いたします。' },
-  { num: 7, icon: '🔥',  title: '焼却（完全焼却）',     desc: '都道府県知事許可の焼却炉に委託し完全焼却します。一部位牌・人形などは当社の焼却炉にて焼却いたします。' },
-  { num: 8, icon: '📜',  title: '供養証明書の発行',     desc: 'ご希望のご遺族に「供養証明書」を郵送いたします。' },
+  { num: 1, title: 'ご遺族のお手元に',   desc: '御葬儀代精算時、葬儀社担当者が速やかに御供養遺品収納ケースをお持参します。' },
+  { num: 2, title: '名札の記入',         desc: 'ご遺族様に、名札の記入をお願いいたします。供養証明書の発行に必要です。' },
+  { num: 3, title: 'パッケージ',         desc: 'ご遺族様に、ご供養したい品物を御供養袋にお入れいただきます（実用新案登録 第3154655号）。' },
+  { num: 4, title: '回収・保管',         desc: 'エンゼルセンター担当者がお預かりして、所定の場所に保管いたします。' },
+  { num: 5, title: '御供養（合同供養）', desc: '当社指定の寺院の僧侶により、読経・御供養をしていただきます。' },
+  { num: 6, title: '輸送',               desc: '御供養終了後、都道府県知事許可の運搬作業車にて輸送いたします。' },
+  { num: 7, title: '焼却（完全焼却）',   desc: '都道府県知事許可の焼却炉に委託し完全焼却します。一部位牌・人形などは当社の焼却炉にて焼却いたします。' },
+  { num: 8, title: '供養証明書の発行',   desc: 'ご希望のご遺族に「供養証明書」を郵送いたします。' },
 ];
 
 const items = [
-  { icon: '👘', title: '衣類・着物・バッグ',      desc: '故人が愛用された着物・衣類・背広などを衣類供養袋にお入れいただき、専用供養祭壇にてお寺様に御供養していただきます。' },
-  { icon: '🏮', title: '仏壇・神棚',              desc: '大切にされてきた仏壇・神棚を、閉眼供養（魂抜き）のうえ、責任を持ってお焚き上げいたします。' },
-  { icon: '🎎', title: '人形・ぬいぐるみ',        desc: '魂が宿るとされる人形・ぬいぐるみ・節句人形などを丁寧に供養します。供養証明書の発行も可能です。' },
-  { icon: '🛋️', title: '家具・家電',              desc: 'タンス・ソファ・テーブルなど大型家具から、テレビ・冷蔵庫・洗濯機・空調機などの家電まで回収します（リサイクル料別途）。' },
-  { icon: '📷', title: '写真・思い出の品',        desc: '故人が大切にしていた写真・位牌・置物・剥製なども丁寧に御供養したうえで処分いたします。' },
-  { icon: '🏠', title: 'その他不用品全般',        desc: '日用品・雑貨・書籍など、処分に困っているものはなんでもご相談ください。お布団の引き取りも可能です（有料1枚550円）。' },
+  { icon: 'bag',       title: '衣類・着物・バッグ',  desc: '故人が愛用された着物・衣類・背広などを衣類供養袋にお入れいただき、専用供養祭壇にてお寺様に御供養していただきます。' },
+  { icon: 'altar',     title: '仏壇・神棚',          desc: '大切にされてきた仏壇・神棚を、閉眼供養（魂抜き）のうえ、責任を持ってお焚き上げいたします。' },
+  { icon: 'doll',      title: '人形・ぬいぐるみ',    desc: '魂が宿るとされる人形・ぬいぐるみ・節句人形などを丁寧に供養します。供養証明書の発行も可能です。' },
+  { icon: 'furniture', title: '家具・家電',          desc: 'タンス・ソファ・テーブルなど大型家具から、テレビ・冷蔵庫・洗濯機・空調機などの家電まで回収します（リサイクル料別途）。' },
+  { icon: 'photo',     title: '写真・思い出の品',    desc: '故人が大切にしていた写真・位牌・置物・剥製なども丁寧に御供養したうえで処分いたします。' },
+  { icon: 'home',      title: 'その他不用品全般',    desc: '日用品・雑貨・書籍など、処分に困っているものはなんでもご相談ください。お布団の引き取りも可能です（有料1枚550円）。' },
 ];
 
 const angelSet = [
@@ -47,9 +48,9 @@ const priceRows = [
 ];
 
 const areas = [
-  { icon: '🏙️', name: '長崎市', permit: '一般廃棄物収集運搬許可<br>長崎市 第471号' },
-  { icon: '🌆', name: '時津町', permit: '一般廃棄物収集運搬許可<br>時津 指令第15号' },
-  { icon: '🏘️', name: '長与町', permit: '一般廃棄物収集運搬許可<br>長与 一廃許可65号' },
+  { name: '長崎市', permit: '一般廃棄物収集運搬許可<br>長崎市 第471号' },
+  { name: '時津町', permit: '一般廃棄物収集運搬許可<br>時津 指令第15号' },
+  { name: '長与町', permit: '一般廃棄物収集運搬許可<br>長与 一廃許可65号' },
 ];
 ---
 
@@ -76,7 +77,7 @@ const areas = [
           仏壇・神棚・人形などは心を込めてお焚き上げいたします。
         </p>
         <div class="page-hero-badge">
-          <span>🚚</span>
+          <Icon name="tag" size={16} />
           <span>エンゼル号 1台 <strong style="font-family:var(--num);font-size:1.1rem">11,000円〜</strong>（税込）</span>
         </div>
       </div>
@@ -91,7 +92,7 @@ const areas = [
         <div class="features fi">
           {features.map(f => (
             <div class="feature">
-              <div class="feature-icon">{f.icon}</div>
+              <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
               <h3 class="feature-title">{f.title}</h3>
               <p class="feature-desc">{f.desc}</p>
             </div>
@@ -127,7 +128,6 @@ const areas = [
           {steps.map(s => (
             <div class="step">
               <div class="step-num">{s.num}</div>
-              <div class="step-icon">{s.icon}</div>
               <h3 class="step-title">{s.title}</h3>
               <p class="step-desc">{s.desc}</p>
             </div>
@@ -146,7 +146,7 @@ const areas = [
         <div class="items-grid fi">
           {items.map(it => (
             <div class="item-card">
-              <div class="item-icon">{it.icon}</div>
+              <div class="item-icon"><Icon name={it.icon} size={24} /></div>
               <div>
                 <h3 class="item-title">{it.title}</h3>
                 <p class="item-desc">{it.desc}</p>
@@ -228,7 +228,6 @@ const areas = [
         <div class="area-cards fi">
           {areas.map(a => (
             <div class="area-card">
-              <div style="font-size:1.5rem;margin-bottom:.5rem">{a.icon}</div>
               <h3 class="area-name">{a.name}</h3>
               <p class="area-permit" set:html={a.permit}></p>
             </div>
@@ -243,9 +242,9 @@ const areas = [
       <a href="tel:0958654400" class="cta-tel-num">095-865-4400</a>
       <p class="cta-hours">受付時間 午前9時〜午後5時</p>
       <div class="cta-btns">
-        <a href="tel:0958654400" class="cta-tel-btn">📞 今すぐ電話する</a>
-        <a href="/#contact" class="cta-web-btn">✉ Webで相談する</a>
-        <a href="/estimate/junk" class="cta-web-btn">📋 仮見積りを依頼する</a>
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+        <a href="/estimate/junk" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
       </div>
     </section>
 
@@ -254,8 +253,8 @@ const areas = [
   <Footer />
 
   <div class="fixed-cta">
-    <a href="tel:0958654400" class="tel-f">📞 電話で相談</a>
-    <a href="/#contact" class="web-f">✉ Webで相談</a>
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
   </div>
 </BaseLayout>
 
@@ -290,8 +289,8 @@ const areas = [
 
   .features{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:3rem}
   .feature{background:var(--white);border:1px solid var(--border);padding:1.75rem 1.25rem;text-align:center;transition:.2s}
-  .feature:hover{border-color:var(--gd);box-shadow:0 4px 20px rgba(0,0,0,.08)}
-  .feature-icon{width:52px;height:52px;background:var(--gl);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.4rem}
+  .feature:hover{border-color:var(--gd);background:var(--clight)}
+  .feature-icon{width:52px;height:52px;background:var(--gl);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;color:var(--gd)}
   .feature-title{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--gd);margin-bottom:.6rem}
   .feature-desc{font-size:.875rem;line-height:1.9;color:var(--mid)}
 
@@ -323,7 +322,7 @@ const areas = [
   .items-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
   .item-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:.2s}
   .item-card:hover{border-color:var(--gm)}
-  .item-icon{font-size:1.6rem;flex-shrink:0;width:44px;height:44px;background:var(--gl);border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .item-icon{flex-shrink:0;width:44px;height:44px;background:var(--gl);display:flex;align-items:center;justify-content:center;color:var(--gd)}
   .item-title{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--gd);margin-bottom:.4rem}
   .item-desc{font-size:.875rem;line-height:1.85;color:var(--mid)}
 
@@ -351,9 +350,9 @@ const areas = [
   .cta-title{font-family:var(--serif);font-size:clamp(1.3rem,3vw,1.75rem);font-weight:400;letter-spacing:.1em;margin-bottom:.75rem}
   .cta-desc{font-size:.9rem;opacity:.85;margin-bottom:2.25rem;line-height:2}
   .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-  .cta-tel-btn{background:#fff;color:var(--gd);padding:.95rem 2.5rem;font-size:.95rem;font-family:var(--roman);letter-spacing:.1em;transition:.2s}
+  .cta-tel-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;background:#fff;color:var(--gd);padding:.95rem 2.5rem;font-size:.95rem;font-family:var(--roman);letter-spacing:.1em;transition:.2s}
   .cta-tel-btn:hover{background:var(--gl)}
-  .cta-web-btn{border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.5rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
+  .cta-web-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.5rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
   .cta-web-btn:hover{background:rgba(255,255,255,.1)}
   .cta-tel-num{font-family:var(--num);font-size:clamp(1.75rem,4vw,2.5rem);display:block;margin-bottom:.25rem;letter-spacing:.1em}
   .cta-hours{font-size:.78rem;opacity:.7;margin-bottom:1.5rem}

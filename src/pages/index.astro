@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BlogCards from '../components/BlogCards.astro';
+import Icon from '../components/Icon.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../_assets/img/hero-family.jpg';
 import estimateImage from '../_assets/img/estimate-flowers.jpg';
@@ -58,7 +59,7 @@ const services = [
         </p>
         <div class="hero-btns">
           <a href="#estimate" class="btn-p">まず仮見積りしてみる</a>
-          <a href="tel:0120XXXXXX" class="btn-o">📞 電話で相談する</a>
+          <a href="tel:0120XXXXXX" class="btn-o"><Icon name="phone" size={16} /> 電話で相談する</a>
         </div>
       </div>
 
@@ -226,8 +227,8 @@ const services = [
 
   <!-- モバイル固定CTAバー -->
   <div class="fixed-cta">
-    <a href="tel:0120XXXXXX" class="tel-f">📞 電話で相談</a>
-    <a href="#contact" class="web-f">✉ Webで相談</a>
+    <a href="tel:0120XXXXXX" class="tel-f"><Icon name="phone" size={18} /> 電話で相談</a>
+    <a href="#contact" class="web-f"><Icon name="mail" size={18} /> Webで相談</a>
   </div>
 </BaseLayout>
 
@@ -354,6 +355,9 @@ const services = [
 
 /* サブCTA(電話) */
 .hero-btns .btn-o{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
   border:1px solid rgba(255,255,255,.55);
   color:#fff;
   background:transparent;
@@ -475,7 +479,7 @@ const services = [
 /* SERVICES */
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;max-width:1100px;margin:0 auto}
 .svc-card{background:var(--white);border:1px solid var(--border);padding:1.5rem 1.35rem;transition:.2s;display:flex;flex-direction:column}
-.svc-card--link:hover{box-shadow:0 6px 24px rgba(45,90,61,.15);transform:translateY(-3px);border-color:var(--gm)}
+.svc-card--link:hover{background:var(--clight);border-color:var(--gd);transform:translateY(-2px)}
 .svc-card--link{position:relative}
 .svc-card--link::after{content:'詳細を見る →';position:absolute;bottom:.9rem;right:1rem;font-size:.78rem;color:var(--gm);opacity:0;transition:opacity .2s}
 .svc-card--link:hover::after{opacity:1}

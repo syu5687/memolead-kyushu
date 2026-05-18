@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
 ---
 
 <BaseLayout
@@ -28,15 +29,15 @@ import Footer from '../components/Footer.astro';
 
         <div class="error-links">
           <a href="/" class="error-btn primary">
-            <span class="btn-icon">🏠</span>
+            <span class="btn-icon"><Icon name="home" size={18} /></span>
             <span class="btn-text">トップページへ戻る</span>
           </a>
           <a href="/#services" class="error-btn">
-            <span class="btn-icon">📋</span>
+            <span class="btn-icon"><Icon name="document" size={18} /></span>
             <span class="btn-text">サービス一覧を見る</span>
           </a>
           <a href="tel:0120XXXXXX" class="error-btn">
-            <span class="btn-icon">📞</span>
+            <span class="btn-icon"><Icon name="phone" size={18} /></span>
             <span class="btn-text">電話で相談する</span>
           </a>
         </div>
@@ -164,7 +165,6 @@ import Footer from '../components/Footer.astro';
   border-color:var(--gd);
   background:var(--gl);
   transform:translateY(-1px);
-  box-shadow:0 4px 12px rgba(45,90,61,.08);
 }
 
 .error-btn.primary{
