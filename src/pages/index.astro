@@ -41,10 +41,10 @@ const services = [
         />
       </div>
 
-      
+      <!-- 右側のダークグリーンオーバーレイ -->
       <div class="hero-overlay"></div>
 
-      
+      <!-- テキストコンテンツ(右側に配置) -->
       <div class="hero-content">
         <p class="hero-label">SERVICE — 葬儀後の供養</p>
         <h1 class="hero-title">
@@ -58,7 +58,7 @@ const services = [
         </p>
         <div class="hero-btns">
           <a href="#estimate" class="btn-p">まず仮見積りしてみる</a>
-          <a href="tel:0120XXXXXX" class="btn-o">電話で相談する</a>
+          <a href="tel:0120XXXXXX" class="btn-o">📞 電話で相談する</a>
         </div>
       </div>
 
@@ -125,7 +125,7 @@ const services = [
           class="est-bg-img"
         />
       </div>
-      
+      <!-- ダークグリーン+細かい白ドットのオーバーレイ -->
       <div class="est-overlay"></div>
 
       <div class="est-inner fi">
@@ -226,8 +226,8 @@ const services = [
 
   <!-- モバイル固定CTAバー -->
   <div class="fixed-cta">
-    <a href="tel:0120XXXXXX" class="tel-f">電話で相談</a>
-    <a href="#contact" class="web-f">Webで相談</a>
+    <a href="tel:0120XXXXXX" class="tel-f">📞 電話で相談</a>
+    <a href="#contact" class="web-f">✉ Webで相談</a>
   </div>
 </BaseLayout>
 
@@ -239,8 +239,8 @@ const services = [
    ───────────────────────────────────────── */
 .hero{
   position:relative;
-  height:calc(100vh - 60px);
-  min-height:560px;
+  height:calc(100vh - 60px);  /* ヘッダー高さを除いた残り全て */
+  min-height:560px;            /* 縦長スマホ対応の最低高さ */
   overflow:hidden;
   background:var(--clight);
 }
@@ -260,6 +260,9 @@ const services = [
   filter:saturate(0.85) sepia(0.08) brightness(1.02);
 }
 
+/* 右側ダークグリーングラデーションオーバーレイ
+   左:透明 → 右:ダークグリーン濃いめ
+   テキストエリアの視認性を確保 */
 .hero-overlay{
   position:absolute;
   inset:0;
@@ -285,10 +288,10 @@ const services = [
   display:flex;
   flex-direction:column;
   justify-content:center;
-  align-items:flex-end;
+  align-items:flex-end;     /* 右寄せ */
 }
 .hero-content > *{
-  max-width:520px;
+  max-width:520px;          /* テキスト幅を制限して読みやすく */
   width:100%;
   color:#fff;
   text-align:left;
@@ -296,7 +299,7 @@ const services = [
 
 .hero-label{
   font-family:var(--roman);
-  font-size:.72rem;
+  font-size:.78rem;
   letter-spacing:.28em;
   color:rgba(255,255,255,.72);
   margin-bottom:1.5rem;
@@ -314,12 +317,12 @@ const services = [
 }
 .hero-title em{
   font-style:normal;
-  color:var(--yellow);
+  color:#f5c842;          /* アクセントの金色(既存パレットから) */
   font-weight:500;
 }
 
 .hero-desc{
-  font-size:clamp(.82rem, 1vw, .92rem);
+  font-size:clamp(.875rem, 1vw, .95rem);
   line-height:2.1;
   color:rgba(255,255,255,.85);
   margin-bottom:2.5rem;
@@ -334,14 +337,14 @@ const services = [
 
 /* メインCTA(仮見積り) */
 .hero-btns .btn-p{
-  background:var(--yellow);
+  background:#f5c842;
   color:var(--gd);
   padding:1rem 1.85rem;
-  font-size:.85rem;
+  font-size:.9rem;
   letter-spacing:.08em;
   font-weight:500;
   transition:.2s;
-  border:1px solid var(--yellow);
+  border:1px solid #f5c842;
 }
 .hero-btns .btn-p:hover{
   background:#fff;
@@ -355,7 +358,7 @@ const services = [
   color:#fff;
   background:transparent;
   padding:1rem 1.85rem;
-  font-size:.85rem;
+  font-size:.9rem;
   letter-spacing:.08em;
   transition:.2s;
 }
@@ -458,33 +461,33 @@ const services = [
 .points{background:var(--gd);padding:3.5rem 1.5rem}
 .pts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;max-width:1100px;margin:0 auto}
 .pt{border:1px solid rgba(255,255,255,.2);padding:2rem 1.5rem;text-align:center;color:#fff}
-.pt-num{font-family:var(--num);font-size:.7rem;letter-spacing:.22em;opacity:.55;margin-bottom:.6rem}
-.pt-title{font-family:var(--serif);font-size:.95rem;font-weight:400;margin-bottom:.8rem}
-.pt-desc{font-size:.85rem;line-height:1.95;opacity:.85}
+.pt-num{font-family:var(--roman);font-size:.78rem;letter-spacing:.22em;opacity:.55;margin-bottom:.6rem}
+.pt-title{font-family:var(--serif);font-size:1rem;font-weight:400;margin-bottom:.8rem}
+.pt-desc{font-size:.9rem;line-height:1.95;opacity:.85}
 /* SECTION */
 .sec{padding:5rem 1.5rem}
 .sec.bg-cream{background:var(--clight)}
 .sec.bg-gl{background:var(--gl)}
 .sec-head{text-align:center;margin-bottom:2.75rem}
-.sec-label{font-family:var(--roman);font-size:.7rem;letter-spacing:.26em;color:var(--gd);margin-bottom:.55rem}
-.sec-title{font-family:var(--serif);font-size:clamp(1.35rem,3vw,1.75rem);font-weight:400;letter-spacing:.1em;margin-bottom:.8rem}
-.sec-desc{font-size:.85rem;color:var(--mid);line-height:2}
+.sec-label{font-family:var(--roman);font-size:.78rem;letter-spacing:.26em;color:var(--gd);margin-bottom:.55rem}
+.sec-title{font-family:var(--serif);font-size:clamp(1.4rem,3vw,1.85rem);font-weight:400;letter-spacing:.1em;margin-bottom:.8rem}
+.sec-desc{font-size:.9rem;color:var(--mid);line-height:2}
 /* SERVICES */
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;max-width:1100px;margin:0 auto}
 .svc-card{background:var(--white);border:1px solid var(--border);padding:1.5rem 1.35rem;transition:.2s;display:flex;flex-direction:column}
 .svc-card--link:hover{box-shadow:0 6px 24px rgba(45,90,61,.15);transform:translateY(-3px);border-color:var(--gm)}
 .svc-card--link{position:relative}
-.svc-card--link::after{opacity:0;transition:opacity .2s}
+.svc-card--link::after{content:'詳細を見る →';position:absolute;bottom:.9rem;right:1rem;font-size:.78rem;color:var(--gm);opacity:0;transition:opacity .2s}
 .svc-card--link:hover::after{opacity:1}
 .svc-hd{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
-.svc-num{font-family:var(--num);font-size:1.2rem;color:var(--gl);font-weight:300;line-height:1;min-width:2rem}
-.svc-title{font-family:var(--serif);font-size:.92rem;font-weight:400;letter-spacing:.06em}
-.svc-en{font-family:var(--roman);font-size:.7rem;color:var(--light);letter-spacing:.09em;margin-top:.18rem}
-.svc-desc{font-size:.85rem;line-height:1.95;color:var(--mid);margin-bottom:.85rem;flex:1}
+.svc-num{font-family:var(--num);font-size:1.3rem;color:var(--gl);font-weight:300;line-height:1;min-width:2rem}
+.svc-title{font-family:var(--serif);font-size:1rem;font-weight:400;letter-spacing:.06em}
+.svc-en{font-family:var(--roman);font-size:.78rem;color:var(--light);letter-spacing:.09em;margin-top:.18rem}
+.svc-desc{font-size:.9rem;line-height:1.95;color:var(--mid);margin-bottom:.85rem;flex:1}
 .svc-foot{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem;margin-top:auto}
-.svc-link{font-size:.8rem;color:var(--gm);margin-left:auto;font-weight:500}
-.svc-soon{font-size:.7rem;color:var(--light);border:1px solid var(--border);padding:.16rem .55rem;margin-left:auto}
-.tag{font-size:.7rem;padding:.18rem .55rem}
+.svc-link{font-size:.875rem;color:var(--gm);margin-left:auto;font-weight:500}
+.svc-soon{font-size:.78rem;color:var(--light);border:1px solid var(--border);padding:.18rem .6rem;margin-left:auto}
+.tag{font-size:.78rem;padding:.2rem .6rem}
 .tag-hot{background:#c0392b;color:#fff}
 .tag-new{background:var(--gd);color:#fff}
 /* ─────────────────────────────────────────
@@ -494,7 +497,7 @@ const services = [
   position:relative;
   overflow:hidden;
   padding:5rem 1.5rem;
-  
+  /* テキストが乗るので、デフォルトの白背景は削除 */
 }
 
 /* 背景画像レイヤー(最下層) */
@@ -511,13 +514,19 @@ const services = [
   object-position:center center;
 }
 
+/* ダークグリーン + 細かい白ドット のオーバーレイ
+   - 細かい白ドット(上品なテクスチャ)
+   - ダークグリーン濃いめのカラー(画像を引き締めつつブランド統一)
+   背景の重ね順: 上から書いた順に重なる(最初がいちばん上) */
 .est-overlay{
   position:absolute;
   inset:0;
   z-index:1;
   pointer-events:none;
   background:
+    /* 一番上: 細かい白ドットのテクスチャ */
     radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1.2px),
+    /* 真ん中: ダークグリーンの不透明グラデーション(画像を引き締める) */
     linear-gradient(135deg, rgba(45,90,61,0.92) 0%, rgba(45,90,61,0.88) 50%, rgba(30,61,42,0.94) 100%);
   background-size: 10px 10px, cover;
 }
@@ -534,14 +543,18 @@ const services = [
   align-items:center;
 }
 
+/* ─ テキスト周りの色を白系に上書き ─ */
+
+/* ラベル「QUICK ESTIMATE」を金色に */
 .est-label{
-  color:var(--yellow) !important;
+  color:#f5c842 !important;
   opacity:.9;
 }
 
+/* 見出し「料金の目安を、今すぐ確認できます」を白に */
 .est-head{
   font-family:var(--serif);
-  font-size:clamp(1.1rem, 2.5vw, 1.45rem);
+  font-size:clamp(1.15rem, 2.5vw, 1.5rem);
   font-weight:400;
   letter-spacing:.07em;
   margin:.55rem 0 .9rem;
@@ -549,30 +562,31 @@ const services = [
   line-height:1.7;
 }
 
-
+/* 説明文を半透明白に */
 .est-desc{
-  font-size:.84rem;
+  font-size:.9rem;
   line-height:2.05;
   color:rgba(255,255,255,.85);
   margin-bottom:.8rem;
 }
 
-
+/* 注釈を薄めの白に */
 .est-note{
-  font-size:.78rem;
+  font-size:.875rem;
   color:rgba(255,255,255,.55);
   line-height:1.85;
 }
 
-
+/* ─ リンクボックス: ガラスモーフィズム(半透明・ぼかし) ─ */
 .est-item{
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:.95rem 1.25rem;
-  font-size:.86rem;
+  font-size:.92rem;
   margin-bottom:.7rem;
   color:#fff;
+  /* ガラスのような半透明背景 */
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.18);
   backdrop-filter:blur(8px);
@@ -580,15 +594,14 @@ const services = [
   transition:.2s ease;
 }
 .est-item:hover{
-  background:rgba(255,255,255,1);
-  border-color:var(--gd);
+  background:rgba(255,255,255,0.16);
+  border-color:rgba(245,200,66,0.5);
   transform:translateX(4px);
-  color:var(--gd);
 }
 
 /* 矢印を金色に */
 .est-arr{
-  color:var(--gd);
+  color:#f5c842;
   font-size:1.1rem;
   transition:transform .2s ease;
 }
@@ -597,43 +610,43 @@ const services = [
 }
 /* BLOG */
 .more-wrap{text-align:center;margin-top:2rem}
-.btn-more{display:inline-block;border:1px solid var(--gd);color:var(--gd);padding:.68rem 2.65rem;font-size:.8rem;letter-spacing:.08em;transition:.2s}
+.btn-more{display:inline-block;border:1px solid var(--gd);color:var(--gd);padding:.78rem 2.65rem;font-size:.875rem;letter-spacing:.08em;transition:.2s}
 .btn-more:hover{background:var(--gd);color:#fff}
 /* VOICES */
 .voices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.35rem;max-width:1100px;margin:0 auto}
 .voice-card{border:1px solid var(--border);padding:1.65rem 1.5rem;position:relative;background:var(--white)}
 .voice-q{font-family:var(--roman);font-size:2.75rem;color:var(--gd);opacity:.2;position:absolute;top:.3rem;left:1.1rem;line-height:1}
-.voice-text{font-size:.85rem;line-height:2.05;color:var(--mid);padding-top:.95rem;margin-bottom:1.1rem}
+.voice-text{font-size:.9rem;line-height:2.05;color:var(--mid);padding-top:.95rem;margin-bottom:1.1rem}
 .voice-line{border-top:1px solid #eee;padding-top:.7rem}
-.voice-name{font-size:.8rem;color:var(--gd);font-weight:500;margin-bottom:.2rem}
-.voice-svc{font-size:.75rem;color:var(--light)}
+.voice-name{font-size:.875rem;color:var(--gd);font-weight:500;margin-bottom:.2rem}
+.voice-svc{font-size:.78rem;color:var(--light)}
 /* FLOW */
 .flow-steps{max-width:620px;margin:0 auto}
 .flow-step{display:grid;grid-template-columns:72px 1fr;gap:1.35rem;align-items:start}
 .step-num{display:flex;flex-direction:column;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;background:var(--gd);color:#fff;text-align:center;flex-shrink:0}
-.step-num span{font-family:var(--num);font-size:.56rem;letter-spacing:.1em;opacity:.75}
-.step-num strong{font-family:var(--num);font-size:1.35rem;font-weight:400;line-height:1}
+.step-num span{font-family:var(--roman);font-size:.7rem;letter-spacing:.1em;opacity:.75}
+.step-num strong{font-family:var(--num);font-size:1.5rem;font-weight:400;line-height:1}
 .step-body{padding:.3rem 0 1.85rem}
-.step-body h3{font-family:var(--serif);font-size:.97rem;font-weight:400;margin-bottom:.48rem}
-.step-body p{font-size:.8rem;line-height:2;color:var(--mid)}
+.step-body h3{font-family:var(--serif);font-size:1.05rem;font-weight:400;margin-bottom:.48rem}
+.step-body p{font-size:.9rem;line-height:2;color:var(--mid)}
 .step-arr{grid-column:1;text-align:center;font-size:1.15rem;color:var(--gd);opacity:.45;margin-top:-.8rem;margin-bottom:.4rem}
 /* CONTACT */
 .contact{background:var(--white);padding:5rem 1.5rem;text-align:center}
-.contact-title{font-family:var(--serif);font-size:clamp(1.35rem,3vw,1.75rem);font-weight:400;letter-spacing:.1em;margin-bottom:.6rem}
-.contact-sub{font-size:.86rem;color:var(--mid);margin-bottom:2.75rem}
+.contact-title{font-family:var(--serif);font-size:clamp(1.4rem,3vw,1.85rem);font-weight:400;letter-spacing:.1em;margin-bottom:.6rem}
+.contact-sub{font-size:.92rem;color:var(--mid);margin-bottom:2.75rem}
 .contact-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.35rem;max-width:840px;margin:0 auto}
 .contact-card{border:1px solid var(--border);padding:2.4rem 1.85rem}
-.contact-card h3{font-family:var(--serif);font-size:.97rem;font-weight:400;margin-bottom:.9rem}
-.contact-card p{font-size:.8rem;line-height:1.95;color:var(--mid)}
-.contact-tel{display:block;font-family:var(--num);font-size:2rem;color:var(--gd);letter-spacing:.09em;margin:1.1rem 0 .38rem}
-.contact-hours{font-size:.7rem;color:var(--light)}
-.btn-cta-contact{display:inline-block;background:var(--gd);color:#fff;padding:.8rem 2rem;font-size:.82rem;letter-spacing:.08em;transition:.2s}
+.contact-card h3{font-family:var(--serif);font-size:1.05rem;font-weight:400;margin-bottom:.9rem}
+.contact-card p{font-size:.9rem;line-height:1.95;color:var(--mid)}
+.contact-tel{display:block;font-family:var(--num);font-size:2.2rem;color:var(--gd);letter-spacing:.09em;margin:1.1rem 0 .38rem}
+.contact-hours{font-size:.78rem;color:var(--light)}
+.btn-cta-contact{display:inline-block;background:var(--gd);color:#fff;padding:.9rem 2rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
 .btn-cta-contact:hover{background:var(--gm)}
 /* MOBILE FIXED */
 .fixed-cta{display:none}
 @media(max-width:768px){
   .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
-  .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:.9rem;font-size:.8rem;gap:.4rem;font-weight:500}
+  .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
   .tel-f{background:var(--gd);color:#fff}
   .web-f{background:#333;color:#fff}
   body{padding-bottom:52px}
