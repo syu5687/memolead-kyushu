@@ -1,4 +1,33 @@
 ---
+// ヘッダーナビゲーション
+// - PC:「サービス」「仮見積り」はクリックでアコーディオン開閉(全幅パネル)
+// - スマホ:ハンバーガーメニュー → フルスクリーンオーバーレイ(緑背景)
+//          「サービス」「仮見積り」はタップで +/- アコーディオン
+
+// 12サービスの一覧
+const services = [
+  { num: '01', label: '遺品整理',           href: '/services/estate/' },
+  { num: '02', label: '不用品回収',         href: '/services/junk/' },
+  { num: '03', label: '古物買取',           href: '/services/antique/' },
+  { num: '04', label: '仏壇・仏具販売',     href: '/services/butsudan/' },
+  { num: '05', label: '墓地・霊園紹介',     href: '/services/cemetery/' },
+  { num: '06', label: '仏壇（神棚）じまい', href: '/services/altar-closing/' },
+  { num: '07', label: '仏壇リメイク',       href: '/services/altar-remake/' },
+  { num: '08', label: '墓じまい',           href: '/services/grave-closure/' },
+  { num: '09', label: '墓守代行',           href: '/services/grave-keeping/' },
+  { num: '10', label: '海洋散骨',           href: '/services/ocean/' },
+  { num: '11', label: '手元供養品販売',     href: '/services/memento/' },
+  { num: '12', label: '相続（不動産）相談', href: '/services/inheritance/' },
+];
+
+// 仮見積り対応5サービス
+const estimates = [
+  { label: '遺品整理',    href: '/estimate/?service=estate' },
+  { label: '不用品回収',  href: '/estimate/?service=junk' },
+  { label: '墓じまい',    href: '/estimate/?service=grave-closure' },
+  { label: '墓守代行',    href: '/estimate/?service=grave-keeping' },
+  { label: '海洋散骨',    href: '/estimate/?service=ocean' },
+];
 ---
 <header class="hd" id="hd">
   <div class="hd-top">
@@ -10,72 +39,559 @@
       <span class="logo-en">Angel Center</span>
       <span class="logo-ja">ぶっこうどう</span>
     </a>
+
+    <!-- PC ナビゲーション(クリックでアコーディオン) -->
     <nav class="pc-nav">
-      <a href="#services">サービス</a>
-      <a href="#estimate">仮見積り</a>
-      <a href="#blog">ブログ</a>
-      <a href="#voices">お客様の声</a>
-      <a href="#flow">ご相談の流れ</a>
-      <a href="#contact">お問合せ</a>
+      <div class="nav-item nav-has-drop" data-drop="services">
+        <button class="nav-trigger" type="button" aria-expanded="false">
+          サービス<span class="nav-arrow">▾</span>
+        </button>
+      </div>
+      <div class="nav-item nav-has-drop" data-drop="estimate">
+        <button class="nav-trigger" type="button" aria-expanded="false">
+          仮見積り<span class="nav-arrow">▾</span>
+        </button>
+      </div>
+      <a href="/blog/" class="nav-item">ブログ</a>
+      <a href="/voices/" class="nav-item">お客様の声</a>
+      <a href="/#flow" class="nav-item">ご相談の流れ</a>
+      <a href="/contact/" class="nav-item">お問合せ</a>
     </nav>
-    <a href="#contact" class="btn-cta">無料相談はこちら</a>
-    <button class="hamburger" id="hamburger" aria-label="メニュー">
+
+    <a href="/contact/" class="btn-cta">無料相談はこちら</a>
+
+    <button class="hamburger" id="hamburger" aria-label="メニュー" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
+
+  <!-- ─── PC用 ドロップダウンパネル(ヘッダー直下に全幅展開) ─── -->
+  <div class="drop-panel" id="dropServices" aria-hidden="true">
+    <div class="drop-panel-inner">
+      <div class="drop-panel-head">
+        <span class="drop-panel-label">SERVICES</span>
+        <span class="drop-panel-title">サービス一覧</span>
+      </div>
+      <ul class="drop-list drop-list-services">
+        {services.map(s => (
+          <li>
+            <a href={s.href}>
+              <span class="drop-num">{s.num}</span>
+              <span class="drop-label">{s.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="drop-panel" id="dropEstimate" aria-hidden="true">
+    <div class="drop-panel-inner">
+      <div class="drop-panel-head">
+        <span class="drop-panel-label">QUICK ESTIMATE</span>
+        <span class="drop-panel-title">仮見積りシミュレーション</span>
+      </div>
+      <ul class="drop-list drop-list-estimate">
+        {estimates.map(e => (
+          <li>
+            <a href={e.href}>
+              <span class="drop-label">{e.label}の仮見積り</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
 </header>
 
-<div class="drawer" id="drawer">
-  <button class="drawer-close" id="drawerClose">✕</button>
-  <nav class="drawer-nav">
-    <a href="#services">サービス</a>
-    <a href="#estimate">仮見積り</a>
-    <a href="#blog">ブログ</a>
-    <a href="#voices">お客様の声</a>
-    <a href="#flow">ご相談の流れ</a>
-    <a href="#contact">お問合せ</a>
+<!-- ─── スマホ用フルスクリーンメニュー(緑背景) ─── -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <!-- 上部:ロゴと電話番号 -->
+  <div class="mm-head">
+    <a href="/" class="mm-logo">
+      <span class="mm-logo-en">Angel Center</span>
+      <span class="mm-logo-ja">ぶっこうどう</span>
+    </a>
+  </div>
+
+  <!-- 電話番号バナー -->
+  <a href="tel:0958654400" class="mm-tel-bar">
+    <span class="mm-tel-icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+    </span>
+    <span class="mm-tel-text">
+      <span class="mm-tel-label">お電話でのご相談</span>
+      <span class="mm-tel-num">095-865-4400</span>
+      <span class="mm-tel-hours">10:00〜17:00（店休日無し）</span>
+    </span>
+  </a>
+
+  <!-- メニュー本体 -->
+  <nav class="mm-nav">
+    <!-- サービス:アコーディオン -->
+    <div class="mm-acc">
+      <button class="mm-acc-trigger" type="button" aria-expanded="false">
+        <span>サービス</span>
+        <span class="mm-icon" aria-hidden="true"></span>
+      </button>
+      <div class="mm-acc-body">
+        {services.map(s => (
+          <a href={s.href} class="mm-acc-link">
+            <span class="mm-acc-num">{s.num}</span>
+            <span>{s.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- 仮見積り:アコーディオン -->
+    <div class="mm-acc">
+      <button class="mm-acc-trigger" type="button" aria-expanded="false">
+        <span>仮見積り</span>
+        <span class="mm-icon" aria-hidden="true"></span>
+      </button>
+      <div class="mm-acc-body">
+        {estimates.map(e => (
+          <a href={e.href} class="mm-acc-link">
+            <span>{e.label}の仮見積り</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- 単独リンク -->
+    <a href="/blog/" class="mm-link">ブログ<span class="mm-arr">›</span></a>
+    <a href="/voices/" class="mm-link">お客様の声<span class="mm-arr">›</span></a>
+    <a href="/#flow" class="mm-link">ご相談の流れ<span class="mm-arr">›</span></a>
+    <a href="/contact/" class="mm-link">お問合せ<span class="mm-arr">›</span></a>
   </nav>
-  <a href="#contact" class="drawer-cta">無料相談はこちら</a>
+
+  <!-- 下部CTA -->
+  <div class="mm-cta-wrap">
+    <a href="/contact/" class="mm-cta">無料相談はこちら</a>
+  </div>
 </div>
-<div class="overlay-bg" id="overlayBg"></div>
 
 <style>
 .hd{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .hd-top{background:var(--gd);color:rgba(255,255,255,.85);display:flex;justify-content:flex-end;align-items:center;gap:1.5rem;padding:.32rem 1.5rem;font-size:12px}
-.hd-tel{font-family:var(--num);font-size:1.1rem;color:#fff}
-.hd-main{display:flex;align-items:center;padding:.65rem 1.5rem;gap:1.25rem}
+.hd-tel{font-family:var(--num);font-size:1.1rem;color:#fff;letter-spacing:0}
+.hd-main{display:flex;align-items:center;padding:.65rem 1.5rem;gap:1.25rem;max-width:1280px;margin:0 auto}
 .logo{display:flex;flex-direction:column;margin-right:auto;line-height:1.25}
-.logo-en{font-family:var(--roman);font-size:.78rem;letter-spacing:.2em;color:var(--gd);text-transform:uppercase}
+.logo-en{font-family:var(--roman);font-size:.78rem;letter-spacing:0;color:var(--gd);text-transform:uppercase}
 .logo-ja{font-family:var(--serif);font-size:1.1rem;letter-spacing:.13em;color:var(--gd)}
-.pc-nav{display:flex;gap:1.25rem;font-size:.875rem;color:var(--mid)}
-.pc-nav a:hover{color:var(--gd)}
-.btn-cta{background:var(--gd);color:#fff;padding:.6rem 1.3rem;font-size:.875rem;letter-spacing:.08em;white-space:nowrap;transition:.2s;flex-shrink:0}
-.btn-cta:hover{background:var(--gm)}
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
-.hamburger span{display:block;width:22px;height:2px;background:var(--gd);transition:.3s}
-.drawer{position:fixed;top:0;right:-100%;width:260px;height:100vh;background:var(--white);z-index:300;padding:3.5rem 1.75rem 2rem;transition:right .3s;border-left:1px solid var(--border)}
-.drawer.open{right:0}
-.drawer-close{position:absolute;top:.85rem;right:1.2rem;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mid)}
-.drawer-nav{display:flex;flex-direction:column}
-.drawer-nav a{display:block;padding:.7rem 0;border-bottom:1px solid #f0f0ea;font-size:.9rem;color:var(--mid)}
-.drawer-nav a:hover{color:var(--gd)}
-.drawer-cta{display:block;background:var(--gd);color:#fff;text-align:center;padding:.85rem;font-size:.875rem;margin-top:1.25rem}
-.overlay-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:250}
-.overlay-bg.open{display:block}
-@media(max-width:768px){
-  .pc-nav,.btn-cta{display:none}
-  .hamburger{display:flex}
-  .hd-main{padding:.6rem 1rem}
+
+/* PC NAVIGATION */
+.pc-nav{display:flex;gap:1.5rem;font-size:.875rem;color:var(--mid);align-items:center}
+.nav-item{position:relative;padding:.6rem 0;color:var(--mid);transition:color .2s}
+a.nav-item:hover{color:var(--gd)}
+
+.nav-trigger{
+  display:inline-flex;
+  align-items:center;
+  gap:.3rem;
+  padding:.6rem 0;
+  background:none;
+  border:none;
+  color:var(--mid);
+  font-size:.875rem;
+  font-family:inherit;
+  cursor:pointer;
+  letter-spacing:0;
 }
-@media(max-width:480px){.hd-top .hd-tel{display:none}}
+.nav-trigger:hover{color:var(--gd)}
+.nav-arrow{font-size:.65rem;transition:transform .3s;opacity:.7}
+.nav-has-drop.is-open .nav-arrow{transform:rotate(180deg)}
+.nav-has-drop.is-open .nav-trigger{color:var(--gd)}
+
+/* ─── PC ドロップダウンパネル ─── */
+.drop-panel{
+  position:absolute;
+  left:0;
+  right:0;
+  top:100%;
+  background:var(--white);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+  z-index:210;
+}
+.drop-panel.is-open{max-height:600px}
+.drop-panel-inner{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+
+.drop-panel-head{
+  margin-bottom:1.25rem;
+  padding-bottom:.85rem;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:baseline;
+  gap:1.25rem;
+}
+.drop-panel-label{font-family:var(--roman);font-size:.72rem;letter-spacing:0;color:var(--gd)}
+.drop-panel-title{font-family:var(--serif);font-size:1.05rem;color:var(--text);letter-spacing:.05em}
+
+.drop-list{list-style:none;padding:0;margin:0}
+.drop-list-services{display:grid;grid-template-columns:repeat(3,1fr);gap:.25rem}
+.drop-list-estimate{display:grid;grid-template-columns:repeat(2,1fr);gap:.25rem}
+.drop-list a{
+  display:flex;align-items:center;gap:.7rem;
+  padding:.75rem 1rem;font-size:.88rem;color:var(--mid);
+  border-radius:var(--corner);transition:.18s ease;white-space:nowrap;
+}
+.drop-list a:hover{background:var(--gd);color:#fff}
+.drop-num{font-family:var(--num);font-size:.78rem;color:var(--light);letter-spacing:0;min-width:1.8rem;transition:.18s ease}
+.drop-list a:hover .drop-num{color:rgba(255,255,255,.8)}
+.drop-label{font-family:var(--serif)}
+
+/* CTA */
+.btn-cta{background:var(--gd);color:#fff;padding:.6rem 1.3rem;font-size:.875rem;letter-spacing:0;white-space:nowrap;transition:.2s;flex-shrink:0;border-radius:var(--corner)}
+.btn-cta:hover{background:var(--gm)}
+
+/* ─── HAMBURGER(×変化対応) ─── */
+.hamburger{
+  display:none;
+  position:relative;
+  width:30px;
+  height:30px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
+  z-index:310;
+}
+.hamburger span{
+  display:block;
+  position:absolute;
+  left:4px;
+  width:22px;
+  height:2px;
+  background:var(--gd);
+  transition:.3s ease;
+}
+.hamburger span:nth-child(1){top:8px}
+.hamburger span:nth-child(2){top:14px}
+.hamburger span:nth-child(3){top:20px}
+/* メニュー開いた状態:×印 */
+.hamburger.is-open span{background:#fff}
+.hamburger.is-open span:nth-child(1){top:14px;transform:rotate(45deg)}
+.hamburger.is-open span:nth-child(2){opacity:0}
+.hamburger.is-open span:nth-child(3){top:14px;transform:rotate(-45deg)}
+
+/* ─────────────────────────────────────────
+   MOBILE MENU(フルスクリーンオーバーレイ・緑背景)
+   ───────────────────────────────────────── */
+.mobile-menu{
+  display:none;  /* スマホでのみ表示 */
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg, var(--gd) 0%, #1e3d2a 100%);
+  z-index:300;
+  overflow-y:auto;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .35s ease, visibility 0s linear .35s;
+}
+.mobile-menu.is-open{
+  opacity:1;
+  visibility:visible;
+  transition:opacity .35s ease, visibility 0s linear 0s;
+}
+
+/* メニュー上部:ロゴ */
+.mm-head{
+  display:flex;
+  align-items:center;
+  padding:1rem 1.25rem;
+  min-height:60px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.mm-logo{display:flex;flex-direction:column;line-height:1.25;color:#fff}
+.mm-logo-en{font-family:var(--roman);font-size:.72rem;letter-spacing:0;color:rgba(255,255,255,.65);text-transform:uppercase}
+.mm-logo-ja{font-family:var(--serif);font-size:1.05rem;letter-spacing:.13em;color:#fff}
+
+/* 電話番号バナー */
+.mm-tel-bar{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  padding:1.25rem 1.5rem;
+  background:rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  color:#fff;
+}
+.mm-tel-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;height:44px;
+  background:var(--yellow,#f5c842);
+  color:var(--gd);
+  border-radius:50%;
+  flex-shrink:0;
+}
+.mm-tel-text{display:flex;flex-direction:column;gap:.1rem;line-height:1.4}
+.mm-tel-label{font-size:.7rem;color:rgba(255,255,255,.6);letter-spacing:.04em}
+.mm-tel-num{font-family:var(--num);font-size:1.45rem;letter-spacing:0;color:#fff;font-weight:500}
+.mm-tel-hours{font-size:.7rem;color:rgba(255,255,255,.6);letter-spacing:.04em}
+
+/* メニュー本体 */
+.mm-nav{display:flex;flex-direction:column;padding:0}
+
+/* 単独リンク */
+.mm-link{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1.15rem 1.5rem;
+  font-size:1rem;
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  transition:.2s;
+  min-height:56px;  /* タッチターゲット確保 */
+}
+.mm-link:hover,
+.mm-link:active{
+  background:rgba(255,255,255,.08);
+}
+.mm-arr{
+  font-size:1.1rem;
+  color:rgba(255,255,255,.5);
+  transition:.2s;
+}
+
+/* アコーディオン */
+.mm-acc{border-bottom:1px solid rgba(255,255,255,.12)}
+.mm-acc-trigger{
+  display:flex;
+  width:100%;
+  justify-content:space-between;
+  align-items:center;
+  padding:1.15rem 1.5rem;
+  background:none;
+  border:none;
+  font-size:1rem;
+  color:#fff;
+  cursor:pointer;
+  font-family:inherit;
+  text-align:left;
+  min-height:56px;
+  transition:.2s;
+}
+.mm-acc-trigger:hover,
+.mm-acc-trigger:active{background:rgba(255,255,255,.08)}
+
+/* +/- アイコン(CSS だけで描画) */
+.mm-icon{
+  position:relative;
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+}
+.mm-icon::before,
+.mm-icon::after{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:50%;
+  background:#fff;
+  transition:.3s ease;
+}
+/* 横棒(常にあり) */
+.mm-icon::before{
+  width:14px;
+  height:2px;
+  transform:translate(-50%,-50%);
+}
+/* 縦棒(閉じている時は表示、開いている時は非表示) */
+.mm-icon::after{
+  width:2px;
+  height:14px;
+  transform:translate(-50%,-50%);
+}
+.mm-acc.is-open .mm-icon::after{
+  transform:translate(-50%,-50%) rotate(90deg);
+  opacity:0;
+}
+
+/* アコーディオン本体 */
+.mm-acc-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+  background:rgba(0,0,0,.15);
+}
+.mm-acc.is-open .mm-acc-body{max-height:800px}
+
+.mm-acc-link{
+  display:flex;
+  align-items:center;
+  gap:.85rem;
+  padding:.95rem 1.5rem .95rem 2.5rem;
+  font-size:.92rem;
+  color:rgba(255,255,255,.9);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  transition:.2s;
+  min-height:48px;
+}
+.mm-acc-link:last-child{border-bottom:none}
+.mm-acc-link:hover,
+.mm-acc-link:active{
+  background:rgba(255,255,255,.08);
+  color:#fff;
+}
+.mm-acc-num{
+  font-family:var(--num);
+  font-size:.78rem;
+  color:rgba(255,255,255,.5);
+  letter-spacing:0;
+  min-width:1.8rem;
+}
+
+/* 下部CTA */
+.mm-cta-wrap{padding:1.75rem 1.5rem 2.5rem;background:rgba(0,0,0,.15)}
+.mm-cta{
+  display:block;
+  background:var(--yellow,#f5c842);
+  color:var(--gd);
+  text-align:center;
+  padding:1.1rem 1.25rem;
+  font-size:1rem;
+  font-weight:500;
+  border-radius:var(--corner);
+  letter-spacing:.04em;
+  transition:.2s;
+}
+.mm-cta:hover,
+.mm-cta:active{background:#e8b835}
+
+/* レスポンシブ切り替え */
+@media(max-width:1024px){
+  .pc-nav{gap:1rem}
+  .btn-cta{padding:.55rem 1rem;font-size:.82rem}
+  .drop-list-services{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .pc-nav,.btn-cta{display:none}
+  .hamburger{display:block}
+  .hd-main{padding:.6rem 1rem}
+  .drop-panel{display:none}
+  .mobile-menu{display:block}
+}
+@media(max-width:480px){
+  .hd-top .hd-tel{display:none}
+  .mm-tel-num{font-size:1.3rem}
+}
 </style>
 
 <script>
-const ham=document.getElementById('hamburger'),drawer=document.getElementById('drawer'),bg=document.getElementById('overlayBg'),closeBtn=document.getElementById('drawerClose');
-const open=()=>{drawer?.classList.add('open');bg?.classList.add('open')};
-const close=()=>{drawer?.classList.remove('open');bg?.classList.remove('open')};
-ham?.addEventListener('click',open);
-closeBtn?.addEventListener('click',close);
-bg?.addEventListener('click',close);
-drawer?.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+// ─── PC:クリック式ドロップダウン ───
+const navTriggers = document.querySelectorAll<HTMLButtonElement>('.pc-nav .nav-trigger');
+const navItems = document.querySelectorAll<HTMLElement>('.pc-nav .nav-has-drop');
+const dropPanels = {
+  services: document.getElementById('dropServices'),
+  estimate: document.getElementById('dropEstimate'),
+};
+
+function closeAllPanels() {
+  navItems.forEach(item => item.classList.remove('is-open'));
+  Object.values(dropPanels).forEach(panel => {
+    panel?.classList.remove('is-open');
+    panel?.setAttribute('aria-hidden', 'true');
+  });
+  navTriggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
+}
+
+navTriggers.forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const item = trigger.closest('.nav-has-drop') as HTMLElement;
+    const dropKey = item?.dataset.drop as 'services' | 'estimate' | undefined;
+    if (!dropKey) return;
+    const panel = dropPanels[dropKey];
+    if (!panel) return;
+
+    const isOpen = item.classList.contains('is-open');
+    closeAllPanels();
+
+    if (!isOpen) {
+      item.classList.add('is-open');
+      panel.classList.add('is-open');
+      panel.setAttribute('aria-hidden', 'false');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+document.addEventListener('click', (e) => {
+  const target = e.target as HTMLElement;
+  if (target.closest('.hd')) return;
+  closeAllPanels();
+});
+
+Object.values(dropPanels).forEach(panel => {
+  panel?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => closeAllPanels());
+  });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeAllPanels();
+    closeMobileMenu();
+  }
+});
+
+// ─── スマホ:フルスクリーンメニュー ───
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function openMobileMenu() {
+  mobileMenu?.classList.add('is-open');
+  mobileMenu?.setAttribute('aria-hidden', 'false');
+  hamburger?.classList.add('is-open');
+  hamburger?.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  mobileMenu?.classList.remove('is-open');
+  mobileMenu?.setAttribute('aria-hidden', 'true');
+  hamburger?.classList.remove('is-open');
+  hamburger?.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+
+  // 開いていたアコーディオンも閉じる
+  document.querySelectorAll('.mm-acc').forEach(acc => acc.classList.remove('is-open'));
+  document.querySelectorAll<HTMLButtonElement>('.mm-acc-trigger').forEach(t =>
+    t.setAttribute('aria-expanded', 'false')
+  );
+}
+
+hamburger?.addEventListener('click', () => {
+  if (mobileMenu?.classList.contains('is-open')) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
+});
+
+// メニュー内リンククリックで閉じる
+mobileMenu?.querySelectorAll('a').forEach(a =>
+  a.addEventListener('click', closeMobileMenu)
+);
+
+// スマホ:アコーディオン
+document.querySelectorAll<HTMLButtonElement>('.mm-acc-trigger').forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const acc = trigger.closest('.mm-acc');
+    const isOpen = acc?.classList.contains('is-open');
+    acc?.classList.toggle('is-open');
+    trigger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  });
+});
 </script>

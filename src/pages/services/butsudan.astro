@@ -3,6 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
+import { Image } from 'astro:assets';
+import heroImage from '../../_assets/img/butsudan/hero-image.jpg';
 
 const altarTypes = [
   { banner: 'small',  icon: 'altar',    name: '小型仏壇',              desc: '省スペースでも祈りの心を。コンパクトで機能的な小型仏壇は、現代の暮らしに寄り添います。家具調タイプで部屋に自然に溶け込みます。' },
@@ -79,6 +81,17 @@ const tamotoItems = [
   <main>
 
     <section class="page-hero">
+      <div class="hero-bg">
+        <Image
+          src={heroImage}
+          alt="仏壇・仏具販売 - エンジェルセンター ぶっこうどう"
+          widths={[800, 1200, 1600, 2000]}
+          sizes="100vw"
+          loading="eager"
+          class="hero-img"
+        />
+      </div>
+      <div class="hero-overlay"></div>
       <div class="breadcrumb">
         <a href="/">ホーム</a><span>›</span>
         <a href="/#services">サービス一覧</a><span>›</span>
@@ -310,21 +323,26 @@ const tamotoItems = [
   .breadcrumb > span:last-child{color:rgba(255,255,255,0.95)}
 
   .page-hero{
+    position:relative;min-height:480px;color:#fff;padding:5rem 1.5rem;overflow:hidden;
+    display:flex;align-items:center;
     background:linear-gradient(135deg,#2c2218 0%,#4a3728 50%,#3d2e22 100%);
-    color:#fff;padding:4rem 1.5rem;position:relative;overflow:hidden
   }
+  .hero-bg{position:absolute;inset:0;z-index:1}
+  .hero-bg :global(.hero-img){width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:saturate(0.85) sepia(0.1) brightness(0.85)}
+  .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(100deg,rgba(44,34,24,0.85) 0%,rgba(74,55,40,0.75) 35%,rgba(61,46,34,0.65) 60%,rgba(61,46,34,0.4) 100%)}
   .page-hero::before{
     content:'大切な想いを、そっと暮らしの中に。';
     position:absolute;top:50%;right:5%;transform:translateY(-50%);
     font-family:var(--serif);font-size:clamp(1rem,2.5vw,1.6rem);
     color:rgba(255,255,255,.1);white-space:nowrap;letter-spacing:.2em;
+    z-index:3;
     pointer-events:none;
   }
   .page-hero::after{
     content:'';position:absolute;top:-60px;right:-60px;
     width:260px;height:260px;border:1px solid rgba(200,168,75,.15);border-radius:50%
   }
-  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:3}
   .hero-label{font-family:var(--roman);font-size:.78rem;letter-spacing:.25em;color:var(--gold);margin-bottom:.65rem;opacity:.85}
   .hero-title{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.6rem);font-weight:400;letter-spacing:.12em;margin-bottom:.85rem}
   .hero-catch{font-family:var(--serif);font-size:clamp(1rem,2.5vw,1.4rem);color:rgba(255,255,255,.7);margin-bottom:1.25rem;letter-spacing:.15em;font-weight:300}

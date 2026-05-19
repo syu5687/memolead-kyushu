@@ -3,9 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
-// Hero画像は後で挿入予定
-// import { Image } from 'astro:assets';
-// import heroImage from '../../_assets/img/antique/antique-XXX.jpg';
+import { Image } from 'astro:assets';
+import heroImage from '../../_assets/img/antique/hero-image.jpg';
 
 const features = [
   { icon: 'tag',      title: '専門スタッフによる査定',   desc: '骨董品・古美術品の知識を持つ専門スタッフが、お品物一点一点を丁寧に査定いたします。価値あるお品を見落とすことはありません。' },
@@ -59,6 +58,16 @@ const areas = [
 
     <!-- HERO(画像は後で挿入予定) -->
     <section class="page-hero">
+      <div class="hero-bg">
+        <Image
+          src={heroImage}
+          alt="古物買取 - エンジェルセンター ぶっこうどう"
+          widths={[800, 1200, 1600, 2000]}
+          sizes="100vw"
+          loading="eager"
+          class="hero-img"
+        />
+      </div>
       <div class="hero-overlay"></div>
       <div class="breadcrumb">
       <a href="/">ホーム</a><span>›</span>

@@ -1,0 +1,329 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+---
+
+<BaseLayout
+  title="お問合せ | エンジェルセンター ぶっこうどう"
+  description="エンジェルセンター ぶっこうどうへのお問合せはこちらから。お電話・Webフォームでお気軽にご相談ください。受付時間 10:00〜17:00（店休日無し）"
+>
+  <Header />
+  <main>
+
+    <!-- HERO -->
+    <section class="page-hero">
+      <div class="breadcrumb">
+        <a href="/">ホーム</a><span>›</span>
+        <span>お問合せ</span>
+      </div>
+      <div class="page-hero-inner">
+        <p class="page-hero-label">CONTACT</p>
+        <h1 class="page-hero-title">お問合せ・無料相談</h1>
+        <p class="page-hero-catch">どんな小さなことでも、まずはお気軽にご連絡ください。</p>
+        <p class="page-hero-desc">
+          専門スタッフが丁寧にお話を伺います。<br>
+          初めての方も安心してご相談いただけます。
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT METHODS -->
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">HOW TO CONTACT</p>
+          <h2 class="sec-title">お問合せ方法</h2>
+          <p class="sec-desc">お電話とWebフォーム、ご都合の良い方法でお問合せください。</p>
+        </div>
+
+        <div class="contact-cards fi">
+
+          <!-- 電話 -->
+          <div class="contact-card">
+            <div class="contact-icon"><Icon name="phone" size={32} /></div>
+            <h3 class="contact-card-title">お電話でのご相談</h3>
+            <p class="contact-card-desc">
+              スタッフが直接ご対応します。<br>
+              お急ぎの場合はお電話が便利です。
+            </p>
+            <a href="tel:0958654400" class="contact-tel">095-865-4400</a>
+            <p class="contact-hours">受付時間 10:00〜17:00（店休日無し）</p>
+          </div>
+
+          <!-- Webフォーム -->
+          <div class="contact-card">
+            <div class="contact-icon"><Icon name="mail" size={32} /></div>
+            <h3 class="contact-card-title">Webからのご相談</h3>
+            <p class="contact-card-desc">
+              24時間受付中。<br>
+              1営業日以内にご連絡いたします。
+            </p>
+            <a href="#contact-form" class="contact-form-btn">フォームへ進む</a>
+            <p class="contact-hours">送信内容を確認後、ご返信いたします</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESS -->
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">ACCESS</p>
+          <h2 class="sec-title">アクセス・店舗情報</h2>
+        </div>
+
+        <div class="access-wrap fi">
+          <div class="access-info">
+            <h3 class="access-name">エンジェルセンター ぶっこうどう</h3>
+            <dl class="access-list">
+              <div class="access-row">
+                <dt>住所</dt>
+                <dd>
+                  〒850-0046<br>
+                  長崎県長崎市幸町4-13
+                </dd>
+              </div>
+              <div class="access-row">
+                <dt>電話</dt>
+                <dd><a href="tel:0958654400">095-865-4400</a></dd>
+              </div>
+              <div class="access-row">
+                <dt>営業時間</dt>
+                <dd>10:00〜17:00</dd>
+              </div>
+              <div class="access-row">
+                <dt>定休日</dt>
+                <dd>店休日無し</dd>
+              </div>
+              <div class="access-row">
+                <dt>対応エリア</dt>
+                <dd>長崎市・時津町・長与町(エリア外応相談)</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="access-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3318.5!2d129.866!3d32.766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0:0x0!2zMzLCsDQ2JzAwLjAiTiAxMjnCsDUyJzAwLjAiRQ!5e0!3m2!1sja!2sjp!4v1234567890"
+              width="100%"
+              height="400"
+              style="border:0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="エンジェルセンター ぶっこうどう 地図"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM(仮表示) -->
+    <section class="sec" id="contact-form">
+      <div class="sec-inner sec-inner-narrow">
+        <div class="sec-head fi">
+          <p class="sec-label">CONTACT FORM</p>
+          <h2 class="sec-title">お問合せフォーム</h2>
+          <p class="sec-desc">下記のフォームよりお問合せください。<br>1営業日以内にご返信いたします。</p>
+        </div>
+
+        <!-- ⚠ 仮フォーム(送信機能は未実装)
+             将来 Cloudflare Worker + Resend API で送信機能を実装予定 -->
+        <div class="form-notice fi">
+          <p>
+            <Icon name="document" size={16} />
+            お問合せフォームは現在準備中です。<br>
+            お急ぎの方はお電話(<a href="tel:0958654400">095-865-4400</a>)もしくはメールにて直接ご連絡ください。
+          </p>
+        </div>
+
+        <form class="contact-form fi" onsubmit="return false">
+          <div class="form-row">
+            <label for="name">お名前 <span class="required">必須</span></label>
+            <input type="text" id="name" name="name" placeholder="山田 太郎" disabled>
+          </div>
+
+          <div class="form-row">
+            <label for="email">メールアドレス <span class="required">必須</span></label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" disabled>
+          </div>
+
+          <div class="form-row">
+            <label for="tel">電話番号</label>
+            <input type="tel" id="tel" name="tel" placeholder="090-1234-5678" disabled>
+          </div>
+
+          <div class="form-row">
+            <label for="service">ご相談内容</label>
+            <select id="service" name="service" disabled>
+              <option>選択してください</option>
+              <option>遺品整理</option>
+              <option>不用品回収</option>
+              <option>古物買取</option>
+              <option>仏壇・仏具販売</option>
+              <option>墓地・霊園紹介</option>
+              <option>仏壇（神棚）じまい</option>
+              <option>仏壇リメイク</option>
+              <option>墓じまい</option>
+              <option>墓守代行</option>
+              <option>海洋散骨</option>
+              <option>手元供養品販売</option>
+              <option>相続（不動産）相談</option>
+              <option>その他</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="message">お問合せ内容 <span class="required">必須</span></label>
+            <textarea id="message" name="message" rows="6" placeholder="ご相談内容を詳しくお書きください" disabled></textarea>
+          </div>
+
+          <div class="form-submit">
+            <button type="submit" class="submit-btn" disabled>送信する（準備中）</button>
+            <p class="submit-note">※ 現在フォーム送信は準備中です。お電話にてご連絡ください。</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="#contact-form" class="web-f"><Icon name="mail" size={18} />フォームへ</a>
+  </div>
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .page-hero{position:relative;min-height:380px;overflow:hidden;background:linear-gradient(135deg, var(--gd), var(--gm));color:#fff;display:flex;align-items:center;padding:5rem 1.5rem}
+  .breadcrumb{position:absolute;top:1.25rem;left:0;right:0;z-index:4;max-width:1100px;margin:0 auto;padding:.5rem 1.5rem;font-size:.78rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:rgba(255,255,255,0.8)}
+  .breadcrumb a:hover{color:#fff}
+  .breadcrumb > span:last-child{color:rgba(255,255,255,0.95)}
+  .page-hero-inner{position:relative;z-index:3;max-width:680px;width:100%;margin:0 auto 0 max(1.5rem,calc((100% - 1100px)/2));text-align:left}
+  .page-hero-label{font-family:var(--roman);font-size:.78rem;letter-spacing:0;opacity:.8;margin-bottom:.6rem}
+  .page-hero-title{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);font-weight:400;letter-spacing:.1em;margin-bottom:1rem}
+  .page-hero-catch{font-family:var(--serif);font-size:clamp(1rem,2vw,1.25rem);font-weight:300;letter-spacing:.08em;color:rgba(255,255,255,.92);margin-bottom:1.25rem;line-height:1.7}
+  .page-hero-desc{font-size:.95rem;line-height:2;opacity:.88;max-width:600px}
+
+  /* SECTION COMMON */
+  .sec{padding:5rem 1.5rem;background:var(--white)}
+  .sec.bg-cream{background:var(--clight)}
+  .sec-inner{max-width:1100px;margin:0 auto}
+  .sec-inner-narrow{max-width:680px}
+  .sec-head{text-align:center;margin-bottom:2.75rem}
+  .sec-label{font-family:var(--roman);font-size:.78rem;letter-spacing:0;color:var(--gd);margin-bottom:.55rem}
+  .sec-title{font-family:var(--serif);font-size:clamp(1.4rem,3vw,1.85rem);font-weight:400;letter-spacing:.1em;margin-bottom:.8rem}
+  .sec-desc{font-size:.9rem;color:var(--mid);line-height:2}
+
+  /* CONTACT CARDS */
+  .contact-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:880px;margin:0 auto}
+  .contact-card{border:1px solid var(--border);padding:2.5rem 2rem;text-align:center;background:var(--white);border-radius:var(--corner);transition:.2s}
+  .contact-card:hover{border-color:var(--gd)}
+  .contact-icon{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;background:var(--gl);color:var(--gd);border-radius:50%;margin-bottom:1.25rem}
+  .contact-card-title{font-family:var(--serif);font-size:1.15rem;font-weight:400;letter-spacing:.06em;margin-bottom:.85rem;color:var(--text)}
+  .contact-card-desc{font-size:.875rem;color:var(--mid);line-height:1.95;margin-bottom:1.5rem;min-height:3.6em}
+  .contact-tel{display:block;font-family:var(--num);font-size:2rem;color:var(--gd);letter-spacing:0;margin-bottom:.5rem;font-weight:400}
+  .contact-tel:hover{color:var(--gm)}
+  .contact-hours{font-size:.75rem;color:var(--light)}
+  .contact-form-btn{display:inline-block;background:var(--gd);color:#fff;padding:.85rem 2.25rem;font-size:.92rem;letter-spacing:0;margin-bottom:.85rem;transition:.2s;border-radius:var(--corner)}
+  .contact-form-btn:hover{background:var(--gm)}
+
+  /* ACCESS */
+  .access-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:2.5rem;align-items:flex-start;max-width:1000px;margin:0 auto}
+  .access-info{background:var(--white);padding:2rem;border:1px solid var(--border);border-radius:var(--corner)}
+  .access-name{font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--gd);margin-bottom:1.5rem;padding-bottom:.85rem;border-bottom:1px solid var(--border);letter-spacing:.05em}
+  .access-list{display:flex;flex-direction:column;gap:1rem}
+  .access-row{display:grid;grid-template-columns:5.5rem 1fr;gap:1rem;font-size:.875rem;line-height:1.85}
+  .access-row dt{font-family:var(--serif);color:var(--gd);font-weight:500;letter-spacing:.04em}
+  .access-row dd{color:var(--mid)}
+  .access-row dd a{color:var(--mid);transition:.2s}
+  .access-row dd a:hover{color:var(--gd)}
+  .access-map{border:1px solid var(--border);overflow:hidden;border-radius:var(--corner)}
+  .access-map iframe{display:block}
+
+  /* FORM NOTICE */
+  .form-notice{background:#fffbf0;border-left:3px solid #c8a84b;padding:1.25rem 1.5rem;margin-bottom:2.5rem;border-radius:var(--corner)}
+  .form-notice p{font-size:.875rem;color:var(--mid);line-height:2;display:flex;align-items:flex-start;gap:.5rem;flex-wrap:wrap}
+  .form-notice a{color:var(--gd);text-decoration:underline;text-underline-offset:3px;font-weight:500}
+
+  /* CONTACT FORM */
+  .contact-form{display:flex;flex-direction:column;gap:1.5rem}
+  .form-row{display:flex;flex-direction:column;gap:.55rem}
+  .form-row label{font-family:var(--serif);font-size:.92rem;color:var(--text);font-weight:500;letter-spacing:.04em;display:flex;align-items:center;gap:.6rem}
+  .required{display:inline-block;font-size:.7rem;background:var(--gd);color:#fff;padding:.1rem .45rem;letter-spacing:0;border-radius:var(--corner);font-family:var(--sans);font-weight:400}
+  .form-row input,
+  .form-row select,
+  .form-row textarea{
+    width:100%;
+    padding:.85rem 1rem;
+    font-size:.92rem;
+    border:1px solid var(--border);
+    background:var(--white);
+    color:var(--text);
+    font-family:inherit;
+    border-radius:var(--corner);
+    transition:.2s;
+  }
+  .form-row input:focus,
+  .form-row select:focus,
+  .form-row textarea:focus{outline:none;border-color:var(--gd)}
+  .form-row input:disabled,
+  .form-row select:disabled,
+  .form-row textarea:disabled{background:#f5f5f0;cursor:not-allowed;opacity:.7}
+  .form-row textarea{resize:vertical;min-height:120px;line-height:1.85}
+
+  .form-submit{text-align:center;margin-top:1rem}
+  .submit-btn{
+    display:inline-block;
+    background:var(--gd);
+    color:#fff;
+    padding:1rem 3rem;
+    font-size:.95rem;
+    letter-spacing:.04em;
+    border:none;
+    cursor:not-allowed;
+    border-radius:var(--corner);
+    transition:.2s;
+    font-family:inherit;
+    opacity:.5;
+  }
+  .submit-note{font-size:.78rem;color:var(--light);margin-top:1rem;line-height:1.85}
+
+  /* FIXED CTA */
+  .fixed-cta{display:none}
+
+  @media(max-width:1024px){
+    .access-wrap{grid-template-columns:1fr;gap:1.5rem}
+  }
+  @media(max-width:768px){
+    .page-hero{padding:3.5rem 1.25rem;min-height:auto}
+    .page-hero-inner{margin:0 auto;text-align:left}
+    .sec{padding:3.5rem 1rem}
+    .contact-cards{grid-template-columns:1fr;gap:1rem}
+    .contact-card{padding:1.75rem 1.35rem}
+    .contact-tel{font-size:1.6rem}
+    .access-info{padding:1.5rem}
+    .access-row{grid-template-columns:5rem 1fr;font-size:.82rem}
+    .access-map iframe{height:280px}
+    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
+    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
+    .tel-f{background:var(--gd);color:#fff}
+    .web-f{background:#333;color:#fff}
+    body{padding-bottom:52px}
+  }
+</style>
+
+<script>
+  // フェードイン
+  const obs = new IntersectionObserver(e => {
+    e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }});
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>
