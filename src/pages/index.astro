@@ -241,7 +241,7 @@ const services = [
 .hero{
   position:relative;
   height:calc(100vh - 60px);  /* ヘッダー高さを除いた残り全て */
-  min-height:560px;            /* 縦長スマホ対応の最低高さ */
+  min-height:560px; 
   overflow:hidden;
   background:var(--clight);
 }
@@ -257,7 +257,6 @@ const services = [
   height:100%;
   object-fit:cover;
   object-position:center 30%;
-  /* 暖色フィルター + 彩度を少し下げて葬儀後サービスの落ち着いた印象に */
   filter:saturate(0.85) sepia(0.08) brightness(1.02);
 }
 
@@ -289,10 +288,10 @@ const services = [
   display:flex;
   flex-direction:column;
   justify-content:center;
-  align-items:flex-end;     /* 右寄せ */
+  align-items:flex-end;
 }
 .hero-content > *{
-  max-width:520px;          /* テキスト幅を制限して読みやすく */
+  max-width:520px; 
   width:100%;
   color:#fff;
   text-align:left;
@@ -318,7 +317,7 @@ const services = [
 }
 .hero-title em{
   font-style:normal;
-  color:#f5c842;          /* アクセントの金色(既存パレットから) */
+  color:#f5c842; 
   font-weight:500;
 }
 
@@ -334,7 +333,7 @@ const services = [
   display:flex;
   gap:1rem;
   flex-wrap:wrap;
-}
+  }
 
 /* メインCTA(仮見積り) */
 .hero-btns .btn-p{
@@ -346,11 +345,7 @@ const services = [
   font-weight:500;
   transition:.2s;
   border:1px solid #f5c842;
-}
-.hero-btns .btn-p:hover{
-  background:#fff;
-  border-color:#fff;
-  transform:translateY(-1px);
+  border-radius:50px;
 }
 
 /* サブCTA(電話) */
@@ -365,35 +360,37 @@ const services = [
   font-size:.9rem;
   letter-spacing:.08em;
   transition:.2s;
+  border-radius:50px;
 }
+.hero-btns .btn-p:hover,
 .hero-btns .btn-o:hover{
-  background:rgba(255,255,255,.12);
-  border-color:#fff;
+  background:rgba(255,255,255,1);
+  color:var(--gm);
 }
 
 /* スクロール促進矢印(画面下中央) */
 .hero-scroll{
   position:absolute;
-  bottom:1.75rem;
+  bottom:2.75rem;
   left:50%;
   transform:translateX(-50%);
   z-index:4;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:.5rem;
-  color:rgba(255,255,255,.7);
-  font-family:var(--roman);
-  font-size:.65rem;
-  letter-spacing:.32em;
+  gap:.9rem;
+  color:rgba(255,255,255,1);
+  font-family:var(--sans);
+  font-size:1rem;
+  letter-spacing:0.2em;
   text-decoration:none;
   transition:.2s;
 }
 .hero-scroll:hover{color:#fff}
 .hero-scroll-arrow{
-  width:1px;
-  height:36px;
-  background:rgba(255,255,255,.7);
+  width:0px;
+  height:0px;
+  background:rgba(255,255,255,1);
   position:relative;
   animation:scrollIndicator 2s ease-in-out infinite;
 }
@@ -403,10 +400,10 @@ const services = [
   bottom:-1px;
   left:50%;
   transform:translateX(-50%) rotate(45deg);
-  width:6px;
-  height:6px;
-  border-right:1px solid rgba(255,255,255,.7);
-  border-bottom:1px solid rgba(255,255,255,.7);
+  width:20px;
+  height:20px;
+  border-right:1.5px solid rgba(255,255,255,1);
+  border-bottom:1.5px solid rgba(255,255,255,1);
 }
 @keyframes scrollIndicator{
   0%, 100%{opacity:.4; transform:translateY(0)}
@@ -457,8 +454,8 @@ const services = [
   }
   .hero-title{line-height:1.55; letter-spacing:.06em}
   .hero-desc br{display:none}
-  .hero-btns{flex-direction:column; width:100%}
-  .hero-btns a{text-align:center; width:100%}
+  .hero-btns{flex-direction:column; width:100%;}
+  .hero-btns a{text-align:center; width:100%;}
   .hero-scroll{display:none}
 }
 /* POINTS */
@@ -479,21 +476,21 @@ const services = [
 /* SERVICES */
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;max-width:1100px;margin:0 auto}
 .svc-card{background:var(--white);border:1px solid var(--border);padding:1.5rem 1.35rem;transition:.2s;display:flex;flex-direction:column}
-.svc-card--link:hover{background:var(--clight);border-color:var(--gd);transform:translateY(-2px)}
+.svc-card--link:hover{transform:translateY(-2px);border:1px solid var(--gd);border-radius:var(--corner);background:var(--gl);}
 .svc-card--link{position:relative}
-.svc-card--link::after{content:'詳細を見る →';position:absolute;bottom:.9rem;right:1rem;font-size:.78rem;color:var(--gm);opacity:0;transition:opacity .2s}
-.svc-card--link:hover::after{opacity:1}
 .svc-hd{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
-.svc-num{font-family:var(--num);font-size:1.3rem;color:var(--gl);font-weight:300;line-height:1;min-width:2rem}
-.svc-title{font-family:var(--serif);font-size:1rem;font-weight:400;letter-spacing:.06em}
-.svc-en{font-family:var(--roman);font-size:.78rem;color:var(--light);letter-spacing:.09em;margin-top:.18rem}
+.svc-num{font-family:var(--num);font-size:3.1rem;color:var(--gl);font-weight:300;line-height:1;min-width:2rem}
+.svc-card--link:hover .svc-num{color:var(--gm); transition:.5s ease;}
+.svc-title{font-family:var(--serif);font-size:1.3rem;font-weight:400;}
+.svc-en{font-family:var(--roman);font-size:.78rem;color:var(--light);letter-spacing:.03em;}
 .svc-desc{font-size:.9rem;line-height:1.95;color:var(--mid);margin-bottom:.85rem;flex:1}
 .svc-foot{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem;margin-top:auto}
-.svc-link{font-size:.875rem;color:var(--gm);margin-left:auto;font-weight:500}
-.svc-soon{font-size:.78rem;color:var(--light);border:1px solid var(--border);padding:.18rem .6rem;margin-left:auto}
-.tag{font-size:.78rem;padding:.2rem .6rem}
-.tag-hot{background:#c0392b;color:#fff}
-.tag-new{background:var(--gd);color:#fff}
+.svc-link{font-size:.875rem;color:var(--gm);margin-left:auto;font-weight:500;padding:0 5px;border-bottom:1px solid var(--gd);}
+.svc-soon{font-size:.78rem;color:var(--light);border:1px solid var(--border);padding:.18rem .6rem;margin-left:auto;border-radius:var(--corner);}
+.tag{font-size:.78rem;padding:.2rem .6rem;border-radius:var(--corner);}
+.svc-card--link:hover .tag{background:#fff;border:1px solid transparent;}
+.tag-hot{border:1px solid #c0392b;color:#c0392b;}
+.tag-new{border:1px solid var(--gd);color:var(--gd);}
 /* ─────────────────────────────────────────
    ESTIMATE(背景画像+ダークグリーン+細かい白ドット)
    ───────────────────────────────────────── */
@@ -596,21 +593,25 @@ const services = [
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   transition:.2s ease;
+  border-radius:var(--corner);
 }
 .est-item:hover{
-  background:rgba(255,255,255,0.16);
-  border-color:rgba(245,200,66,0.5);
+  background:rgba(255,255,255,1);
+  border-color:var(--gm);
   transform:translateX(4px);
+  color:var(--gm);
 }
 
-/* 矢印を金色に */
+/* 矢印*/
 .est-arr{
-  color:#f5c842;
+  color:var(--cream);
   font-size:1.1rem;
   transition:transform .2s ease;
+  border-radius:var(--corner);
 }
 .est-item:hover .est-arr{
   transform:translateX(3px);
+  color:var(--gm);
 }
 /* BLOG */
 .more-wrap{text-align:center;margin-top:2rem}
@@ -625,13 +626,13 @@ const services = [
 .voice-name{font-size:.875rem;color:var(--gd);font-weight:500;margin-bottom:.2rem}
 .voice-svc{font-size:.78rem;color:var(--light)}
 /* FLOW */
-.flow-steps{max-width:620px;margin:0 auto}
-.flow-step{display:grid;grid-template-columns:72px 1fr;gap:1.35rem;align-items:start}
-.step-num{display:flex;flex-direction:column;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;background:var(--gd);color:#fff;text-align:center;flex-shrink:0}
+.flow-steps{max-width:620px;margin:0 auto;background:#fff;}
+.flow-step{display:grid;grid-template-columns:72px 1fr;gap:5px;align-items:center;border-radius:var(--corner);padding:18px 20px;}
+.step-num{display:flex;flex-direction:column;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;background:var(--gd);color:#fff;text-align:center;flex-shrink:0}
 .step-num span{font-family:var(--roman);font-size:.7rem;letter-spacing:.1em;opacity:.75}
 .step-num strong{font-family:var(--num);font-size:1.5rem;font-weight:400;line-height:1}
-.step-body{padding:.3rem 0 1.85rem}
-.step-body h3{font-family:var(--serif);font-size:1.05rem;font-weight:400;margin-bottom:.48rem}
+.step-body{padding:.3rem 0 1.85rem;}
+.step-body h3{font-family:var(--serif);font-size:1.05rem;font-weight:400;margin-bottom:.48rem;border-bottom:1px solid var(--gm);}
 .step-body p{font-size:.9rem;line-height:2;color:var(--mid)}
 .step-arr{grid-column:1;text-align:center;font-size:1.15rem;color:var(--gd);opacity:.45;margin-top:-.8rem;margin-bottom:.4rem}
 /* CONTACT */
@@ -666,7 +667,7 @@ const services = [
   .hero-visual{order:-1;min-height:220px;padding:1.5rem}
   .hero-content{padding:2rem 1.25rem 2.5rem}
   .hero-title{font-size:1.5rem}
-  .hero-btns{flex-direction:column;gap:.65rem}
+  .hero-btns{flex-direction:column;gap:.65rem;}
   .btn-p,.btn-o{width:100%;text-align:center;padding:.8rem 1rem}
   .wave svg{height:32px}
   .points{padding:2.5rem 1rem}
