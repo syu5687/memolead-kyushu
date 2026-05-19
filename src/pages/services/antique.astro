@@ -1,0 +1,369 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+// Hero画像は後で挿入予定
+// import { Image } from 'astro:assets';
+// import heroImage from '../../_assets/img/antique/antique-XXX.jpg';
+
+const features = [
+  { icon: 'tag',      title: '専門スタッフによる査定',   desc: '骨董品・古美術品の知識を持つ専門スタッフが、お品物一点一点を丁寧に査定いたします。価値あるお品を見落とすことはありません。' },
+  { icon: 'document', title: '査定書を発行',             desc: 'お見積もり後、査定書を発行いたします。ご家族でじっくりご検討いただいてからのご決定で問題ございません。' },
+  { icon: 'home',     title: '出張査定に対応',           desc: '大量のお品物・大きなお品物は、ご自宅まで出張査定にお伺いいたします。出張費は無料です(長崎県内)。' },
+  { icon: 'lotus',    title: '遺品整理と一括対応',       desc: '遺品整理とあわせて買取査定も承ります。価値あるお品は買取、その他は供養・処分まで一括で対応いたします。' },
+];
+
+const items = [
+  { icon: 'altar',     title: '骨董品・古美術品',      desc: '掛軸・茶道具・書道具・陶磁器・漆器など、和の骨董品を専門に査定いたします。' },
+  { icon: 'box',       title: '古い食器・陶磁器',      desc: '九谷焼・有田焼・伊万里焼などの和食器、明治大正期のガラス器なども査定対象です。' },
+  { icon: 'photo',     title: '絵画・版画・書',        desc: '日本画・洋画・版画・書道作品など、有名作家の作品から無名作家まで査定いたします。' },
+  { icon: 'tree',      title: '家具・調度品',          desc: '桐箪笥・座卓・違い棚など、伝統工芸的価値のある古家具を査定いたします。' },
+  { icon: 'document',  title: '古書・古文書',          desc: '和本・浮世絵・古地図・古文書など、紙資料の買取も承ります。' },
+  { icon: 'bag',       title: '着物・帯',              desc: '訪問着・色留袖・振袖・帯など、未使用に近い高級和装品を査定いたします。' },
+  { icon: 'lotus',     title: '仏像・仏具',            desc: '古い仏像・経典・数珠など、信仰の品も丁寧に査定いたします。' },
+  { icon: 'tag',       title: '貴金属・宝飾品',        desc: '金・プラチナ・指輪・ネックレスなど、貴金属類も適正価格で買い取ります。' },
+];
+
+const steps = [
+  { num: 1, title: 'お電話・Webでお問合せ',  desc: 'お品物の種類・大まかな数量をお伺いいたします。お写真をお送りいただけるとスムーズです。' },
+  { num: 2, title: '査定日のご相談',         desc: 'ご都合の良い日時を伺い、出張査定 または ご持参いただく日を決めさせていただきます。' },
+  { num: 3, title: '査定実施',               desc: '専門スタッフが丁寧に査定いたします。お品物の状態を見ながら、適正な価格をご提示します。' },
+  { num: 4, title: '査定書の発行',           desc: '査定額を記した査定書をお渡しします。ご家族でじっくりご検討いただけます。' },
+  { num: 5, title: 'ご売却の決定',           desc: 'ご納得いただきましたら、ご売却の手続きとなります。ご決定はその場でなくても問題ございません。' },
+  { num: 6, title: 'お支払い・お引取り',     desc: 'ご売却分のお支払いとお品物のお引取りを行います。買取しない品は元の場所にお戻しいたします。' },
+];
+
+const priceExamples = [
+  { item: '掛軸（無名作家）',           price: '00,000円〜', note: '状態・サイズによる' },
+  { item: '茶道具一式',                 price: '00,000円〜', note: '茶碗・棗・茶杓・水指など' },
+  { item: '九谷焼・有田焼の食器',       price: '00,000円〜', note: '揃いの良いもの' },
+  { item: '日本画(有名作家)',           price: '000,000円〜', note: '真贋確認のうえ' },
+  { item: '桐箪笥(伝統工芸品)',         price: '00,000円〜', note: '状態良好なもの' },
+  { item: '和本・古文書',               price: '00,000円〜', note: 'まとまった量で査定' },
+];
+
+const areas = [
+  { name: '長崎市', permit: '古物商許可<br>長崎県公安委員会 第000000000号' },
+  { name: '時津町', permit: '古物商許可<br>長崎県公安委員会 第000000000号' },
+  { name: '長与町', permit: '古物商許可<br>長崎県公安委員会 第000000000号' },
+];
+---
+
+<BaseLayout
+  title="古物買取 | エンジェルセンター ぶっこうどう"
+  description="骨董品・古美術品・茶道具・着物・古書など、遺品の中の価値あるお品を専門スタッフが丁寧に査定・買取いたします。長崎市・時津町・長与町対応。"
+>
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>古物買取</span>
+    </div>
+
+    <!-- HERO(画像は後で挿入予定) -->
+    <section class="page-hero">
+      <div class="hero-overlay"></div>
+      <div class="page-hero-inner">
+        <p class="page-hero-label">SERVICE 03 — Antique Purchase</p>
+        <h1 class="page-hero-title">古物買取</h1>
+        <p class="page-hero-catch">価値あるお品を、次の世代へ。</p>
+        <p class="page-hero-desc">
+          遺品の中には、ご家族も気づかないような価値あるお品が眠っていることがあります。<br>
+          骨董品・古美術品の専門知識を持つスタッフが、<br>
+          一点一点丁寧に査定し、適正な価格でお買い取りいたします。
+        </p>
+        <div class="page-hero-badge">
+          <Icon name="tag" size={16} />
+          <span>出張査定 <strong style="font-family:var(--num);font-size:1.1rem">無料</strong>（長崎県内）</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">FEATURES</p>
+          <h2 class="sec-title">買取の特徴</h2>
+        </div>
+        <div class="features fi">
+          {features.map(f => (
+            <div class="feature">
+              <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
+              <h3 class="feature-title">{f.title}</h3>
+              <p class="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ITEMS(買取対象品目) -->
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">ITEMS</p>
+          <h2 class="sec-title">買取対応品目</h2>
+          <p class="sec-desc">骨董品から貴金属まで、幅広い品目に対応いたします。<br>下記以外でも、まずはご相談ください。</p>
+        </div>
+        <div class="items-grid fi">
+          {items.map(it => (
+            <div class="item-card">
+              <div class="item-icon"><Icon name={it.icon} size={24} /></div>
+              <div>
+                <h3 class="item-title">{it.title}</h3>
+                <p class="item-desc">{it.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">PROCESS</p>
+          <h2 class="sec-title">査定・買取の流れ</h2>
+          <p class="sec-desc">お問合せから査定書発行・お支払いまで、6つのステップで丁寧に対応いたします。</p>
+        </div>
+        <div class="steps-grid fi">
+          {steps.map(s => (
+            <div class="step">
+              <div class="step-num">{s.num}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICE TABLE(買取参考価格) -->
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">PRICE EXAMPLES</p>
+          <h2 class="sec-title">買取参考価格</h2>
+          <p class="sec-desc">下記は買取参考価格の一例です。お品物の状態・市場価値により金額は変動いたします。</p>
+        </div>
+        <div class="price-table-wrap fi">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th>お品物</th>
+                <th>買取参考価格</th>
+                <th>備考</th>
+              </tr>
+            </thead>
+            <tbody>
+              {priceExamples.map(row => (
+                <tr>
+                  <td>{row.item}</td>
+                  <td><strong>{row.price}</strong></td>
+                  <td class="note-cell">{row.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
+            ※上記は参考価格です。実際の買取価格は査定の上で決定いたします。<br>
+            ※真贋判定に時間を要する場合、後日改めてご連絡することもございます。<br>
+            ※買取できないお品物もございます。あらかじめご了承ください。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AREA -->
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">AREA</p>
+          <h2 class="sec-title">対応エリア</h2>
+          <p class="sec-desc">出張査定は下記エリアにて承っております。エリア外の方もまずはご相談ください。</p>
+        </div>
+        <div class="area-cards fi">
+          {areas.map(a => (
+            <div class="area-card">
+              <h3 class="area-name">{a.name}</h3>
+              <p class="area-permit" set:html={a.permit}></p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTE -->
+    <section class="sec">
+      <div class="sec-inner" style="max-width:780px">
+        <div class="note-block fi">
+          <strong>「これって価値があるのかな?」と思ったら、まずはご相談を。</strong>
+          ご家族にとっては何気ないお品でも、市場では高値で取引されることがあります。逆に、有名作家の作品でも真贋確認が必要なケースもございます。気になるお品がございましたら、写真でも構いませんのでお気軽にお問い合わせください。専門スタッフが丁寧にお応えいたします。
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-sec fi">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-desc">査定・お見積もりは無料です。「古物買取の件で…」とお伝えください。<br>専門スタッフが丁寧にご案内いたします。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<style>
+  :root{--gold:#c8a84b}
+
+  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:var(--mid)}
+  .breadcrumb a:hover{color:var(--gd)}
+
+  /* HERO(画像なし版・後で画像を挿入) */
+  .page-hero{
+    position:relative;
+    min-height:480px;
+    overflow:hidden;
+    background:linear-gradient(135deg, var(--gd), var(--gm));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    padding:5rem 1.5rem;
+  }
+  .hero-overlay{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background:linear-gradient(
+      100deg,
+      rgba(45,90,61,0.6) 0%,
+      rgba(45,90,61,0.3) 60%,
+      rgba(45,90,61,0) 100%
+    );
+  }
+  .page-hero-inner{
+    position:relative;
+    z-index:3;
+    max-width:680px;
+    width:100%;
+    margin:0 auto 0 max(1.5rem,calc((100% - 1100px)/2));
+    text-align:left;
+  }
+  .page-hero-label{font-family:var(--roman);font-size:.78rem;letter-spacing:.25em;opacity:.8;margin-bottom:.6rem}
+  .page-hero-title{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);font-weight:400;letter-spacing:.1em;margin-bottom:1rem}
+  .page-hero-catch{font-family:var(--serif);font-size:clamp(1rem,2vw,1.25rem);font-weight:300;letter-spacing:.08em;color:rgba(255,255,255,.92);margin-bottom:1.25rem;line-height:1.7}
+  .page-hero-desc{font-size:.95rem;line-height:2;opacity:.88;max-width:600px}
+  .page-hero-badge{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    padding:.5rem 1rem;
+    font-size:.85rem;margin-top:1.25rem;
+    backdrop-filter:blur(4px);
+    border-radius:var(--corner);
+  }
+
+  /* SEC共通 */
+  .sec{padding:5rem 1.5rem}
+  .sec-inner{max-width:1100px;margin:0 auto}
+  .sec.bg-cream{background:var(--clight)}
+  .sec-head{text-align:center;margin-bottom:2.75rem}
+  .sec-label{font-family:var(--roman);font-size:.78rem;letter-spacing:.26em;color:var(--gd);margin-bottom:.55rem}
+  .sec-title{font-family:var(--serif);font-size:clamp(1.4rem,3vw,1.85rem);font-weight:400;letter-spacing:.1em;margin-bottom:.8rem}
+  .sec-desc{font-size:.9rem;color:var(--mid);line-height:2}
+
+  /* FEATURES */
+  .features{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+  .feature{background:var(--white);border:1px solid var(--border);padding:1.85rem 1.35rem;text-align:left;border-radius:var(--corner)}
+  .feature-icon{color:var(--gd);margin-bottom:.85rem;width:48px;height:48px;background:var(--gl);display:flex;align-items:center;justify-content:center;border-radius:var(--corner)}
+  .feature-title{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--gd);margin-bottom:.6rem;line-height:1.6}
+  .feature-desc{font-size:.875rem;line-height:1.9;color:var(--mid)}
+
+  /* STEPS */
+  .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;max-width:1100px;margin:0 auto}
+  .step{background:var(--white);border:1px solid var(--border);padding:1.85rem 1.35rem 1.5rem;position:relative;border-radius:var(--corner)}
+  .step-num{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;background:var(--gd);color:#fff;font-family:var(--num);font-size:1.1rem;margin-bottom:.95rem;border-radius:50%}
+  .step-title{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--gd);margin-bottom:.65rem;line-height:1.6;padding-bottom:.5rem;border-bottom:1px solid var(--gm)}
+  .step-desc{font-size:.875rem;line-height:1.85;color:var(--mid)}
+
+  /* ITEMS */
+  .items-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;max-width:1000px;margin:0 auto}
+  .item-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;border-radius:var(--corner)}
+  .item-icon{color:var(--gd);background:var(--gl);width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:var(--corner)}
+  .item-title{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--gd);margin-bottom:.4rem}
+  .item-desc{font-size:.875rem;line-height:1.85;color:var(--mid)}
+
+  /* PRICE TABLE */
+  .price-table-wrap{max-width:780px;margin:0 auto}
+  .price-table{width:100%;border-collapse:collapse;font-size:.9rem;background:var(--white);border:1px solid var(--border);border-radius:var(--corner);overflow:hidden}
+  .price-table th{background:var(--gd);color:#fff;padding:.85rem 1.25rem;text-align:left;font-weight:400;font-size:.875rem;letter-spacing:.06em}
+  .price-table td{padding:.85rem 1.25rem;border-bottom:1px solid var(--border)}
+  .price-table tbody tr:last-child td{border-bottom:none}
+  .price-table .note-cell{font-size:.78rem;color:var(--light)}
+  .price-table strong{font-family:var(--num);font-size:1rem;color:var(--gd)}
+
+  /* AREA */
+  .area-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;max-width:840px;margin:0 auto}
+  .area-card{background:var(--white);border:1px solid var(--border);padding:2rem 1.5rem;text-align:center;border-radius:var(--corner)}
+  .area-name{font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--gd);margin-bottom:.75rem;letter-spacing:.1em}
+  .area-permit{font-size:.78rem;color:var(--light);line-height:1.8}
+
+  .note-block{background:#fffbf0;border-left:3px solid var(--gold);padding:1.5rem 1.75rem;font-size:.9rem;line-height:1.95;color:var(--mid);border-radius:var(--corner)}
+  .note-block strong{color:var(--gd);display:block;margin-bottom:.5rem;font-family:var(--serif);font-size:1rem}
+
+  .cta-sec{background:var(--gd);color:#fff;padding:5rem 1.5rem;text-align:center}
+  .cta-title{font-family:var(--serif);font-size:clamp(1.4rem,3vw,1.85rem);font-weight:400;letter-spacing:.1em;margin-bottom:1.25rem}
+  .cta-desc{font-size:.9rem;opacity:.85;margin-bottom:.75rem;line-height:2}
+  .cta-hours{font-size:.78rem;opacity:.7;margin-bottom:2.25rem}
+  .cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+  .cta-tel-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;background:#fff;color:var(--gd);padding:.95rem 2.5rem;font-size:.95rem;font-family:var(--roman);letter-spacing:.1em;transition:.2s;border-radius:var(--corner)}
+  .cta-tel-btn:hover{background:var(--gl)}
+  .cta-web-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.5rem;font-size:.9rem;letter-spacing:.08em;transition:.2s;border-radius:var(--corner)}
+  .cta-web-btn:hover{background:rgba(255,255,255,.1)}
+
+  .fixed-cta{display:none}
+
+  @media(max-width:1024px){
+    .features{grid-template-columns:repeat(2,1fr)}
+    .steps-grid{grid-template-columns:repeat(2,1fr)}
+    .area-cards{grid-template-columns:repeat(3,1fr)}
+  }
+  @media(max-width:768px){
+    .page-hero{padding:3.5rem 1.25rem;min-height:auto}
+    .page-hero-inner{margin:0 auto;text-align:left}
+    .features,.steps-grid,.items-grid,.area-cards{grid-template-columns:1fr}
+    .sec{padding:3.5rem 1rem}
+    .price-table{font-size:.85rem}
+    .price-table th,.price-table td{padding:.7rem .8rem}
+    .cta-btns{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}
+    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
+    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
+    .tel-f{background:var(--gd);color:#fff}
+    .web-f{background:#333;color:#fff}
+    body{padding-bottom:52px}
+  }
+</style>
+
+<script>
+const obs = new IntersectionObserver(e => {
+  e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>

@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import ServicePageStyles from '../../components/ServicePageStyles.astro';
+
+const features = [
+  { icon: 'tree',     title: '自然に還る、新しい供養',     desc: '広い海原へお見送りする海洋散骨は、自然と一体化したい方や、お墓を継承する方がいないご家族に選ばれています。' },
+  { icon: 'document', title: 'ガイドラインに沿った対応',   desc: '厚生労働省のガイドラインに沿って、適切な海域・方法で散骨を執り行います。ご遺骨の粉骨も含めて適正に対応。' },
+  { icon: 'home',     title: 'ご家族の想いに寄り添う',     desc: '貸切のチャータープランから、複数家族で行う合同プランまで、ご予算とご希望に合わせてお選びいただけます。' },
+  { icon: 'photo',    title: '散骨証明書を発行',           desc: '散骨完了後、散骨日時・海域を記した散骨証明書を発行いたします。' },
+];
+
+const plans = [
+  { icon: 'home',  title: 'チャータープラン',  desc: 'ご家族・ご親族で船を貸し切り、ゆっくりと故人をお見送りいただけます。10名様までご乗船可能。費用 000,000円〜。' },
+  { icon: 'tree',  title: '合同プラン',        desc: '他のご家族と合同で乗船し、それぞれのご遺骨を散骨いたします。ご家族2〜4名様まで。費用 000,000円〜。' },
+  { icon: 'box',   title: '委託プラン',        desc: 'ご乗船されず、当社スタッフが代行して散骨いたします。後日、散骨証明書と写真をお送りします。費用 00,000円〜。' },
+  { icon: 'lotus', title: '部分散骨プラン',    desc: 'ご遺骨の一部を海洋散骨し、残りはお墓・納骨堂・手元供養などへ。柔軟な供養を希望される方に。費用 00,000円〜。' },
+];
+
+const steps = [
+  { num: 1, title: 'ご相談・プラン決定',     desc: 'プラン・日程・乗船人数などを確認のうえ、お見積もりをご提示いたします。' },
+  { num: 2, title: 'ご契約・お支払い',       desc: 'ご納得いただきましたらご契約。お支払い方法もご案内いたします。' },
+  { num: 3, title: 'ご遺骨の粉骨',           desc: '法律に基づき、ご遺骨を2mm以下に粉骨いたします。立ち会いも可能です。' },
+  { num: 4, title: '散骨当日・乗船',         desc: '指定の港にお越しいただき、ご乗船。海域までスタッフが丁寧にご案内いたします。' },
+  { num: 5, title: '散骨セレモニー',         desc: '海域到着後、お花とともにご遺骨を散骨。黙祷を捧げ、心からお見送りいたします。' },
+  { num: 6, title: '証明書・写真をお届け',   desc: '後日、散骨証明書と当日の写真をお送りいたします。' },
+];
+---
+
+<BaseLayout
+  title="海洋散骨 | エンジェルセンター ぶっこうどう"
+  description="長崎の海へ、故人を自然に還す海洋散骨。チャーター・合同・委託・部分散骨の4プランをご用意。厚生労働省ガイドラインに沿った適切な対応。"
+>
+  <ServicePageStyles />
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>海洋散骨</span>
+    </div>
+
+    <section class="page-hero no-image">
+      <div class="hero-overlay"></div>
+      <div class="page-hero-inner">
+        <p class="page-hero-label">SERVICE 10 — Ocean Scattering</p>
+        <h1 class="page-hero-title">海洋散骨</h1>
+        <p class="page-hero-catch">広い海原へ。新しいお見送りのかたち。</p>
+        <p class="page-hero-desc">
+          長崎の海へ、故人を自然に還す供養のかたち。<br>
+          チャーター・合同・委託・部分散骨と、<br>
+          ご家族のご希望に合わせた4つのプランをご用意しています。
+        </p>
+        <div class="page-hero-badge">
+          <Icon name="tree" size={16} />
+          <span>委託プラン<strong style="font-family:var(--num);font-size:1.1rem">00,000円〜</strong>（税込）</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">FEATURES</p><h2 class="sec-title">海洋散骨の特徴</h2></div>
+        <div class="features fi">
+          {features.map(f => (
+            <div class="feature">
+              <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
+              <h3 class="feature-title">{f.title}</h3>
+              <p class="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PLANS</p><h2 class="sec-title">4つのプラン</h2><p class="sec-desc">ご家族のご希望・ご予算に合わせて、4つのプランからお選びいただけます。</p></div>
+        <div class="items-grid fi">
+          {plans.map(p => (
+            <div class="item-card">
+              <div class="item-icon"><Icon name={p.icon} size={24} /></div>
+              <div>
+                <h3 class="item-title">{p.title}</h3>
+                <p class="item-desc">{p.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PROCESS</p><h2 class="sec-title">散骨までの流れ</h2><p class="sec-desc">ご相談から散骨完了まで、6つのステップで丁寧に対応いたします。</p></div>
+        <div class="steps-grid cols-6 fi">
+          {steps.map(s => (
+            <div class="step">
+              <div class="step-num">{s.num}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner" style="max-width:780px">
+        <div class="note-block fi">
+          <strong>海洋散骨は、近年注目されている新しい供養のかたちです。</strong>
+          「海が好きだった」「子や孫に負担をかけたくない」「お墓を持たない選択をしたい」など、選ばれる理由は様々。法律やガイドラインに基づいた適切な手続きで、ご家族の想いに寄り添ったお見送りをお手伝いいたします。「全部を海に還すのは抵抗がある」という方には、部分散骨もおすすめです。
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-sec fi">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-desc">ご相談・お見積もりは無料です。「海洋散骨の件で…」とお伝えください。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+        <a href="/estimate/ocean" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<script>
+const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>

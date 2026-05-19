@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import ServicePageStyles from '../../components/ServicePageStyles.astro';
+
+const features = [
+  { icon: 'home',     title: '遠方の方でも安心',         desc: '長崎を離れて暮らすご家族に代わり、お墓の清掃・お参りを定期的に代行いたします。' },
+  { icon: 'photo',    title: '作業前後の写真をご報告',   desc: '作業前後の写真をメール・郵送でお送りします。お墓の状況がひと目でわかり、安心していただけます。' },
+  { icon: 'lotus',    title: 'お花・お線香の供養',       desc: 'ご希望に応じてお花・お線香をお供えし、手を合わせてお祈りいたします。' },
+  { icon: 'tag',      title: '柔軟な単発・定期プラン',   desc: '年に1回のお盆だけ、毎月定期で、など柔軟に対応。お試し1回からご利用いただけます。' },
+];
+
+const services = [
+  { icon: 'lotus',     title: '基本清掃',         desc: '墓石の水洗い・拭き上げ、雑草の除去、落ち葉の片付けなど、墓地まわりを丁寧にお手入れします。' },
+  { icon: 'tree',      title: '献花・お供え',     desc: 'お花・お線香・お供物をお供えし、手を合わせてお祈りいたします。お花は季節に合わせたものをご用意します。' },
+  { icon: 'photo',     title: '作業前後の撮影',   desc: '作業前後のお墓の状況を撮影し、ご家族へご報告。お墓の状態を確認していただけます。' },
+  { icon: 'document',  title: 'ご報告書の発行',   desc: '作業内容・お墓の状況をまとめたご報告書を、ご希望のご家族にお送りいたします。' },
+];
+
+const priceRows = [
+  { type: 'お試し単発(1回・基本清掃)',     price: '00,000円',   note: 'はじめての方向け' },
+  { type: '単発(1回・基本清掃+献花)',     price: '00,000円',   note: 'お盆・お彼岸など' },
+  { type: '年2回プラン(お盆・お彼岸)',     price: '00,000円',   note: '年額・献花込み' },
+  { type: '年4回プラン(四季)',             price: '00,000円',   note: '年額・献花込み' },
+  { type: '月1回プラン(レギュラー)',       price: '00,000円',   note: '年額・献花込み' },
+  { type: '草刈り単独(墓地周辺)',           price: '00,000円',   note: '範囲による' },
+];
+
+const steps = [
+  { num: 1, title: 'お問合せ',           desc: 'お墓の場所・ご希望プランをお伺いします。所要時間の目安もお伝えします。' },
+  { num: 2, title: '現地確認・お見積もり', desc: 'お墓の状態を一度確認させていただきます(写真でも代用可能)。' },
+  { num: 3, title: 'プラン決定・契約',    desc: '単発・定期プランを決定。お支払い方法もご案内いたします。' },
+  { num: 4, title: '作業実施',           desc: '清掃・献花・お祈りを実施。作業前後を撮影し記録します。' },
+  { num: 5, title: 'ご報告',             desc: 'ご報告書と写真をメール・郵送でお届けいたします。' },
+];
+---
+
+<BaseLayout
+  title="墓守代行サービス | エンジェルセンター ぶっこうどう"
+  description="遠方にお住まいの方に代わり、お墓の清掃・献花・お参りを代行いたします。作業前後の写真ご報告つき。単発1回から月1回の定期プランまで対応。"
+>
+  <ServicePageStyles />
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>墓守代行サービス</span>
+    </div>
+
+    <section class="page-hero no-image">
+      <div class="hero-overlay"></div>
+      <div class="page-hero-inner">
+        <p class="page-hero-label">SERVICE 09 — Grave Keeping Agency</p>
+        <h1 class="page-hero-title">墓守代行サービス</h1>
+        <p class="page-hero-catch">遠くからでも、お墓を想うあなたの気持ちを。</p>
+        <p class="page-hero-desc">
+          長崎を離れて暮らす方に代わり、<br>
+          お墓の清掃・献花・お参りを定期的に代行いたします。<br>
+          作業前後の写真ご報告つきで、遠方でも安心。
+        </p>
+        <div class="page-hero-badge">
+          <Icon name="tag" size={16} />
+          <span>お試し単発<strong style="font-family:var(--num);font-size:1.1rem">00,000円〜</strong>（税込）</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">FEATURES</p><h2 class="sec-title">墓守代行の特徴</h2></div>
+        <div class="features fi">
+          {features.map(f => (
+            <div class="feature">
+              <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
+              <h3 class="feature-title">{f.title}</h3>
+              <p class="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">SERVICE CONTENT</p><h2 class="sec-title">サービス内容</h2><p class="sec-desc">基本サービスとして以下の作業をご提供いたします。</p></div>
+        <div class="items-grid fi">
+          {services.map(s => (
+            <div class="item-card">
+              <div class="item-icon"><Icon name={s.icon} size={24} /></div>
+              <div>
+                <h3 class="item-title">{s.title}</h3>
+                <p class="item-desc">{s.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PLANS</p><h2 class="sec-title">プラン・料金</h2><p class="sec-desc">単発・定期、ご都合に合わせて選べる柔軟なプランをご用意しています。</p></div>
+        <div class="price-table-wrap fi">
+          <table class="price-table">
+            <thead><tr><th>プラン</th><th>料金(税込)</th><th>備考</th></tr></thead>
+            <tbody>
+              {priceRows.map(row => (
+                <tr><td>{row.type}</td><td><strong>{row.price}</strong></td><td class="note-cell">{row.note}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
+            ※定期プランの料金は年額です。月割りでのお支払いも可能です。<br>
+            ※お墓の場所・規模により追加料金が発生する場合があります(離島・山間部など)。<br>
+            ※お花の種類のご希望は、別途ご相談ください。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PROCESS</p><h2 class="sec-title">ご利用の流れ</h2></div>
+        <div class="steps-grid cols-5 fi">
+          {steps.map(s => (
+            <div class="step">
+              <div class="step-num">{s.num}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner" style="max-width:780px">
+        <div class="note-block fi">
+          <strong>「気にしてはいるけれど、なかなか帰省できない」というお声、よく耳にします。</strong>
+          仕事や家庭の事情で帰省が難しい方、ご高齢でお墓参りが大変な方など、お墓を想う気持ちはあっても、行動が難しいケースは少なくありません。私たちが代わりにお墓をきれいに保ち、手を合わせます。写真ご報告で、いつでもお墓の様子を確認していただけます。
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-sec fi">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-desc">お試し単発からご利用いただけます。「墓守代行の件で…」とお伝えください。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+        <a href="/estimate/keeping" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<script>
+const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>

@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import ServicePageStyles from '../../components/ServicePageStyles.astro';
+
+const features = [
+  { icon: 'lotus',     title: 'いつもそばに、故人を感じて',   desc: 'ペンダント・ミニ骨壺・遺骨アクセサリーなど、いつでも身近に故人を感じられる供養のかたちをご提案します。' },
+  { icon: 'furniture', title: '住空間に馴染むデザイン',       desc: 'リビングに飾れるステージタイプ、小さなインテリアとして置けるミニ骨壺など、現代の暮らしに合うデザインを多数。' },
+  { icon: 'document',  title: '宗派を問わずご利用可能',       desc: '仏教・神道・キリスト教・無宗教まで、どんな信仰のかたにもお使いいただけるデザインをご用意しています。' },
+  { icon: 'tag',       title: '手の届く価格帯から',           desc: 'ペンダントは00,000円台から、ミニ骨壺は0,000円台からとお求めやすい価格帯もご用意しています。' },
+];
+
+const products = [
+  { icon: 'lotus',     title: '遺骨ペンダント',     desc: 'ご遺骨やご遺髪を納められるペンダント。シルバー・ゴールド・チタン素材から選べます。' },
+  { icon: 'box',       title: 'ミニ骨壺',           desc: '手のひらサイズの可愛らしい骨壺。陶器・ガラス・金属など豊富な素材とデザイン。' },
+  { icon: 'altar',     title: 'ステージ型仏壇',     desc: 'お写真・お位牌・骨壺・お花などを飾れるシンプルなステージ。リビングに置けるサイズ。' },
+  { icon: 'photo',     title: '遺骨入りフォトフレーム', desc: 'お写真とご遺骨を一緒に飾れる特別なフォトフレーム。お部屋のインテリアとしても。' },
+  { icon: 'doll',      title: 'ぬくもり人形',       desc: '故人のお洋服やお守りなどを使って作る、思い出の品を込めた人形。世界に一つだけの形見。' },
+  { icon: 'tree',      title: 'メモリアルツリー',   desc: 'ご遺骨の一部を内蔵し、植物や石とともに飾るアートピース。ご家族の癒しの場に。' },
+];
+
+const priceRows = [
+  { type: '遺骨ペンダント(シルバー)',       price: '00,000円〜', note: '刻印サービス可' },
+  { type: '遺骨ペンダント(ゴールド)',       price: '00,000円〜', note: 'K10/K18展開' },
+  { type: 'ミニ骨壺(陶器)',                 price: '0,000円〜',  note: '九谷焼・有田焼など' },
+  { type: 'ミニ骨壺(ガラス・クリスタル)',   price: '00,000円〜', note: '手作り一点物あり' },
+  { type: 'ステージ型仏壇',                 price: '00,000円〜', note: '木製・サイズ各種' },
+  { type: 'ぬくもり人形',                   price: '00,000円〜', note: 'オーダーメイド' },
+];
+
+const steps = [
+  { num: 1, title: 'ご来店またはオンライン相談', desc: '店舗(仏光堂)にて実物をご覧いただくか、オンラインでも商品のご相談を承ります。' },
+  { num: 2, title: '商品選び',                  desc: '故人の好みや暮らし方に合わせて、最適なお品をご提案いたします。' },
+  { num: 3, title: 'カスタマイズの相談',        desc: '刻印・色違い・特注品など、ご希望に応じてカスタマイズが可能です。' },
+  { num: 4, title: 'ご注文・お支払い',          desc: 'ご注文確定後、お支払い手続きへ。納期もご案内いたします。' },
+  { num: 5, title: 'お届け・ご納骨サポート',    desc: '完成品をお届けし、ご希望に応じてご遺骨の納入サポートもいたします。' },
+];
+---
+
+<BaseLayout
+  title="手元供養品販売 | エンジェルセンター ぶっこうどう"
+  description="ペンダント・ミニ骨壺・ステージ型仏壇など、現代の暮らしに馴染む手元供養品を多数取り揃え。宗派を問わずご利用いただけます。"
+>
+  <ServicePageStyles />
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>手元供養品販売</span>
+    </div>
+
+    <section class="page-hero no-image">
+      <div class="hero-overlay"></div>
+      <div class="page-hero-inner">
+        <p class="page-hero-label">SERVICE 11 — Memento Items</p>
+        <h1 class="page-hero-title">手元供養品販売</h1>
+        <p class="page-hero-catch">いつもそばに、大切な人を。</p>
+        <p class="page-hero-desc">
+          ペンダント・ミニ骨壺・ステージ型仏壇など、<br>
+          現代の暮らしに馴染む手元供養品を多数取り揃えています。<br>
+          宗派を問わずご利用いただけます。
+        </p>
+        <div class="page-hero-badge">
+          <Icon name="tag" size={16} />
+          <span>商品<strong style="font-family:var(--num);font-size:1.1rem">0,000円〜</strong>（税込）</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">FEATURES</p><h2 class="sec-title">手元供養品の特徴</h2></div>
+        <div class="features fi">
+          {features.map(f => (
+            <div class="feature">
+              <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
+              <h3 class="feature-title">{f.title}</h3>
+              <p class="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PRODUCTS</p><h2 class="sec-title">取扱商品</h2><p class="sec-desc">ご家族のお気持ち・暮らし方に合わせて、6種類の手元供養品をご紹介いたします。</p></div>
+        <div class="items-grid cols-3 fi">
+          {products.map(p => (
+            <div class="item-card">
+              <div class="item-icon"><Icon name={p.icon} size={24} /></div>
+              <div>
+                <h3 class="item-title">{p.title}</h3>
+                <p class="item-desc">{p.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PRICE</p><h2 class="sec-title">商品価格表</h2><p class="sec-desc">下記は代表的な商品の参考価格です。素材・デザインにより金額が変動いたします。</p></div>
+        <div class="price-table-wrap fi">
+          <table class="price-table">
+            <thead><tr><th>商品</th><th>価格(税込)</th><th>備考</th></tr></thead>
+            <tbody>
+              {priceRows.map(row => (
+                <tr><td>{row.type}</td><td><strong>{row.price}</strong></td><td class="note-cell">{row.note}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
+            ※上記は参考価格です。素材・デザイン・サイズにより金額が変動いたします。<br>
+            ※刻印・特注品は別途料金がかかる場合がございます。<br>
+            ※詳細は仏光堂(店舗)にてご確認いただけます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PROCESS</p><h2 class="sec-title">ご購入の流れ</h2></div>
+        <div class="steps-grid cols-5 fi">
+          {steps.map(s => (
+            <div class="step">
+              <div class="step-num">{s.num}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner" style="max-width:780px">
+        <div class="note-block fi">
+          <strong>「大きなお仏壇は持てないけれど、何か供養のかたちを持ちたい」というご家族へ。</strong>
+          手元供養は、住宅事情や生活スタイルが変わっても、故人を身近に感じ続けられる供養のかたちです。普段の生活の中でふと手を合わせる、寝室に置いて朝晩のご挨拶をする、外出時に身につける——日常に自然に溶け込む供養を、私たちと一緒に見つけませんか。
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-sec fi">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-desc">店舗での実物確認も可能です。「手元供養品の件で…」とお伝えください。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<script>
+const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>

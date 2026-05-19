@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import ServicePageStyles from '../../components/ServicePageStyles.astro';
+
+const features = [
+  { icon: 'document', title: '行政手続きを代行',         desc: '改葬許可申請・受入証明書の取得など、複雑な行政手続きを代行いたします。書類作成のサポートも万全。' },
+  { icon: 'lotus',    title: '閉眼供養から対応',         desc: 'お墓から魂を抜く閉眼供養を、提携寺院の僧侶が執り行います。ご遺骨を丁寧にお取り出しいたします。' },
+  { icon: 'home',     title: '墓石撤去・整地',           desc: '専門スタッフによる墓石の撤去・整地作業。墓地を更地に戻し、霊園管理者へお返しいたします。' },
+  { icon: 'tree',     title: '次の供養先までサポート',   desc: '永代供養墓・納骨堂・樹木葬・散骨など、ご遺骨の新しい供養先のご紹介まで一括対応。' },
+];
+
+const steps = [
+  { num: 1, title: 'ご相談・現地確認',     desc: 'お墓の場所・サイズ・状況を確認し、お見積もりをご提示いたします。' },
+  { num: 2, title: '改葬先の決定',         desc: '永代供養墓・納骨堂・散骨など、ご遺骨の新しい供養先を決めていただきます。' },
+  { num: 3, title: '行政手続き',           desc: '改葬許可申請書・受入証明書など、必要書類の取得・提出を代行いたします。' },
+  { num: 4, title: '閉眼供養',             desc: 'お寺様による閉眼供養を執り行い、ご遺骨をお取り出しいたします。' },
+  { num: 5, title: '墓石撤去・整地',       desc: '墓石の撤去・処分、墓地の整地を行い、霊園管理者へお返しいたします。' },
+  { num: 6, title: '新たな供養先へ納骨',   desc: 'ご遺骨を新しい供養先へお運びし、納骨までサポートいたします。' },
+];
+
+const priceRows = [
+  { type: '墓じまい(標準・1〜2㎡)',     price: '000,000円〜', note: '墓石撤去・整地含む' },
+  { type: '墓じまい(中規模・3〜4㎡)',   price: '000,000円〜', note: '墓石撤去・整地含む' },
+  { type: '墓じまい(大規模・5㎡以上)',  price: '000,000円〜', note: 'お見積もり制' },
+  { type: '改葬許可申請代行',           price: '00,000円〜',  note: '1柱あたり' },
+  { type: '閉眼供養(お布施)',           price: '00,000円〜',  note: 'お寺様への謝礼' },
+  { type: '搬出費用',                   price: '00,000円〜',  note: '距離による' },
+];
+---
+
+<BaseLayout
+  title="墓じまい | エンジェルセンター ぶっこうどう"
+  description="改葬許可申請から閉眼供養・墓石撤去・新たな供養先までワンストップ対応。後継者問題・遠方管理など、お墓のお悩みをサポートいたします。"
+>
+  <ServicePageStyles />
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>墓じまい</span>
+    </div>
+
+    <section class="page-hero no-image">
+      <div class="hero-overlay"></div>
+      <div class="page-hero-inner">
+        <p class="page-hero-label">SERVICE 08 — Grave Closure</p>
+        <h1 class="page-hero-title">墓じまい</h1>
+        <p class="page-hero-catch">お墓の未来を、ご家族の選択で。</p>
+        <p class="page-hero-desc">
+          後継者問題・遠方からの管理・経済的負担など、<br>
+          お墓のお悩みは年々増えています。<br>
+          行政手続きから新たな供養先まで、複雑な工程をすべて当社が代行いたします。
+        </p>
+        <div class="page-hero-badge">
+          <Icon name="document" size={16} />
+          <span>行政手続き<strong style="font-family:var(--num);font-size:1.1rem">代行込み</strong>（税込）</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">FEATURES</p><h2 class="sec-title">墓じまいの特徴</h2></div>
+        <div class="features fi">
+          {features.map(f => (
+            <div class="feature">
+              <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
+              <h3 class="feature-title">{f.title}</h3>
+              <p class="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PROCESS</p><h2 class="sec-title">墓じまいの流れ</h2><p class="sec-desc">ご相談から新たな供養先への納骨まで、6つのステップで丁寧に対応いたします。</p></div>
+        <div class="steps-grid cols-6 fi">
+          {steps.map(s => (
+            <div class="step">
+              <div class="step-num">{s.num}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PRICE</p><h2 class="sec-title">料金の目安</h2><p class="sec-desc">お墓のサイズ・立地・改葬先により金額が変動いたします。</p></div>
+        <div class="price-table-wrap fi">
+          <table class="price-table">
+            <thead><tr><th>項目</th><th>料金(税込)</th><th>備考</th></tr></thead>
+            <tbody>
+              {priceRows.map(row => (
+                <tr><td>{row.type}</td><td><strong>{row.price}</strong></td><td class="note-cell">{row.note}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
+            ※墓地の立地(山間部・離島など)により搬出費用が変動いたします。<br>
+            ※新たな供養先の費用は別途必要です(永代供養墓・納骨堂など)。<br>
+            ※詳細は現地確認のうえ、お見積もりさせていただきます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner" style="max-width:780px">
+        <div class="note-block fi">
+          <strong>「ご先祖様に申し訳ない」というお気持ち、よく分かります。</strong>
+          墓じまいは「捨てる」ことではなく、「より良いかたちへの引っ越し」です。後継者がいない、遠方で管理が難しい、経済的に厳しい——どんな理由でも構いません。閉眼供養を経て新しい供養先へお移しすることで、ご先祖様も安心していただけるかたちが整います。後悔のない選択ができるよう、丁寧にサポートいたします。
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-sec fi">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-desc">ご相談・お見積もりは無料です。「墓じまいの件で…」とお伝えください。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+        <a href="/estimate/grave" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<script>
+const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>

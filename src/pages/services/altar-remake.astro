@@ -1,0 +1,170 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import ServicePageStyles from '../../components/ServicePageStyles.astro';
+
+const features = [
+  { icon: 'altar',     title: '想いを残しつつ現代の暮らしへ', desc: '代々受け継がれた仏壇の一部材を使い、現代のお部屋に馴染むサイズ・デザインへ作り変えます。ご先祖様への想いはそのままに。' },
+  { icon: 'furniture', title: '熟練職人が一点ずつ製作',       desc: '伝統工芸を学んだ職人が、お預かりした仏壇を一点ずつ丁寧に再構築。既製品にはない仕上がりです。' },
+  { icon: 'home',      title: 'お部屋に合わせたサイズ感',     desc: 'マンションのリビング・寝室・床の間など、設置場所に合わせたコンパクト設計。圧迫感のないお仏壇に。' },
+  { icon: 'document',  title: '事前デザイン確認',             desc: '製作開始前にデザイン案・寸法をご確認いただきます。納得いただいてから着手いたします。' },
+];
+
+const remakeTypes = [
+  { icon: 'altar',     title: 'コンパクト型リメイク',   desc: '大型仏壇を、現代のお部屋に合うコンパクトサイズに再構築。元の彫刻や金具を活かした仕上がりに。' },
+  { icon: 'furniture', title: 'モダン家具型リメイク',   desc: 'リビングのチェストやサイドボードと自然に馴染むデザインに。インテリアの一部として置けます。' },
+  { icon: 'box',       title: 'ステージ型リメイク',     desc: 'お写真・お位牌・ご遺骨を飾るシンプルなステージ型へ。手元供養としても最適です。' },
+  { icon: 'tree',      title: '木材活用リメイク',       desc: '使える木材を活かして、思い出を残す家具・小物へ作り変えます(写真立て・小箱など)。' },
+];
+
+const steps = [
+  { num: 1, title: 'ご相談・お見積もり',     desc: '現在の仏壇のサイズ・状態を拝見し、リメイク案とお見積もりをご提案いたします。' },
+  { num: 2, title: 'デザインご提案',         desc: 'リメイク後のイメージ図・寸法・使用材料をご確認いただきます。' },
+  { num: 3, title: 'ご契約・お預かり',       desc: 'ご納得いただきましたらご契約。仏壇をお預かりいたします(閉眼供養も承ります)。' },
+  { num: 4, title: '製作・組み立て',         desc: '熟練職人が一点ずつ丁寧に製作いたします。製作期間は1〜3ヶ月が目安です。' },
+  { num: 5, title: '完成・お届け',           desc: '完成品をお届けし、設置までいたします。開眼供養もお手配可能です。' },
+];
+
+const priceRows = [
+  { type: 'コンパクト型リメイク',     price: '000,000円〜', note: '元仏壇のサイズによる' },
+  { type: 'モダン家具型リメイク',     price: '000,000円〜', note: 'デザインにより変動' },
+  { type: 'ステージ型リメイク',       price: '00,000円〜',  note: 'シンプル仕様' },
+  { type: '木材活用リメイク(小物)',   price: '00,000円〜',  note: '写真立て・小箱など' },
+  { type: '搬出・搬入費',             price: '00,000円〜',  note: '長崎県内' },
+  { type: '閉眼・開眼供養手配',       price: '00,000円〜',  note: 'お寺様のお布施含む' },
+];
+---
+
+<BaseLayout
+  title="仏壇リメイク | エンジェルセンター ぶっこうどう"
+  description="代々受け継がれた仏壇を、現代のお部屋に馴染むデザインへ。コンパクト型・モダン家具型・ステージ型など、ご家族の暮らしに合わせたリメイクをご提案。"
+>
+  <ServicePageStyles />
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>仏壇リメイク</span>
+    </div>
+
+    <section class="page-hero no-image">
+      <div class="hero-overlay"></div>
+      <div class="page-hero-inner">
+        <p class="page-hero-label">SERVICE 07 — Altar Remake</p>
+        <h1 class="page-hero-title">仏壇リメイク</h1>
+        <p class="page-hero-catch">受け継がれた想いを、これからの暮らしへ。</p>
+        <p class="page-hero-desc">
+          「処分するには忍びないが、今の家には大きすぎる」<br>
+          そんなお声から生まれたサービスです。<br>
+          ご先祖様への想いを残しながら、現代のお部屋に合うかたちへ作り変えます。
+        </p>
+        <div class="page-hero-badge">
+          <Icon name="furniture" size={16} />
+          <span>リメイク <strong style="font-family:var(--num);font-size:1.1rem">000,000円〜</strong>（税込）</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">FEATURES</p><h2 class="sec-title">リメイクの特徴</h2></div>
+        <div class="features fi">
+          {features.map(f => (
+            <div class="feature">
+              <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
+              <h3 class="feature-title">{f.title}</h3>
+              <p class="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">REMAKE TYPES</p><h2 class="sec-title">リメイクのタイプ</h2><p class="sec-desc">ご家族のお部屋や暮らし方に合わせて、最適なリメイクをご提案します。</p></div>
+        <div class="items-grid fi">
+          {remakeTypes.map(t => (
+            <div class="item-card">
+              <div class="item-icon"><Icon name={t.icon} size={24} /></div>
+              <div>
+                <h3 class="item-title">{t.title}</h3>
+                <p class="item-desc">{t.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PROCESS</p><h2 class="sec-title">リメイクの流れ</h2><p class="sec-desc">ご相談からお届けまで、5つのステップで丁寧に対応いたします。</p></div>
+        <div class="steps-grid cols-5 fi">
+          {steps.map(s => (
+            <div class="step">
+              <div class="step-num">{s.num}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PRICE</p><h2 class="sec-title">料金の目安</h2><p class="sec-desc">リメイクのタイプ・サイズ・使用材料により金額が変動いたします。</p></div>
+        <div class="price-table-wrap fi">
+          <table class="price-table">
+            <thead><tr><th>項目</th><th>料金(税込)</th><th>備考</th></tr></thead>
+            <tbody>
+              {priceRows.map(row => (
+                <tr><td>{row.type}</td><td><strong>{row.price}</strong></td><td class="note-cell">{row.note}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
+            ※製作期間は1〜3ヶ月が目安です。デザインの複雑さにより変動いたします。<br>
+            ※元仏壇の状態によっては、追加修復費用が発生する場合がございます。<br>
+            ※詳細は現地確認のうえ、お見積もりさせていただきます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner" style="max-width:780px">
+        <div class="note-block fi">
+          <strong>「捨てたくない、でも今の家には合わない」というジレンマに、新しい選択肢を。</strong>
+          仏壇リメイクは、近年注目されている供養のかたちです。大切なご先祖様への想いを残しつつ、現代の住空間に馴染むデザインへ。リビングに置いても違和感のないモダン仏壇として、日々の暮らしの中で自然にご供養いただけます。
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-sec fi">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-desc">ご相談・お見積もりは無料です。「仏壇リメイクの件で…」とお伝えください。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<script>
+const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>

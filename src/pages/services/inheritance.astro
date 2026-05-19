@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import ServicePageStyles from '../../components/ServicePageStyles.astro';
+
+const features = [
+  { icon: 'home',     title: '専門家ネットワークでサポート',   desc: '司法書士・税理士・宅地建物取引士など、相続に関わる専門家と連携。ワンストップで手続きをサポートいたします。' },
+  { icon: 'document', title: '初回相談は無料',                 desc: 'まずは現状をお伺いいたします。相続に関するお悩み・ご不安を丁寧に整理し、進むべき道筋をご提案します。' },
+  { icon: 'tag',      title: '料金の事前提示',                 desc: '専門家のお見積もりを事前にご提示。ご納得いただいてから手続きに進めますので、安心してご相談ください。' },
+  { icon: 'lotus',    title: '葬儀後すぐにご相談可能',         desc: '相続手続きには期限のあるものが多くあります。葬儀の慌ただしさが落ち着いたら、お早めにご相談ください。' },
+];
+
+const consultTopics = [
+  { icon: 'home',      title: '不動産の相続・名義変更',    desc: '土地・建物の相続登記、相続人間での分割協議、必要書類の収集まで司法書士が対応いたします。' },
+  { icon: 'tag',       title: '不動産の売却・活用',        desc: '相続した不動産の売却・賃貸活用・更地化など、状況に応じた最適な選択肢をご提案します。' },
+  { icon: 'document',  title: '相続税の申告',              desc: '相続税の試算・申告書作成・各種特例の適用まで、税理士が対応。10ヶ月以内の申告期限にも対応します。' },
+  { icon: 'lotus',     title: '遺産分割協議のサポート',    desc: '相続人間で揉めごとが生じないよう、専門家が中立的な立場でアドバイスいたします。' },
+  { icon: 'box',       title: '預貯金・株式の名義変更',    desc: '銀行・証券口座の解約・名義変更手続きをサポート。煩雑な書類対応もお任せください。' },
+  { icon: 'tree',      title: '生前対策のご相談',          desc: 'ご本人がお元気なうちにできる相続対策(遺言書・生前贈与・家族信託など)もご提案可能です。' },
+];
+
+const steps = [
+  { num: 1, title: '初回ご相談(無料)',     desc: '現状とお悩みをお伺いいたします。相続人・財産の概要を整理し、進めるべき手続きをご案内。' },
+  { num: 2, title: '専門家のご紹介',       desc: 'ご相談内容に応じて、最適な専門家(司法書士・税理士・不動産業者)をご紹介いたします。' },
+  { num: 3, title: '見積もり・ご依頼',     desc: '専門家から見積もりをご提示。ご納得いただきましたら正式にご依頼となります。' },
+  { num: 4, title: '手続きの実施',         desc: '各種手続きを専門家が代行。当社が窓口として、進捗状況をご報告いたします。' },
+  { num: 5, title: '完了報告',             desc: 'すべての手続きが完了しましたら、結果をご報告。残った課題があれば次のステップをご案内します。' },
+];
+
+const priceRows = [
+  { type: '初回相談',                       price: '無料',         note: '60分まで' },
+  { type: '相続登記(不動産名義変更)',       price: '00,000円〜',   note: '司法書士費用・物件数による' },
+  { type: '相続税申告',                     price: '000,000円〜',  note: '税理士費用・財産額による' },
+  { type: '遺産分割協議書作成',             price: '00,000円〜',   note: '相続人数による' },
+  { type: '不動産売却サポート',             price: '成功報酬',     note: '売却価格の3〜5%' },
+  { type: '生前対策コンサルティング',       price: '00,000円〜',   note: 'ご相談内容による' },
+];
+---
+
+<BaseLayout
+  title="相続(不動産)相談 | エンジェルセンター ぶっこうどう"
+  description="相続登記・相続税申告・不動産売却・遺産分割協議など、相続に関するお悩みをワンストップでサポート。司法書士・税理士・宅建士など専門家ネットワーク。"
+>
+  <ServicePageStyles />
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>相続（不動産）相談</span>
+    </div>
+
+    <section class="page-hero no-image">
+      <div class="hero-overlay"></div>
+      <div class="page-hero-inner">
+        <p class="page-hero-label">SERVICE 12 — Inheritance Consultation</p>
+        <h1 class="page-hero-title">相続（不動産）相談</h1>
+        <p class="page-hero-catch">複雑な相続手続きを、安心の窓口で。</p>
+        <p class="page-hero-desc">
+          相続登記・相続税申告・不動産売却・遺産分割協議など、<br>
+          相続には専門知識が必要な手続きが多くあります。<br>
+          司法書士・税理士・宅建士などの専門家と連携し、ワンストップで対応いたします。
+        </p>
+        <div class="page-hero-badge">
+          <Icon name="document" size={16} />
+          <span>初回相談<strong style="font-family:var(--num);font-size:1.1rem">無料</strong>（60分まで）</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">FEATURES</p><h2 class="sec-title">相続相談の特徴</h2></div>
+        <div class="features fi">
+          {features.map(f => (
+            <div class="feature">
+              <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
+              <h3 class="feature-title">{f.title}</h3>
+              <p class="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">CONSULTATION TOPICS</p><h2 class="sec-title">ご相談いただける内容</h2><p class="sec-desc">相続に関するさまざまなお悩みに対応いたします。</p></div>
+        <div class="items-grid fi">
+          {consultTopics.map(t => (
+            <div class="item-card">
+              <div class="item-icon"><Icon name={t.icon} size={24} /></div>
+              <div>
+                <h3 class="item-title">{t.title}</h3>
+                <p class="item-desc">{t.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PROCESS</p><h2 class="sec-title">ご相談の流れ</h2><p class="sec-desc">初回相談から完了報告まで、5つのステップで丁寧に対応いたします。</p></div>
+        <div class="steps-grid cols-5 fi">
+          {steps.map(s => (
+            <div class="step">
+              <div class="step-num">{s.num}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PRICE</p><h2 class="sec-title">料金の目安</h2><p class="sec-desc">専門家への報酬は、相続財産の規模・手続きの複雑さにより変動いたします。</p></div>
+        <div class="price-table-wrap fi">
+          <table class="price-table">
+            <thead><tr><th>項目</th><th>料金(税込)</th><th>備考</th></tr></thead>
+            <tbody>
+              {priceRows.map(row => (
+                <tr><td>{row.type}</td><td><strong>{row.price}</strong></td><td class="note-cell">{row.note}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
+            ※上記は目安です。専門家からのお見積もりを事前にご提示いたします。<br>
+            ※相続税申告は財産総額により大きく変動いたします。<br>
+            ※当社では相談コーディネートを行い、専門家報酬は各専門家への直接お支払いとなります。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner" style="max-width:780px">
+        <div class="note-block fi">
+          <strong>相続には期限のある手続きが多く、放置するとリスクが生じます。</strong>
+          相続税の申告は10ヶ月以内、相続放棄は3ヶ月以内、2024年4月からは相続登記が義務化されるなど、相続手続きには期限のあるものが少なくありません。「忙しくて手が回らない」「何から始めればいいかわからない」というご家族こそ、お早めにご相談ください。慌てる前に、落ち着いて対応できます。
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-sec fi">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-desc">初回相談は無料です(60分まで)。「相続の件で…」とお伝えください。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<script>
+const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>

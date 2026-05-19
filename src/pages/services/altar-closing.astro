@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import ServicePageStyles from '../../components/ServicePageStyles.astro';
+
+const features = [
+  { icon: 'lotus',    title: '閉眼供養に対応',           desc: 'お寺様による閉眼供養(魂抜き)を行ったうえで処分いたします。ご家族の心の整理にもつながる大切な儀式です。' },
+  { icon: 'flame',    title: 'お焚き上げ供養',           desc: '一般廃棄物としてではなく、寺院でのお焚き上げによって丁寧にお見送りいたします。' },
+  { icon: 'document', title: '供養証明書を発行',         desc: 'ご希望のご遺族には供養証明書を郵送いたします。供養が完了した証となります。' },
+  { icon: 'home',     title: '搬出・運搬まで一括',       desc: '仏壇の搬出・運搬から処分まで、当社が責任を持って対応いたします。' },
+];
+
+const steps = [
+  { num: 1, title: 'お問合せ',         desc: 'お電話・Webからご相談ください。仏壇のサイズ・種類をお伺いします。' },
+  { num: 2, title: 'お見積もり',       desc: '料金の目安をお伝えいたします。必要に応じて現地確認も承ります。' },
+  { num: 3, title: '閉眼供養の日程調整', desc: 'ご家族のご都合に合わせ、お寺様との日程調整をいたします。' },
+  { num: 4, title: '閉眼供養',         desc: 'お寺様による閉眼供養を執り行います。ご家族のお立ち会いも可能です。' },
+  { num: 5, title: '搬出・お焚き上げ', desc: '仏壇を搬出し、寺院にてお焚き上げ供養いたします。' },
+  { num: 6, title: '供養証明書発行',   desc: 'ご希望に応じて供養証明書を郵送いたします。' },
+];
+
+const priceRows = [
+  { type: '仏壇供養処分(標準)',       price: '00,000円〜', note: '高さ50cm以上' },
+  { type: '小型仏壇供養処分',         price: '00,000円〜', note: '高さ50cm以下' },
+  { type: '神棚供養処分',             price: '00,000円〜', note: '一般的なサイズ' },
+  { type: '位牌供養処分',             price: '0,000円〜',  note: '1基あたり' },
+  { type: '人形・節句人形供養',       price: '00,000円〜', note: '1セット' },
+  { type: '出張閉眼供養(僧侶料含む)', price: '00,000円〜', note: '長崎県内' },
+];
+---
+
+<BaseLayout
+  title="仏壇(神棚)じまい | エンジェルセンター ぶっこうどう"
+  description="閉眼供養(魂抜き)から搬出・お焚き上げまで、心を込めて対応いたします。仏壇・神棚・位牌の処分でお困りの方はご相談ください。供養証明書発行可能。"
+>
+  <ServicePageStyles />
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>仏壇（神棚）じまい</span>
+    </div>
+
+    <section class="page-hero no-image">
+      <div class="hero-overlay"></div>
+      <div class="page-hero-inner">
+        <p class="page-hero-label">SERVICE 06 — Altar Closing Ceremony</p>
+        <h1 class="page-hero-title">仏壇（神棚）じまい</h1>
+        <p class="page-hero-catch">心を込めた閉眼供養とともに。</p>
+        <p class="page-hero-desc">
+          代々受け継がれてきた仏壇や神棚を、ただ処分するのではなく、<br>
+          お寺様による閉眼供養(魂抜き)を経てから、<br>
+          お焚き上げ供養まで責任を持って対応いたします。
+        </p>
+        <div class="page-hero-badge">
+          <Icon name="lotus" size={16} />
+          <span>閉眼供養つき <strong style="font-family:var(--num);font-size:1.1rem">00,000円〜</strong>（税込）</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">FEATURES</p><h2 class="sec-title">仏壇じまいの特徴</h2></div>
+        <div class="features fi">
+          {features.map(f => (
+            <div class="feature">
+              <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
+              <h3 class="feature-title">{f.title}</h3>
+              <p class="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PROCESS</p><h2 class="sec-title">仏壇じまいの流れ</h2><p class="sec-desc">お問合せから供養証明書発行まで、6つのステップで丁寧に対応いたします。</p></div>
+        <div class="steps-grid cols-6 fi">
+          {steps.map(s => (
+            <div class="step">
+              <div class="step-num">{s.num}</div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi"><p class="sec-label">PRICE</p><h2 class="sec-title">料金表</h2><p class="sec-desc">閉眼供養とお焚き上げを含む料金です。</p></div>
+        <div class="price-table-wrap fi">
+          <table class="price-table">
+            <thead><tr><th>項目</th><th>料金(税込)</th><th>備考</th></tr></thead>
+            <tbody>
+              {priceRows.map(row => (
+                <tr><td>{row.type}</td><td><strong>{row.price}</strong></td><td class="note-cell">{row.note}</td></tr>
+              ))}
+            </tbody>
+          </table>
+          <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
+            ※上記は目安です。仏壇のサイズ・状態により金額は変動いたします。<br>
+            ※出張供養の場合、長崎県内は出張費無料です。県外は別途ご相談ください。<br>
+            ※供養証明書をご希望の場合、発行料は料金に含まれます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-inner" style="max-width:780px">
+        <div class="note-block fi">
+          <strong>「ご先祖様に申し訳ない…」というお気持ち、よく分かります。</strong>
+          住宅事情の変化や継承の問題で、仏壇じまいを検討される方は年々増えています。大切なのは「捨てる」のではなく「お礼を伝えて見送る」こと。閉眼供養を行い、お寺様にお預けすることで、ご先祖様にも安心していただけます。どうぞお気軽にご相談ください。
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-sec fi">
+      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
+      <p class="cta-desc">お見積もり・ご相談は無料です。「仏壇じまいの件で…」とお伝えください。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<script>
+const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>
