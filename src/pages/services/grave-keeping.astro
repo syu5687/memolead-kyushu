@@ -4,6 +4,12 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
+import { getServicePricing } from '../../data/pricing';
+
+// 料金データを一元管理から取得
+const keepingPricing = getServicePricing('grave-keeping');
+const priceRows = keepingPricing?.plans ?? [];
+const priceNotes = keepingPricing?.notes ?? [];
 
 const features = [
   { icon: 'home',     title: '遠方の方でも安心',         desc: '長崎を離れて暮らすご家族に代わり、お墓の清掃・お参りを定期的に代行いたします。' },
@@ -19,14 +25,6 @@ const services = [
   { icon: 'document',  title: 'ご報告書の発行',   desc: '作業内容・お墓の状況をまとめたご報告書を、ご希望のご家族にお送りいたします。' },
 ];
 
-const priceRows = [
-  { type: 'お試し単発(1回・基本清掃)',     price: '00,000円',   note: 'はじめての方向け' },
-  { type: '単発(1回・基本清掃+献花)',     price: '00,000円',   note: 'お盆・お彼岸など' },
-  { type: '年2回プラン(お盆・お彼岸)',     price: '00,000円',   note: '年額・献花込み' },
-  { type: '年4回プラン(四季)',             price: '00,000円',   note: '年額・献花込み' },
-  { type: '月1回プラン(レギュラー)',       price: '00,000円',   note: '年額・献花込み' },
-  { type: '草刈り単独(墓地周辺)',           price: '00,000円',   note: '範囲による' },
-];
 
 const steps = [
   { num: 1, title: 'お問合せ',           desc: 'お墓の場所・ご希望プランをお伺いします。所要時間の目安もお伝えします。' },
@@ -109,7 +107,7 @@ const steps = [
             <thead><tr><th>プラン</th><th>料金(税込)</th><th>備考</th></tr></thead>
             <tbody>
               {priceRows.map(row => (
-                <tr><td>{row.type}</td><td><strong>{row.price}</strong></td><td class="note-cell">{row.note}</td></tr>
+                <tr class={row.popular ? 'row-popular' : ''}><td>{row.label}{row.popular && <span class="popular-badge">人気</span>}</td><td><strong>{row.price.toLocaleString('ja-JP')}円</strong></td><td class="note-cell">{row.size}</td></tr>
               ))}
             </tbody>
           </table>
@@ -153,7 +151,7 @@ const steps = [
       <div class="cta-btns">
         <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
         <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
-        <a href="/estimate/keeping" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
+        <a href="/estimate/?service=grave-keeping" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
       </div>
     </section>
 

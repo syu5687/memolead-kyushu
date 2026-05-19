@@ -5,6 +5,15 @@ import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/estate/estate-organize.jpg';
+import { getServicePricing, formatYen } from '../../data/pricing';
+
+// 料金データを一元管理(src/data/pricing.ts)から取得
+// このファイルを変更すると、サービスページと仮見積りシミュレーション両方に反映されます
+const estatePricing = getServicePricing('estate');
+const priceRows = estatePricing?.plans ?? [];
+const priceNotes = estatePricing?.notes ?? [];
+// 最低価格をヒーローバッジに表示する用(全プランの中の最安値)
+const minPrice = priceRows.length > 0 ? Math.min(...priceRows.map(p => p.price)) : 0;
 
 // 4つの特徴(features) - estate独自の信頼訴求
 const features = [
@@ -12,17 +21,6 @@ const features = [
   { icon: 'lotus',    title: '故人を想う、丁寧な仕分け', desc: '貴重品・思い出の品・買取可能な品・処分品に分類。ご家族のご意向を伺いながら、慎重に進めます。大切な品が紛れないよう、複数人で確認します。' },
   { icon: 'home',     title: '仕分けから処分まで一括対応', desc: '買取査定・不用品回収・お焚き上げ・ハウスクリーニングまで、窓口をひとつにまとめて対応。複数業者への連絡は不要です。' },
   { icon: 'tag',      title: '安心の事前見積もり',       desc: '現地調査のうえ、明確なお見積りをご提示いたします。作業当日の追加料金は一切いただきません。ご納得いただいてからの作業開始です。' },
-];
-
-// 料金プラン(間取り別) - 全部ダミーで00,000円統一
-const priceRows = [
-  { type: '1K',       size: '〜15㎡',  price: '00,000円〜',   time: '2〜3時間',  popular: false },
-  { type: '1DK',      size: '〜25㎡',  price: '00,000円〜',   time: '3〜4時間',  popular: true  },
-  { type: '1LDK',     size: '〜40㎡',  price: '00,000円〜',   time: '5〜7時間',  popular: false },
-  { type: '2DK',      size: '〜50㎡',  price: '00,000円〜',   time: '6〜8時間',  popular: false },
-  { type: '2LDK',     size: '〜60㎡',  price: '00,000円〜',   time: '1日',        popular: false },
-  { type: '3DK〜',    size: '〜70㎡',  price: '00,000円〜',   time: '1〜2日',    popular: false },
-  { type: '一軒家',   size: '70㎡〜',  price: '00,000円〜',   time: '2〜3日',    popular: false },
 ];
 
 // 8つのSTEP - 遺品整理の流れ
@@ -96,7 +94,7 @@ const areas = [
         </p>
         <div class="page-hero-badge">
           <Icon name="tag" size={16} />
-          <span>1K〜一軒家 <strong style="font-family:var(--num);font-size:1.1rem">00,000円〜</strong>（税込）</span>
+          <span>1K〜一軒家 <strong style="font-family:var(--num);font-size:1.1rem">{minPrice.toLocaleString('ja-JP')}円〜</strong>（税込）</span>
         </div>
       </div>
     </section>
@@ -125,7 +123,7 @@ const areas = [
       <div class="price-hero-inner">
         <p class="price-hero-label">PRICE PLAN — 間取り別の料金プラン</p>
         <p class="price-hero-name">明朗な料金体系</p>
-        <div class="price-big">00,000円<span class="price-unit">〜（税込）</span></div>
+        <div class="price-big">{minPrice.toLocaleString('ja-JP')}円<span class="price-unit">〜（税込）</span></div>
         <p style="font-size:.875rem;opacity:.85">1K(15㎡)〜 / 遺品整理士が在籍</p>
         <ul class="price-notes">
           <li>お部屋の状態・残置物の量により料金が変動する場合があります</li>
@@ -201,20 +199,20 @@ const areas = [
               {priceRows.map(row => (
                 <tr class={row.popular ? 'row-popular' : ''}>
                   <td>
-                    {row.type}
+                    {row.label}
                     {row.popular && <span class="popular-badge">人気</span>}
                   </td>
                   <td class="note-cell">{row.size}</td>
-                  <td><strong>{row.price}</strong></td>
+                  <td><strong>{formatYen(row.price)}</strong></td>
                   <td class="note-cell">{row.time}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
-            ※上記は目安となる金額です。お部屋の状況・残置物の量・搬出経路などにより前後する場合があります。<br>
-            ※買取可能な品がある場合は、料金から差し引きいたします。<br>
-            ※リサイクル料金が必要な家電(テレビ・冷蔵庫・洗濯機・空調機等)は別途申し受けます。
+            {priceNotes.map((note, i) => (
+              <>※{note}{i < priceNotes.length - 1 && <br />}</>
+            ))}
           </p>
         </div>
       </div>
@@ -257,7 +255,7 @@ const areas = [
       <div class="cta-btns">
         <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
         <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
-        <a href="/estimate/estate" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
+        <a href="/estimate/?service=estate" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
       </div>
     </section>
 

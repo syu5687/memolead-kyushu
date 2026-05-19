@@ -1,0 +1,424 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import { pricing, formatYenWithTax } from '../../data/pricing';
+---
+
+<BaseLayout
+  title="仮見積りシミュレーション | エンジェルセンター ぶっこうどう"
+  description="遺品整理・不用品回収・墓じまい・墓守代行・海洋散骨の概算料金をその場でシミュレーションできます。複数サービスの合計金額も確認できます。"
+>
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <span>仮見積りシミュレーション</span>
+    </div>
+
+    <!-- PAGE HEAD -->
+    <section class="page-head">
+      <div class="page-head-inner fi">
+        <p class="page-label">QUICK ESTIMATE</p>
+        <h1 class="page-title">仮見積りシミュレーション</h1>
+        <p class="page-desc">
+          ご希望のサービスにチェックを入れ、プランをお選びください。<br>
+          複数のサービスを組み合わせて、合計金額の概算をその場で確認できます。
+        </p>
+        <p class="page-notice">
+          <Icon name="document" size={14} />
+          このシミュレーションは概算金額です。正式なお見積りは現地確認後にご提示いたします。
+        </p>
+      </div>
+    </section>
+
+    <!-- SIMULATOR -->
+    <section class="sim-sec">
+      <div class="sim-layout">
+
+        <!-- 左側:質問エリア -->
+        <div class="sim-questions">
+
+          {pricing.map((service, idx) => (
+            <div class="q-block" data-service={service.serviceKey}>
+
+              <!-- サービス選択チェックボックス -->
+              <label class="q-head">
+                <input
+                  type="checkbox"
+                  class="q-check"
+                  data-service-check={service.serviceKey}
+                />
+                <span class="q-check-box" aria-hidden="true"></span>
+                <span class="q-head-text">
+                  <span class="q-num">SERVICE 0{idx + 1}</span>
+                  <span class="q-title">{service.serviceLabel}</span>
+                </span>
+                <a href={service.serviceUrl} class="q-detail-link" target="_blank" rel="noopener">サービス詳細</a>
+              </label>
+
+              <!-- プラン選択(チェックボックスがONの時のみ表示) -->
+              <div class="q-body" data-body={service.serviceKey} hidden>
+                <p class="q-label">{service.questionLabel}</p>
+                <div class="plan-list">
+                  {service.plans.map(plan => (
+                    <label class="plan-item">
+                      <input
+                        type="radio"
+                        name={`plan-${service.serviceKey}`}
+                        value={plan.id}
+                        data-price={plan.price}
+                        data-plan={plan.id}
+                        data-service-key={service.serviceKey}
+                      />
+                      <span class="plan-radio" aria-hidden="true"></span>
+                      <span class="plan-content">
+                        <span class="plan-label-row">
+                          <span class="plan-label">{plan.label}</span>
+                          {plan.popular && <span class="plan-popular">人気</span>}
+                        </span>
+                        {plan.size && <span class="plan-size">{plan.size}</span>}
+                        {plan.time && <span class="plan-time">{plan.time}</span>}
+                      </span>
+                      <span class="plan-price">{formatYenWithTax(plan.price)}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+
+        </div>
+
+        <!-- 右側:結果サマリー(sticky) -->
+        <aside class="sim-result">
+          <div class="result-card">
+            <p class="result-label">YOUR ESTIMATE</p>
+            <h2 class="result-title">お見積り概算</h2>
+
+            <!-- 選択された内容 -->
+            <div class="result-items" id="resultItems">
+              <p class="result-empty">サービスを選択してください</p>
+            </div>
+
+            <!-- 合計 -->
+            <div class="result-total" id="resultTotal" hidden>
+              <p class="total-label">合計（税込）</p>
+              <p class="total-price">
+                <span class="total-num" id="totalNum">0</span><span class="total-unit">円〜</span>
+              </p>
+              <p class="total-note">※あくまで概算金額です</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="result-cta" id="resultCta" hidden>
+              <a href="#contact-form" class="cta-primary">
+                <Icon name="mail" size={16} />
+                この内容で問い合わせる
+              </a>
+              <a href="tel:0958654400" class="cta-secondary">
+                <Icon name="phone" size={16} />
+                電話で相談する
+              </a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- 注意事項 -->
+      <div class="sim-notice fi">
+        <div class="notice-inner">
+          <h3 class="notice-title">シミュレーションについてのご注意</h3>
+          <ul>
+            <li>表示金額は概算であり、実際の料金は現地確認後の正式お見積りにて確定いたします</li>
+            <li>お部屋の状況・搬出経路・お墓の立地などにより、追加費用が発生する場合があります</li>
+            <li>リサイクル料金が必要な家電・特殊な廃棄物は別途料金を申し受けます</li>
+            <li>長崎県内は出張費無料です(離島・遠隔地はご相談ください)</li>
+            <li>シミュレーション結果のお問い合わせは、上記ボタンよりお気軽にどうぞ</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- CONTACT FORM ANCHOR(将来お問合せフォームを設置する場所) -->
+    <section class="cta-sec" id="contact-form">
+      <h2 class="cta-title">この内容でお問合せ・正式見積りをご依頼ください</h2>
+      <p class="cta-desc">シミュレーション結果をもとに、現地確認のうえ正式なお見積りをご提示いたします。<br>「シミュレーション結果を見ました」とお伝えいただければスムーズです。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:var(--mid)}
+  .breadcrumb a:hover{color:var(--gd)}
+
+  /* PAGE HEAD */
+  .page-head{padding:4rem 1.5rem 3rem;text-align:center;background:var(--white)}
+  .page-head-inner{max-width:780px;margin:0 auto}
+  .page-label{font-family:var(--roman);font-size:.78rem;letter-spacing:.26em;color:var(--gd);margin-bottom:.6rem}
+  .page-title{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.1rem);font-weight:400;letter-spacing:.1em;margin-bottom:1.1rem}
+  .page-desc{font-size:.9rem;color:var(--mid);line-height:2.05}
+  .page-notice{display:inline-flex;align-items:center;gap:.5rem;background:#fffbf0;border:1px solid var(--gold,#c8a84b);color:var(--mid);font-size:.8rem;padding:.55rem 1.1rem;margin-top:1.5rem;border-radius:var(--corner);line-height:1.65}
+
+  /* SIMULATOR LAYOUT(2カラム) */
+  .sim-sec{padding:3rem 1.5rem 5rem;background:var(--clight)}
+  .sim-layout{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:flex-start}
+
+  /* 左:質問エリア */
+  .sim-questions{display:flex;flex-direction:column;gap:1rem}
+
+  .q-block{background:var(--white);border:1px solid var(--border);border-radius:var(--corner);overflow:hidden;transition:.2s}
+  .q-block:has(.q-check:checked){border-color:var(--gd)}
+
+  /* チェックボックスヘッダ */
+  .q-head{display:flex;align-items:center;gap:.9rem;padding:1.15rem 1.35rem;cursor:pointer;transition:.2s;flex-wrap:wrap}
+  .q-head:hover{background:var(--gl)}
+  .q-check{position:absolute;opacity:0;pointer-events:none}
+  .q-check-box{width:22px;height:22px;border:2px solid var(--border);border-radius:var(--corner);position:relative;flex-shrink:0;transition:.2s;background:var(--white)}
+  .q-check:checked + .q-check-box{background:var(--gd);border-color:var(--gd)}
+  .q-check:checked + .q-check-box::after{content:'';position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .q-head-text{display:flex;flex-direction:column;gap:.18rem;flex:1;min-width:0}
+  .q-num{font-family:var(--roman);font-size:.7rem;letter-spacing:.18em;color:var(--light)}
+  .q-title{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--text);letter-spacing:.04em}
+  .q-detail-link{font-size:.75rem;color:var(--mid);text-decoration:underline;text-underline-offset:3px;transition:.2s;flex-shrink:0}
+  .q-detail-link:hover{color:var(--gd)}
+
+  /* プラン選択エリア */
+  .q-body{border-top:1px solid var(--border);padding:1.25rem 1.35rem;background:var(--clight)}
+  .q-label{font-size:.85rem;color:var(--mid);margin-bottom:.85rem;font-weight:500}
+  .plan-list{display:flex;flex-direction:column;gap:.5rem}
+
+  .plan-item{display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:center;padding:.85rem 1rem;background:var(--white);border:1px solid var(--border);border-radius:var(--corner);cursor:pointer;transition:.15s}
+  .plan-item:hover{border-color:var(--gd);background:var(--gl)}
+  .plan-item input{position:absolute;opacity:0;pointer-events:none}
+  .plan-radio{width:18px;height:18px;border:2px solid var(--border);border-radius:50%;flex-shrink:0;position:relative;transition:.2s;background:var(--white)}
+  .plan-item input:checked + .plan-radio{border-color:var(--gd)}
+  .plan-item input:checked + .plan-radio::after{content:'';position:absolute;inset:3px;background:var(--gd);border-radius:50%}
+  .plan-item:has(input:checked){border-color:var(--gd);background:var(--gl)}
+
+  .plan-content{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+  .plan-label-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .plan-label{font-family:var(--serif);font-size:.95rem;color:var(--text);letter-spacing:.02em}
+  .plan-popular{display:inline-block;border:1px solid var(--gold,#c8a84b);color:var(--gold,#c8a84b);font-size:.65rem;padding:.05rem .4rem;border-radius:var(--corner);letter-spacing:.04em}
+  .plan-size{font-size:.75rem;color:var(--light)}
+  .plan-time{font-size:.7rem;color:var(--light)}
+  .plan-price{font-family:var(--num);font-size:.95rem;color:var(--gd);font-weight:500;white-space:nowrap}
+
+  /* 右:結果サマリー(sticky) */
+  .sim-result{position:sticky;top:1.5rem}
+  .result-card{background:linear-gradient(135deg,#2d5a3d,#1e3d2a);color:#fff;padding:1.85rem 1.5rem;border-radius:var(--corner)}
+  .result-label{font-family:var(--roman);font-size:.72rem;letter-spacing:.22em;opacity:.6;margin-bottom:.45rem}
+  .result-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;letter-spacing:.06em;margin-bottom:1.2rem;padding-bottom:1.1rem;border-bottom:1px solid rgba(255,255,255,.18)}
+
+  .result-empty{font-size:.85rem;opacity:.6;line-height:1.85;text-align:center;padding:1.5rem 0}
+
+  .result-items{margin-bottom:1.1rem;display:flex;flex-direction:column;gap:.65rem}
+  .result-item{display:flex;flex-direction:column;gap:.15rem;padding:.7rem .85rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:var(--corner);font-size:.82rem}
+  .result-item-service{font-size:.7rem;opacity:.6;letter-spacing:.04em}
+  .result-item-row{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-top:.18rem}
+  .result-item-plan{font-family:var(--serif);font-size:.85rem;letter-spacing:.02em}
+  .result-item-price{font-family:var(--num);font-size:.92rem;color:var(--yellow,#f5c842);white-space:nowrap}
+
+  .result-total{border-top:1px solid rgba(255,255,255,.18);padding-top:1.1rem;text-align:center}
+  .total-label{font-family:var(--roman);font-size:.72rem;opacity:.7;letter-spacing:.18em;margin-bottom:.3rem}
+  .total-price{margin-bottom:.55rem}
+  .total-num{font-family:var(--num);font-size:2.4rem;color:var(--yellow,#f5c842);font-weight:300;letter-spacing:.02em;line-height:1}
+  .total-unit{font-size:.85rem;opacity:.85;margin-left:.18rem}
+  .total-note{font-size:.7rem;opacity:.55}
+
+  .result-cta{margin-top:1.5rem;display:flex;flex-direction:column;gap:.55rem}
+  .cta-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--yellow,#f5c842);color:var(--gd);padding:.85rem 1.25rem;font-size:.88rem;font-weight:500;letter-spacing:.04em;transition:.2s;border-radius:var(--corner)}
+  .cta-primary:hover{background:#e8b835}
+  .cta-secondary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.85rem 1.25rem;font-size:.85rem;letter-spacing:.06em;transition:.2s;border-radius:var(--corner)}
+  .cta-secondary:hover{background:rgba(255,255,255,.1)}
+
+  /* NOTICE */
+  .sim-notice{max-width:1100px;margin:2.5rem auto 0}
+  .notice-inner{background:#fffbf0;border-left:3px solid var(--gold,#c8a84b);padding:1.5rem 1.75rem;border-radius:var(--corner)}
+  .notice-title{font-family:var(--serif);font-size:1rem;color:var(--gd);font-weight:400;margin-bottom:.75rem}
+  .notice-inner ul{list-style:none;padding:0}
+  .notice-inner li{font-size:.82rem;color:var(--mid);line-height:1.95;padding:.15rem 0 .15rem 1em;position:relative}
+  .notice-inner li::before{content:'·';position:absolute;left:.25em;color:var(--gd);font-weight:700}
+
+  /* CTA SEC */
+  .cta-sec{background:var(--gd);color:#fff;padding:5rem 1.5rem;text-align:center}
+  .cta-title{font-family:var(--serif);font-size:clamp(1.3rem,2.8vw,1.7rem);font-weight:400;letter-spacing:.08em;margin-bottom:1.25rem;line-height:1.65}
+  .cta-desc{font-size:.9rem;opacity:.85;margin-bottom:.75rem;line-height:2}
+  .cta-hours{font-size:.78rem;opacity:.7;margin-bottom:2.25rem}
+  .cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+  .cta-tel-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;background:#fff;color:var(--gd);padding:.95rem 2.5rem;font-size:.95rem;font-family:var(--roman);letter-spacing:.1em;transition:.2s;border-radius:var(--corner)}
+  .cta-tel-btn:hover{background:var(--gl)}
+  .cta-web-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.5rem;font-size:.9rem;letter-spacing:.08em;transition:.2s;border-radius:var(--corner)}
+  .cta-web-btn:hover{background:rgba(255,255,255,.1)}
+
+  .fixed-cta{display:none}
+
+  @media(max-width:1024px){
+    .sim-layout{grid-template-columns:1fr;gap:1.5rem}
+    .sim-result{position:relative;top:auto;order:-1}
+  }
+  @media(max-width:768px){
+    .page-head{padding:2.75rem 1rem 2.25rem}
+    .sim-sec{padding:2rem 1rem 3.5rem}
+    .q-head{padding:1rem 1.15rem;gap:.7rem}
+    .q-body{padding:1rem 1.15rem}
+    .plan-item{padding:.7rem .85rem;gap:.7rem}
+    .plan-label{font-size:.88rem}
+    .plan-price{font-size:.85rem}
+    .result-card{padding:1.5rem 1.25rem}
+    .total-num{font-size:2rem}
+    .notice-inner{padding:1.25rem 1.35rem}
+    .cta-sec{padding:3.5rem 1rem}
+    .cta-btns{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}
+    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
+    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
+    .tel-f{background:var(--gd);color:#fff}
+    .web-f{background:#333;color:#fff}
+    body{padding-bottom:52px}
+  }
+</style>
+
+<script>
+  // 仮見積りシミュレーション ロジック
+  // 動作:
+  // 1. サービスチェックがON → 該当サービスのプラン選択エリアを開く
+  // 2. プランがラジオで選択される → 選択状態を保存
+  // 3. 全選択を集計 → 合計金額と内訳をリアルタイム表示
+
+  type SelectedPlan = {
+    serviceKey: string;
+    serviceLabel: string;
+    planLabel: string;
+    price: number;
+  };
+
+  const state = new Map<string, SelectedPlan>(); // key: serviceKey, val: 選択中プラン
+
+  // チェックボックス(サービス選択)の挙動
+  const serviceChecks = document.querySelectorAll<HTMLInputElement>('.q-check');
+  serviceChecks.forEach(check => {
+    check.addEventListener('change', () => {
+      const key = check.dataset.serviceCheck;
+      if (!key) return;
+      const body = document.querySelector<HTMLElement>(`[data-body="${key}"]`);
+
+      if (check.checked) {
+        body?.removeAttribute('hidden');
+        // チェックONにしたら、最初のプランを自動選択(人気優先)
+        const radios = document.querySelectorAll<HTMLInputElement>(`input[name="plan-${key}"]`);
+        const popular = Array.from(radios).find(r => {
+          const item = r.closest('.plan-item');
+          return item?.querySelector('.plan-popular');
+        });
+        const target = popular ?? radios[0];
+        if (target && !target.checked) {
+          target.checked = true;
+          target.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      } else {
+        body?.setAttribute('hidden', '');
+        state.delete(key);
+        // ラジオもクリア
+        const radios = document.querySelectorAll<HTMLInputElement>(`input[name="plan-${key}"]`);
+        radios.forEach(r => { r.checked = false; });
+      }
+      updateResult();
+    });
+  });
+
+  // ラジオボタン(プラン選択)の挙動
+  const planRadios = document.querySelectorAll<HTMLInputElement>('.plan-item input[type="radio"]');
+  planRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (!radio.checked) return;
+      const serviceKey = radio.dataset.serviceKey ?? '';
+      const price = Number(radio.dataset.price ?? '0');
+      const planLabel = radio.closest('.plan-item')?.querySelector('.plan-label')?.textContent?.trim() ?? '';
+      const serviceLabel = radio.closest('.q-block')?.querySelector('.q-title')?.textContent?.trim() ?? '';
+      state.set(serviceKey, { serviceKey, serviceLabel, planLabel, price });
+      updateResult();
+    });
+  });
+
+  // 結果表示を更新
+  function updateResult() {
+    const itemsEl = document.getElementById('resultItems');
+    const totalEl = document.getElementById('resultTotal');
+    const totalNumEl = document.getElementById('totalNum');
+    const ctaEl = document.getElementById('resultCta');
+    if (!itemsEl || !totalEl || !totalNumEl || !ctaEl) return;
+
+    const items = Array.from(state.values());
+
+    if (items.length === 0) {
+      itemsEl.innerHTML = '<p class="result-empty">サービスを選択してください</p>';
+      totalEl.setAttribute('hidden', '');
+      ctaEl.setAttribute('hidden', '');
+      return;
+    }
+
+    // 内訳のHTML生成
+    itemsEl.innerHTML = items.map(item => `
+      <div class="result-item">
+        <span class="result-item-service">${escapeHtml(item.serviceLabel)}</span>
+        <div class="result-item-row">
+          <span class="result-item-plan">${escapeHtml(item.planLabel)}</span>
+          <span class="result-item-price">${item.price.toLocaleString('ja-JP')}円</span>
+        </div>
+      </div>
+    `).join('');
+
+    // 合計
+    const total = items.reduce((sum, i) => sum + i.price, 0);
+    totalNumEl.textContent = total.toLocaleString('ja-JP');
+    totalEl.removeAttribute('hidden');
+    ctaEl.removeAttribute('hidden');
+  }
+
+  // HTMLエスケープ(XSS対策・プラン名にHTML特殊文字が混じった場合の保険)
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // URLクエリパラメータでの初期選択
+  // 例:/estimate/?service=estate
+  const params = new URLSearchParams(window.location.search);
+  const initService = params.get('service');
+  if (initService) {
+    const check = document.querySelector<HTMLInputElement>(`[data-service-check="${initService}"]`);
+    if (check) {
+      check.checked = true;
+      check.dispatchEvent(new Event('change', { bubbles: true }));
+      // スクロール
+      check.closest('.q-block')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // フェードイン
+  const obs = new IntersectionObserver(e => {
+    e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }});
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>

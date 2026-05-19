@@ -4,6 +4,12 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
+import { getServicePricing } from '../../data/pricing';
+
+// 料金データを一元管理から取得
+const gravePricing = getServicePricing('grave-closure');
+const priceRows = gravePricing?.plans ?? [];
+const priceNotes = gravePricing?.notes ?? [];
 
 const features = [
   { icon: 'document', title: '行政手続きを代行',         desc: '改葬許可申請・受入証明書の取得など、複雑な行政手続きを代行いたします。書類作成のサポートも万全。' },
@@ -21,14 +27,6 @@ const steps = [
   { num: 6, title: '新たな供養先へ納骨',   desc: 'ご遺骨を新しい供養先へお運びし、納骨までサポートいたします。' },
 ];
 
-const priceRows = [
-  { type: '墓じまい(標準・1〜2㎡)',     price: '000,000円〜', note: '墓石撤去・整地含む' },
-  { type: '墓じまい(中規模・3〜4㎡)',   price: '000,000円〜', note: '墓石撤去・整地含む' },
-  { type: '墓じまい(大規模・5㎡以上)',  price: '000,000円〜', note: 'お見積もり制' },
-  { type: '改葬許可申請代行',           price: '00,000円〜',  note: '1柱あたり' },
-  { type: '閉眼供養(お布施)',           price: '00,000円〜',  note: 'お寺様への謝礼' },
-  { type: '搬出費用',                   price: '00,000円〜',  note: '距離による' },
-];
 ---
 
 <BaseLayout
@@ -101,7 +99,7 @@ const priceRows = [
             <thead><tr><th>項目</th><th>料金(税込)</th><th>備考</th></tr></thead>
             <tbody>
               {priceRows.map(row => (
-                <tr><td>{row.type}</td><td><strong>{row.price}</strong></td><td class="note-cell">{row.note}</td></tr>
+                <tr class={row.popular ? 'row-popular' : ''}><td>{row.label}{row.popular && <span class="popular-badge">人気</span>}</td><td><strong>{row.price.toLocaleString('ja-JP')}円</strong></td><td class="note-cell">{row.size}</td></tr>
               ))}
             </tbody>
           </table>
@@ -130,7 +128,7 @@ const priceRows = [
       <div class="cta-btns">
         <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
         <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
-        <a href="/estimate/grave" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
+        <a href="/estimate/?service=grave-closure" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
       </div>
     </section>
 

@@ -3,6 +3,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
+import { getServicePricing, formatYenWithTax } from '../../data/pricing';
+
+// 料金データを一元管理(src/data/pricing.ts)から取得
+const junkPricing = getServicePricing('junk');
+const priceRows = junkPricing?.plans ?? [];
+const priceNotes = junkPricing?.notes ?? [];
+// ヒーローバッジ用:最低価格(エンゼル号1台などの基本料金)
+const minPrice = priceRows.length > 0 ? Math.min(...priceRows.map(p => p.price)) : 0;
 
 const features = [
   { icon: 'lotus',    title: '供養してから処分', desc: '大切な遺品や思い出の品を、ただ捨てるのではなく、お寺様による御供養を経てから責任を持って処分いたします。' },
@@ -37,15 +45,6 @@ const angelSet = [
   { badge: '必須',       name: '供養袋名札 2枚', size: '各供養袋に取り付けてください', desc: '各供養袋にお名前等をご記入の上、取り付けてください。供養証明書が必要な方は名札の最後の列の「供養証明書の要」に忘れずに○印をお付けください。' },
 ];
 
-const priceRows = [
-  { service: '<strong>不用品回収（エンゼル号）</strong>',                                                              unit: '1台',     price: '11,000円〜', note: '横付け可能な場合' },
-  { service: '仏壇供養処分料',                                                                                          unit: '1台',     price: '22,000円〜', note: '税抜20,000円〜' },
-  { service: '小型仏壇供養処分料<br><span style="font-size:.78rem;color:var(--light)">（高さ50cm以下）</span>',          unit: '1台',     price: '11,000円〜', note: '税抜10,000円〜' },
-  { service: '神棚供養処分料',                                                                                          unit: '1台',     price: '11,000円〜', note: '税抜10,000円〜' },
-  { service: '節句人形供養料',                                                                                          unit: '1セット', price: '3,300円〜',  note: '税抜3,000円〜' },
-  { service: '供養袋（追加）<br><span style="font-size:.78rem;color:var(--light)">900×450×450mm</span>',                 unit: '1袋',     price: '3,300円〜',  note: '税抜3,000円〜' },
-  { service: 'お布団の引き取り',                                                                                        unit: '1枚',     price: '550円',      note: '有料' },
-];
 
 const areas = [
   { name: '長崎市', permit: '一般廃棄物収集運搬許可<br>長崎市 第471号' },
@@ -78,7 +77,7 @@ const areas = [
         </p>
         <div class="page-hero-badge">
           <Icon name="tag" size={16} />
-          <span>エンゼル号 1台 <strong style="font-family:var(--num);font-size:1.1rem">11,000円〜</strong>（税込）</span>
+          <span>エンゼル号 1台 <strong style="font-family:var(--num);font-size:1.1rem">{minPrice.toLocaleString('ja-JP')}円〜</strong>（税込）</span>
         </div>
       </div>
     </section>
@@ -197,24 +196,28 @@ const areas = [
             <thead>
               <tr>
                 <th style="width:40%">サービス内容</th>
-                <th style="width:15%">単位</th>
+                <th style="width:20%">内容</th>
                 <th style="width:30%">料金（税込）</th>
-                <th style="width:15%">備考</th>
+                <th style="width:10%">人気</th>
               </tr>
             </thead>
             <tbody>
               {priceRows.map(row => (
-                <tr>
-                  <td set:html={row.service}></td>
-                  <td>{row.unit}</td>
-                  <td class="price-cell">{row.price}</td>
-                  <td class="note-cell">{row.note}</td>
+                <tr class={row.popular ? 'row-popular' : ''}>
+                  <td>{row.label}</td>
+                  <td class="note-cell">{row.size}</td>
+                  <td class="price-cell"><strong>{row.price.toLocaleString('ja-JP')}円</strong></td>
+                  <td>{row.popular && <span class="popular-badge">人気</span>}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">※令和7年7月現在の料金です。内容により異なりますのでご確認ください。<br>※リサイクル料金が掛かる電化製品（テレビ・冷蔵庫・洗濯機・空調機）等については別途料金を申し受けます。<br>※トラック等、1台では積めない不用品がある場合はお見積りしてから回収します。</p>
+        <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
+          {priceNotes.map((note, i) => (
+            <>※{note}{i < priceNotes.length - 1 && <br />}</>
+          ))}
+        </p>
       </div>
     </section>
 
@@ -244,7 +247,7 @@ const areas = [
       <div class="cta-btns">
         <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
         <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
-        <a href="/estimate/junk" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
+        <a href="/estimate/?service=junk" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
       </div>
     </section>
 
