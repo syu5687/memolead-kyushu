@@ -14,7 +14,7 @@ const {
   <meta name="description" content={description} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <slot />
@@ -23,22 +23,16 @@ const {
 
 <style is:global>
 :root{
-  --gd:#2d5a3d;/*深緑*/
-  --gm:#3d7a52;/*緑*/
-  --gl:#e8f0eb;/*灰*/
-  --cream:#f5f0ea;/*薄クリーム*/
-  --clight:#faf7f3;/*極薄灰*/
-  --text:#1a1a1a;
-  --mid:#555;/*濃灰*/
-  --light:#999;
-  --border:#e0e0d8;/*薄灰*/
-  --white:#fff;
+  --gd:#2d5a3d;--gm:#3d7a52;--gl:#e8f0eb;
+  --cream:#f5f0ea;--clight:#faf7f3;
+  --text:#1a1a1a;--mid:#555;--light:#999;
+  --border:#e0e0d8;--white:#fff;
   --yellow:#f5c842;
-  --serif:'Noto Serif JP',serif;
-  --sans:'Noto Sans JP',sans-serif;
-  --roman:'Cormorant Garamond',serif;
-  --num:'Noto Serif JP',serif;
   --corner:4px;
+  --serif:'Noto Serif JP',serif;
+  --sans:'BIZ UDPGothic','Noto Sans JP',sans-serif;
+  --roman:'Noto Serif JP',serif;
+  --num:'Noto Serif JP',serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
