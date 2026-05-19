@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import { voices, voiceFilters } from '../../data/voices';
+
+// 表示するフィルタ:実際にvoicesに存在するサービスのみ表示
+// (将来件数が増えた時にフィルタが綺麗に並ぶように)
+const availableFilters = voiceFilters.filter(
+  f => f.key === 'all' || voices.some(v => v.serviceKey === f.key)
+);
+---
+
+<BaseLayout
+  title="お客様の声 | エンジェルセンター ぶっこうどう"
+  description="実際にぶっこうどうをご利用いただいたお客様からの声をご紹介しています。遺品整理・海洋散骨・墓じまい・仏壇リメイクなど、各サービスの体験談をお読みいただけます。"
+>
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <span>お客様の声</span>
+    </div>
+
+    <!-- PAGE HEAD -->
+    <section class="page-head">
+      <div class="page-head-inner fi">
+        <p class="page-label">CUSTOMER VOICE</p>
+        <h1 class="page-title">お客様の声</h1>
+        <p class="page-desc">
+          実際にぶっこうどうをご利用いただいたお客様からの声をご紹介しています。<br>
+          サービスをご検討いただく際の参考にしていただければ幸いです。
+        </p>
+      </div>
+    </section>
+
+    <!-- SERVICE FILTER -->
+    <div class="filter-wrap">
+      <div class="filter-inner">
+        {availableFilters.map(f => (
+          <button
+            class="filter-btn"
+            data-filter={f.key}
+            data-active={f.key === 'all' ? 'true' : 'false'}
+          >{f.label}</button>
+        ))}
+      </div>
+    </div>
+
+    <!-- VOICES GRID -->
+    <section class="voices-sec">
+      <div class="voices-inner">
+        <div class="voices-grid fi">
+          {voices.map(v => (
+            <div class="voice-card" data-service={v.serviceKey}>
+              <span class="voice-q">"</span>
+              <p class="voice-text">{v.text}</p>
+              <div class="voice-line">
+                <p class="voice-name">{v.name}</p>
+                <p class="voice-svc">{v.serviceLabel}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p class="no-result" hidden>該当するお客様の声はありません。</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-sec">
+      <h2 class="cta-title">あなたのお悩みも、ぜひお聞かせください</h2>
+      <p class="cta-desc">「こんなことで相談していいのかな?」とお悩みの方も、まずはお気軽にご相談ください。<br>専門スタッフが丁寧にお応えいたします。</p>
+      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      <div class="cta-btns">
+        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:var(--mid)}
+  .breadcrumb a:hover{color:var(--gd)}
+
+  /* PAGE HEAD */
+  .page-head{padding:4rem 1.5rem 3rem;text-align:center;background:var(--white)}
+  .page-head-inner{max-width:780px;margin:0 auto}
+  .page-label{font-family:var(--roman);font-size:.78rem;letter-spacing:.26em;color:var(--gd);margin-bottom:.6rem}
+  .page-title{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.1rem);font-weight:400;letter-spacing:.1em;margin-bottom:1.1rem}
+  .page-desc{font-size:.9rem;color:var(--mid);line-height:2.05}
+
+  /* SERVICE FILTER */
+  .filter-wrap{background:var(--clight);padding:1.25rem 1.5rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;background:rgba(250,247,243,.95);backdrop-filter:blur(8px)}
+  .filter-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:center;gap:.55rem;flex-wrap:wrap}
+  .filter-btn{appearance:none;border:1px solid var(--border);background:var(--white);color:var(--mid);padding:.5rem 1.15rem;font-size:.85rem;font-family:inherit;cursor:pointer;transition:.2s;border-radius:var(--corner);letter-spacing:.04em;white-space:nowrap}
+  .filter-btn:hover{border-color:var(--gd);color:var(--gd)}
+  .filter-btn[data-active="true"]{background:var(--gd);border-color:var(--gd);color:#fff}
+
+  /* VOICES */
+  .voices-sec{padding:3.5rem 1.5rem;background:var(--white)}
+  .voices-inner{max-width:1100px;margin:0 auto}
+  .voices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.35rem}
+  .voice-card{border:1px solid var(--border);padding:1.65rem 1.5rem;position:relative;background:var(--white);border-radius:var(--corner)}
+  .voice-q{font-family:var(--roman);font-size:2.75rem;color:var(--gd);opacity:.2;position:absolute;top:.3rem;left:1.1rem;line-height:1}
+  .voice-text{font-size:.9rem;line-height:2.05;color:var(--mid);padding-top:.95rem;margin-bottom:1.1rem}
+  .voice-line{border-top:1px solid #eee;padding-top:.7rem}
+  .voice-name{font-size:.875rem;color:var(--gd);font-weight:500;margin-bottom:.2rem}
+  .voice-svc{font-size:.78rem;color:var(--light)}
+
+  .voice-card[hidden]{display:none}
+  .no-result{text-align:center;padding:3rem 1rem;color:var(--light);font-size:.9rem}
+
+  /* CTA */
+  .cta-sec{background:var(--gd);color:#fff;padding:5rem 1.5rem;text-align:center}
+  .cta-title{font-family:var(--serif);font-size:clamp(1.4rem,3vw,1.85rem);font-weight:400;letter-spacing:.1em;margin-bottom:1.25rem}
+  .cta-desc{font-size:.9rem;opacity:.85;margin-bottom:.75rem;line-height:2}
+  .cta-hours{font-size:.78rem;opacity:.7;margin-bottom:2.25rem}
+  .cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+  .cta-tel-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;background:#fff;color:var(--gd);padding:.95rem 2.5rem;font-size:.95rem;font-family:var(--roman);letter-spacing:.1em;transition:.2s;border-radius:var(--corner)}
+  .cta-tel-btn:hover{background:var(--gl)}
+  .cta-web-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.5rem;font-size:.9rem;letter-spacing:.08em;transition:.2s;border-radius:var(--corner)}
+  .cta-web-btn:hover{background:rgba(255,255,255,.1)}
+
+  .fixed-cta{display:none}
+
+  @media(max-width:1024px){
+    .voices-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:768px){
+    .page-head{padding:2.75rem 1rem 2.25rem}
+    .filter-inner{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:.25rem}
+    .filter-btn{flex-shrink:0}
+    .voices-sec{padding:2.5rem 1rem}
+    .voices-grid{grid-template-columns:1fr;gap:1rem}
+    .cta-sec{padding:3.5rem 1rem}
+    .cta-btns{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}
+    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
+    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
+    .tel-f{background:var(--gd);color:#fff}
+    .web-f{background:#333;color:#fff}
+    body{padding-bottom:52px}
+  }
+</style>
+
+<script>
+  // サービス別フィルタの動作
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.voice-card');
+  const noResult = document.querySelector('.no-result') as HTMLElement | null;
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+      if (!filter) return;
+
+      // ボタンのアクティブ切り替え
+      buttons.forEach(b => b.setAttribute('data-active', 'false'));
+      btn.setAttribute('data-active', 'true');
+
+      // カードの表示/非表示
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const service = card.getAttribute('data-service');
+        const show = filter === 'all' || service === filter;
+        if (show) {
+          card.removeAttribute('hidden');
+          visibleCount++;
+        } else {
+          card.setAttribute('hidden', '');
+        }
+      });
+
+      // 0件メッセージ
+      if (noResult) {
+        if (visibleCount === 0) noResult.removeAttribute('hidden');
+        else noResult.setAttribute('hidden', '');
+      }
+    });
+  });
+
+  // フェードイン
+  const obs = new IntersectionObserver(e => {
+    e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }});
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>
