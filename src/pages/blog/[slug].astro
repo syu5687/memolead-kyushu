@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import { Image } from 'astro:assets';
+import { posts } from '../../data/posts';
+
+import imgOcean from '../../_assets/img/blog/blog-ocean-sky.jpg';
+import imgEstate from '../../_assets/img/blog/blog-estate-water.jpg';
+import imgGrave from '../../_assets/img/blog/blog-grave-leaves.jpg';
+
+const imageMap: Record<string, ImageMetadata> = {
+  'blog-ocean-sky.jpg': imgOcean,
+  'blog-estate-water.jpg': imgEstate,
+  'blog-grave-leaves.jpg': imgGrave,
+};
+
+// 静的ルーティング:全記事のページを自動生成
+export async function getStaticPaths() {
+  const { posts } = await import('../../data/posts');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+// 関連記事(現在の記事以外の2件)
+const relatedPosts = posts.filter(p => p.slug !== post.slug).slice(0, 2);
+---
+
+<BaseLayout
+  title={`${post.title} | エンジェルセンター ぶっこうどう`}
+  description={post.excerpt}
+>
+  <Header />
+  <main>
+
+    <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#blog">ブログ・お知らせ</a><span>›</span>
+      <span>{post.title.length > 30 ? post.title.slice(0, 30) + '…' : post.title}</span>
+    </div>
+
+    <article class="article">
+
+      <!-- 記事ヘッダー -->
+      <header class="article-head">
+        <div class="article-head-inner fi">
+          <div class="article-meta">
+            <span class="article-tag">{post.category}</span>
+            <span class="article-date">{post.date}</span>
+          </div>
+          <h1 class="article-title">{post.title}</h1>
+        </div>
+      </header>
+
+      <!-- アイキャッチ画像 -->
+      <div class="article-hero fi">
+        <Image
+          src={imageMap[post.image]}
+          alt={post.imageAlt}
+          widths={[800, 1200, 1600]}
+          sizes="(max-width:1100px) 100vw, 1100px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <!-- 記事本文 -->
+      <div class="article-body">
+        <div class="article-body-inner fi">
+          {post.body.map(section => {
+            if (section.type === 'lead') {
+              return <p class="lead">{section.content}</p>;
+            } else if (section.type === 'heading') {
+              return <h2 class="h2">{section.content}</h2>;
+            } else if (section.type === 'paragraph') {
+              return <p>{section.content}</p>;
+            } else if (section.type === 'list' && Array.isArray(section.content)) {
+              return (
+                <ul>
+                  {section.content.map(item => <li>{item}</li>)}
+                </ul>
+              );
+            } else if (section.type === 'quote') {
+              return <blockquote>{section.content}</blockquote>;
+            }
+            return null;
+          })}
+        </div>
+      </div>
+
+      <!-- 関連サービスCTA -->
+      {post.relatedService && (
+        <section class="related-service fi">
+          <div class="related-service-inner">
+            <p class="related-label">RELATED SERVICE</p>
+            <h2 class="related-title">{post.relatedService.name}のサービス詳細を見る</h2>
+            <p class="related-desc">本記事の内容に関連するサービスです。詳しい料金・流れ・対応エリアをご覧いただけます。</p>
+            <a href={post.relatedService.url} class="related-btn">
+              <span>サービス詳細へ</span>
+              <Icon name="arrow-right" size={18} />
+            </a>
+          </div>
+        </section>
+      )}
+
+      <!-- 関連記事 -->
+      {relatedPosts.length > 0 && (
+        <section class="related-posts">
+          <div class="related-posts-inner fi">
+            <p class="sec-label">OTHER POSTS</p>
+            <h2 class="sec-title">他の記事を読む</h2>
+            <div class="related-grid">
+              {relatedPosts.map(p => (
+                <a href={`/blog/${p.slug}/`} class="related-card">
+                  <div class="related-img">
+                    <Image
+                      src={imageMap[p.image]}
+                      alt={p.imageAlt}
+                      widths={[400, 600]}
+                      sizes="50vw"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="related-card-body">
+                    <span class="related-card-tag">{p.category}</span>
+                    <p class="related-card-date">{p.date}</p>
+                    <h3 class="related-card-title">{p.title}</h3>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <div class="back-wrap">
+              <a href="/#blog" class="back-btn">ブログ一覧に戻る</a>
+            </div>
+          </div>
+        </section>
+      )}
+
+    </article>
+
+  </main>
+  <Footer />
+
+  <div class="fixed-cta">
+    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
+    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:var(--mid)}
+  .breadcrumb a:hover{color:var(--gd)}
+
+  .article{max-width:100%;margin:0 auto}
+
+  /* 記事ヘッダー */
+  .article-head{background:var(--clight);padding:3rem 1.5rem 2.5rem}
+  .article-head-inner{max-width:780px;margin:0 auto;text-align:center}
+  .article-meta{display:flex;align-items:center;justify-content:center;gap:.85rem;margin-bottom:1.25rem;flex-wrap:wrap}
+  .article-tag{border:1px solid var(--gd);color:var(--gd);font-size:.78rem;padding:.25rem .85rem;letter-spacing:.06em;border-radius:var(--corner)}
+  .article-date{font-family:var(--roman);font-size:.875rem;color:var(--light);letter-spacing:.06em}
+  .article-title{font-family:var(--serif);font-size:clamp(1.35rem,3vw,1.75rem);font-weight:400;line-height:1.7;letter-spacing:.06em}
+
+  /* アイキャッチ */
+  .article-hero{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+  .article-hero :global(img){width:100%;height:auto;display:block;border-radius:var(--corner)}
+
+  /* 記事本文 */
+  .article-body{padding:3rem 1.5rem}
+  .article-body-inner{max-width:760px;margin:0 auto}
+  .lead{font-size:1rem;line-height:2.1;color:var(--text);margin-bottom:2.5rem;padding-left:1.25rem;border-left:3px solid var(--gd)}
+  .h2{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--gd);margin:2.5rem 0 1.25rem;padding-bottom:.65rem;border-bottom:1px solid var(--border);letter-spacing:.04em;line-height:1.7}
+  .article-body p{font-size:.95rem;line-height:2.1;color:var(--text);margin-bottom:1.35rem}
+  .article-body ul{margin:1.35rem 0 1.85rem;padding-left:0;list-style:none}
+  .article-body ul li{position:relative;padding:.55rem 0 .55rem 1.5rem;border-bottom:1px solid var(--border);font-size:.92rem;line-height:1.95;color:var(--mid)}
+  .article-body ul li::before{content:'';position:absolute;top:1.15rem;left:.3rem;width:6px;height:6px;background:var(--gd);border-radius:50%}
+  .article-body ul li:last-child{border-bottom:none}
+  .article-body blockquote{background:var(--clight);border-left:3px solid var(--gold,#c8a84b);padding:1.25rem 1.5rem;margin:1.85rem 0;font-size:.92rem;line-height:2;color:var(--mid);font-family:var(--serif);font-style:normal;border-radius:var(--corner)}
+
+  /* 関連サービスCTA */
+  .related-service{background:var(--gd);color:#fff;padding:4rem 1.5rem;text-align:center}
+  .related-service-inner{max-width:780px;margin:0 auto}
+  .related-label{font-family:var(--roman);font-size:.78rem;opacity:.6;letter-spacing:.26em;margin-bottom:.55rem}
+  .related-title{font-family:var(--serif);font-size:clamp(1.15rem,2.5vw,1.4rem);font-weight:400;margin-bottom:1rem;letter-spacing:.06em;line-height:1.7}
+  .related-desc{font-size:.9rem;opacity:.85;margin-bottom:2rem;line-height:2}
+  .related-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:#fff;color:var(--gd);padding:.95rem 2.5rem;font-size:.95rem;font-family:var(--roman);letter-spacing:.1em;transition:.2s;border-radius:var(--corner)}
+  .related-btn:hover{background:var(--gl)}
+
+  /* 関連記事 */
+  .related-posts{padding:4rem 1.5rem;background:var(--clight)}
+  .related-posts-inner{max-width:1100px;margin:0 auto;text-align:center}
+  .sec-label{font-family:var(--roman);font-size:.78rem;letter-spacing:.26em;color:var(--gd);margin-bottom:.55rem}
+  .sec-title{font-family:var(--serif);font-size:clamp(1.3rem,2.5vw,1.55rem);font-weight:400;letter-spacing:.1em;margin-bottom:2.5rem}
+  .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.35rem;max-width:880px;margin:0 auto}
+  .related-card{background:var(--white);border:1px solid var(--border);border-radius:var(--corner);overflow:hidden;display:flex;flex-direction:column;transition:.2s;text-align:left}
+  .related-card:hover{border-color:var(--gd);transform:translateY(-2px)}
+  .related-img{width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--gl)}
+  .related-img :global(img){width:100%;height:100%;object-fit:cover;display:block}
+  .related-card-body{padding:1rem 1.25rem 1.25rem}
+  .related-card-tag{display:inline-block;border:1px solid var(--gd);color:var(--gd);font-size:.7rem;padding:.16rem .55rem;margin-bottom:.5rem;border-radius:var(--corner);letter-spacing:.04em}
+  .related-card-date{font-family:var(--roman);font-size:.75rem;color:var(--light);margin-bottom:.35rem}
+  .related-card-title{font-family:var(--serif);font-size:.9rem;line-height:1.75;font-weight:400;color:var(--text)}
+
+  .back-wrap{margin-top:2.5rem}
+  .back-btn{display:inline-block;border:1px solid var(--gd);color:var(--gd);padding:.78rem 2.65rem;font-size:.875rem;letter-spacing:.08em;transition:.2s;border-radius:var(--corner)}
+  .back-btn:hover{background:var(--gd);color:#fff}
+
+  /* FIXED CTA */
+  .fixed-cta{display:none}
+  @media(max-width:768px){
+    .article-head{padding:2.25rem 1rem 1.85rem}
+    .article-body{padding:2.5rem 1rem}
+    .lead{padding-left:1rem;font-size:.95rem}
+    .h2{font-size:1.1rem;margin:2rem 0 1rem}
+    .related-service{padding:3rem 1rem}
+    .related-posts{padding:3rem 1rem}
+    .related-grid{grid-template-columns:1fr;gap:1rem}
+    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
+    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
+    .tel-f{background:var(--gd);color:#fff}
+    .web-f{background:#333;color:#fff}
+    body{padding-bottom:52px}
+  }
+</style>
+
+<script>
+const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+</script>

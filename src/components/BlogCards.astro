@@ -1,73 +1,53 @@
 ---
+import { Image } from 'astro:assets';
+import { posts } from '../data/posts';
+
+// すべての画像をimport(Astroの静的解析のため、動的importできない)
+import imgOcean from '../_assets/img/blog/blog-ocean-sky.jpg';
+import imgEstate from '../_assets/img/blog/blog-estate-water.jpg';
+import imgGrave from '../_assets/img/blog/blog-grave-leaves.jpg';
+
+// 画像ファイル名と実際のimportを紐づけ
+const imageMap: Record<string, ImageMetadata> = {
+  'blog-ocean-sky.jpg': imgOcean,
+  'blog-estate-water.jpg': imgEstate,
+  'blog-grave-leaves.jpg': imgGrave,
+};
+
+// 最新3件を取得(現状は3件しかないが、将来増えても対応)
+const latestPosts = posts.slice(0, 3);
 ---
-<div class="blog-cards" id="blogCards">
-  <div class="blog-card skeleton"></div>
-  <div class="blog-card skeleton"></div>
-  <div class="blog-card skeleton"></div>
+
+<div class="blog-cards">
+  {latestPosts.map(post => (
+    <a href={`/blog/${post.slug}/`} class="blog-card">
+      <div class="blog-img">
+        <Image
+          src={imageMap[post.image]}
+          alt={post.imageAlt}
+          widths={[400, 600, 800]}
+          sizes="(max-width:768px) 100vw, 33vw"
+          loading="lazy"
+        />
+      </div>
+      <div class="blog-body">
+        <span class="blog-tag">{post.category}</span>
+        <p class="blog-date">{post.date}</p>
+        <h3 class="blog-title">{post.title}</h3>
+      </div>
+    </a>
+  ))}
 </div>
 
 <style>
 .blog-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.35rem}
-.blog-card{background:var(--white);border:1px solid var(--border);transition:.2s;cursor:pointer}
+.blog-card{background:var(--white);border:1px solid var(--border);border-radius:var(--corner);overflow:hidden;display:flex;flex-direction:column;transition:.2s}
 .blog-card:hover{border-color:var(--gd);transform:translateY(-2px)}
-.blog-img{width:100%;aspect-ratio:4/3;background:var(--gl);display:flex;align-items:center;justify-content:center;color:var(--gd);opacity:.4}
-.blog-img svg{width:42px;height:42px}
-.blog-body{padding:1.1rem 1.3rem 1.35rem}
-.blog-tag{display:inline-block;background:var(--gd);color:#fff;font-size:.72rem;padding:.2rem .6rem;margin-bottom:.5rem}
-.blog-date{font-size:.78rem;color:var(--light);margin-bottom:.4rem}
-.blog-title{font-family:var(--serif);font-size:.9rem;line-height:1.75;font-weight:400}
-.skeleton{background:linear-gradient(90deg,#eee 25%,#f5f5f5 50%,#eee 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;min-height:260px}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.blog-img{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--gl)}
+.blog-img :global(img){width:100%;height:100%;object-fit:cover;display:block}
+.blog-body{padding:1.1rem 1.3rem 1.35rem;flex:1;display:flex;flex-direction:column}
+.blog-tag{display:inline-block;align-self:flex-start;border:1px solid var(--gd);color:var(--gd);font-size:.72rem;padding:.2rem .6rem;margin-bottom:.5rem;border-radius:var(--corner);letter-spacing:.04em}
+.blog-date{font-size:.78rem;color:var(--light);margin-bottom:.4rem;font-family:var(--roman);letter-spacing:.04em}
+.blog-title{font-family:var(--serif);font-size:.95rem;line-height:1.75;font-weight:400;color:var(--text)}
 @media(max-width:768px){.blog-cards{grid-template-columns:1fr;gap:1rem}}
 </style>
-
-<script>
-import{initializeApp,getApps}from'firebase/app';
-import{getFirestore,collection,query,orderBy,limit,getDocs}from'firebase/firestore';
-const cfg={
-  apiKey:import.meta.env.PUBLIC_FIREBASE_API_KEY,
-  authDomain:import.meta.env.PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId:import.meta.env.PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket:import.meta.env.PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId:import.meta.env.PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId:import.meta.env.PUBLIC_FIREBASE_APP_ID,
-};
-const app=getApps().length===0?initializeApp(cfg):getApps()[0];
-const db=getFirestore(app);
-const FALLBACK_SVG='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="14" x2="15" y2="14"/><line x1="9" y1="18" x2="13" y2="18"/></svg>';
-async function load(){
-  const el=document.getElementById('blogCards');
-  if(!el)return;
-  try{
-    const q=query(collection(db,'posts'),orderBy('createdAt','desc'),limit(3));
-    const snap=await getDocs(q);
-    if(snap.empty){el.innerHTML='<p style="color:#888;grid-column:1/-1;text-align:center;padding:3rem 0">記事を準備中です</p>';return;}
-    el.innerHTML=snap.docs.map(d=>{
-      const p=d.data();
-      const date=p.createdAt?.toDate?.()?.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'})||'';
-      return`<a href="/blog/${d.id}" class="blog-card">
-        <div class="blog-img">${p.thumbnail?`<img src="${p.thumbnail}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover" loading="lazy">`:FALLBACK_SVG}</div>
-        <div class="blog-body">
-          <span class="blog-tag">${p.category||'お知らせ'}</span>
-          <p class="blog-date">${date}</p>
-          <h3 class="blog-title">${p.title}</h3>
-        </div>
-      </a>`;
-    }).join('');
-  }catch(e){
-    el.innerHTML=[
-      {tag:'現場レポート',date:'2026.03.10',title:'穏やかな春の海で——初めての海洋散骨をご家族5名でご依頼いただきました'},
-      {tag:'現場レポート',date:'2026.03.05',title:'築40年の実家を整理。「ありがとう」と言いながら作業を終えることができました'},
-      {tag:'豆知識',      date:'2026.02.28',title:'「墓じまい」の前に知っておきたい3つのこと——行政手続きと費用の目安'},
-    ].map(p=>`<div class="blog-card">
-      <div class="blog-img">${FALLBACK_SVG}</div>
-      <div class="blog-body">
-        <span class="blog-tag">${p.tag}</span>
-        <p class="blog-date">${p.date}</p>
-        <h3 class="blog-title">${p.title}</h3>
-      </div>
-    </div>`).join('');
-  }
-}
-load();
-</script>
