@@ -78,13 +78,12 @@ const tamotoItems = [
   <Header />
   <main>
 
-    <div class="breadcrumb">
-      <a href="/">ホーム</a><span>›</span>
-      <a href="/#services">サービス一覧</a><span>›</span>
-      <span>仏壇・仏具販売</span>
-    </div>
-
     <section class="page-hero">
+      <div class="breadcrumb">
+        <a href="/">ホーム</a><span>›</span>
+        <a href="/#services">サービス一覧</a><span>›</span>
+        <span>仏壇・仏具販売</span>
+      </div>
       <div class="hero-inner">
         <p class="hero-label">SERVICE 04 — Buddhist Altar & Items</p>
         <h1 class="hero-title">仏壇・位牌・仏具のご案内</h1>
@@ -305,10 +304,10 @@ const tamotoItems = [
     --gold:#c8a84b;--gold-light:#fdf8ec;
   }
 
-  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-  .breadcrumb a{color:var(--gd)}
-  .breadcrumb a:hover{text-decoration:underline}
-  .breadcrumb span{opacity:.5}
+  .breadcrumb{position:absolute;top:1.25rem;left:0;right:0;z-index:4;max-width:1100px;margin:0 auto;padding:.5rem 1.5rem;font-size:.78rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:rgba(255,255,255,0.8)}
+  .breadcrumb a:hover{color:#fff}
+  .breadcrumb > span:last-child{color:rgba(255,255,255,0.95)}
 
   .page-hero{
     background:linear-gradient(135deg,#2c2218 0%,#4a3728 50%,#3d2e22 100%);

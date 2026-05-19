@@ -62,12 +62,6 @@ const areas = [
   <Header />
   <main>
 
-    <div class="breadcrumb">
-      <a href="/">ホーム</a><span>›</span>
-      <a href="/#services">サービス一覧</a><span>›</span>
-      <span>遺品整理</span>
-    </div>
-
     <!-- HERO(背景画像+ダークグリーンオーバーレイ) -->
     <section class="page-hero">
       <div class="hero-bg">
@@ -82,6 +76,11 @@ const areas = [
         />
       </div>
       <div class="hero-overlay"></div>
+      <div class="breadcrumb">
+      <a href="/">ホーム</a><span>›</span>
+      <a href="/#services">サービス一覧</a><span>›</span>
+      <span>遺品整理</span>
+    </div>
 
       <div class="page-hero-inner">
         <p class="page-hero-label">SERVICE 01 — Estate Clearance</p>
@@ -272,9 +271,10 @@ const areas = [
 <style>
   :root{--gold:#c8a84b}
 
-  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-  .breadcrumb a{color:var(--mid)}
-  .breadcrumb a:hover{color:var(--gd)}
+  .breadcrumb{position:absolute;top:1.25rem;left:0;right:0;z-index:4;max-width:1100px;margin:0 auto;padding:.5rem 1.5rem;font-size:.78rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:rgba(255,255,255,0.8)}
+  .breadcrumb a:hover{color:#fff}
+  .breadcrumb > span:last-child{color:rgba(255,255,255,0.95)}
 
   /* ─────────────────────────────────────────
      PAGE HERO(背景画像+ダークグリーンオーバーレイ)

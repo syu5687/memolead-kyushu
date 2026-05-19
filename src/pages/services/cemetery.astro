@@ -43,14 +43,13 @@ const priceRows = [
   <Header />
   <main>
 
-    <div class="breadcrumb">
+    <section class="page-hero">
+      <div class="hero-overlay"></div>
+      <div class="breadcrumb">
       <a href="/">ホーム</a><span>›</span>
       <a href="/#services">サービス一覧</a><span>›</span>
       <span>墓地・霊園ご紹介</span>
     </div>
-
-    <section class="page-hero">
-      <div class="hero-overlay"></div>
       <div class="page-hero-inner">
         <p class="page-hero-label">SERVICE 05 — Cemetery &amp; Garden Burial</p>
         <h1 class="page-hero-title">墓地・霊園ご紹介</h1>
@@ -195,9 +194,10 @@ const priceRows = [
 
 <style>
   :root{--gold:#c8a84b}
-  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-  .breadcrumb a{color:var(--mid)}
-  .breadcrumb a:hover{color:var(--gd)}
+  .breadcrumb{position:absolute;top:1.25rem;left:0;right:0;z-index:4;max-width:1100px;margin:0 auto;padding:.5rem 1.5rem;font-size:.78rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:rgba(255,255,255,0.8)}
+  .breadcrumb a:hover{color:#fff}
+  .breadcrumb > span:last-child{color:rgba(255,255,255,0.95)}
   .page-hero{position:relative;min-height:480px;overflow:hidden;background:linear-gradient(135deg, var(--gd), var(--gm));color:#fff;display:flex;align-items:center;padding:5rem 1.5rem}
   .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(100deg,rgba(45,90,61,0.6) 0%,rgba(45,90,61,0.3) 60%,rgba(45,90,61,0) 100%)}
   .page-hero-inner{position:relative;z-index:3;max-width:680px;width:100%;margin:0 auto 0 max(1.5rem,calc((100% - 1100px)/2));text-align:left}

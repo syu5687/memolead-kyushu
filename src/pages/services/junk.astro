@@ -60,13 +60,12 @@ const areas = [
   <Header />
   <main>
 
-    <div class="breadcrumb">
-      <a href="/">ホーム</a><span>›</span>
-      <a href="/#services">サービス一覧</a><span>›</span>
-      <span>不用品回収</span>
-    </div>
-
     <section class="page-hero">
+      <div class="breadcrumb">
+        <a href="/">ホーム</a><span>›</span>
+        <a href="/#services">サービス一覧</a><span>›</span>
+        <span>不用品回収</span>
+      </div>
       <div class="page-hero-inner">
         <p class="page-hero-label">SERVICE 02 — Unwanted Items Removal</p>
         <h1 class="page-hero-title">不用品回収</h1>
@@ -264,9 +263,10 @@ const areas = [
 <style>
   :root{--gold:#c8a84b}
 
-  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-  .breadcrumb a{color:var(--gd)}
-  .breadcrumb a:hover{text-decoration:underline}
+  .breadcrumb{position:absolute;top:1.25rem;left:0;right:0;z-index:4;max-width:1100px;margin:0 auto;padding:.5rem 1.5rem;font-size:.78rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb a{color:rgba(255,255,255,0.8)}
+  .breadcrumb a:hover{color:#fff}
+  .breadcrumb > span:last-child{color:rgba(255,255,255,0.95)}
   .breadcrumb span{opacity:.5}
 
   .page-hero{background:var(--gd);color:#fff;padding:3.5rem 1.5rem;position:relative;overflow:hidden}

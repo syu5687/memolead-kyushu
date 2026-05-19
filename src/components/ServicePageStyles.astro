@@ -4,9 +4,26 @@
 // 使い方: <ServicePageStyles /> をBaseLayoutの中、Header前に配置
 ---
 <style is:global>
-  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-  .breadcrumb a{color:var(--mid)}
-  .breadcrumb a:hover{color:var(--gd)}
+  /* パンくず:ヒーロー内に絶対配置で重ねる(白文字・透明背景) */
+  .breadcrumb{
+    position:absolute;
+    top:1.25rem;
+    left:0;
+    right:0;
+    z-index:4;
+    max-width:1100px;
+    margin:0 auto;
+    padding:.5rem 0;
+    font-size:.78rem;
+    color:rgba(255,255,255,0.7);
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    flex-wrap:wrap;
+  }
+  .breadcrumb a{color:rgba(255,255,255,0.8)}
+  .breadcrumb a:hover{color:#fff}
+  .breadcrumb > span:last-child{color:rgba(255,255,255,0.95)}
 
   /* PAGE HERO */
   .page-hero{position:relative;min-height:480px;overflow:hidden;background:linear-gradient(135deg, var(--gd), var(--gm));color:#fff;display:flex;align-items:center;padding:5rem 1.5rem}
