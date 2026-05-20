@@ -211,7 +211,9 @@ const priceRows = [
   .breadcrumb a:hover{color:#fff}
   .breadcrumb > span:last-child{color:rgba(255,255,255,0.95)}
   .page-hero{position:relative;min-height:480px;overflow:hidden;background:linear-gradient(135deg, var(--gd), var(--gm));color:#fff;display:flex;align-items:center;padding:5rem 1.5rem}
-  .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(100deg,rgba(45,90,61,0.6) 0%,rgba(45,90,61,0.3) 60%,rgba(45,90,61,0) 100%)}
+  .hero-bg{position:absolute;inset:0;z-index:1}
+  .hero-bg :global(.hero-img){width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:saturate(0.9) sepia(0.05) brightness(0.95)}
+  .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(100deg,rgba(45,90,61,0.85) 0%,rgba(45,90,61,0.75) 35%,rgba(45,90,61,0.65) 60%,rgba(45,90,61,0.45) 100%)}
   .page-hero-inner{position:relative;z-index:3;max-width:680px;width:100%;margin:0 auto 0 max(1.5rem,calc((100% - 1100px)/2));text-align:left}
   .page-hero-label{font-family:var(--roman);font-size:.78rem;letter-spacing:0;opacity:.8;margin-bottom:.6rem}
   .page-hero-title{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);font-weight:400;letter-spacing:.1em;margin-bottom:1rem}
