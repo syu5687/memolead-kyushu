@@ -8,7 +8,7 @@
 //   - telHref   : 電話ボタンのリンク先(tel:)
 //   - telMain   : 電話ボタンのメイン文言
 //   - telSub    : 電話ボタンのサブ文言
-//   - mailHref  : メールボタンのリンク先(デフォルト /contact)
+//   - mailHref  : メールボタンのリンク先(デフォルト /contact/)
 //                 contactページでは "#contact-form" などを渡してページ内移動にできる
 //   - mailMain  : メールボタンのメイン文言
 //   - mailSub   : メールボタンのサブ文言
@@ -77,6 +77,24 @@ const {
     right:0;
     z-index:150;
     padding:0 .6rem .6rem;
+    /* 初回表示時に下からふわっと(1回だけ・JS不要) */
+    animation:ctaSlideUp .5s ease-out both;
+    /* スクロール中の透明度変化をなめらかに */
+    transition:opacity .25s ease;
+  }
+  /* スクロール中だけ半透明(JSが is-scrolling クラスを付与) */
+  .fixed-cta.is-scrolling{
+    opacity:.6;
+  }
+
+  /* 下からふわっと出るアニメーション */
+  @keyframes ctaSlideUp{
+    from{opacity:0; transform:translateY(100%)}
+    to{opacity:1; transform:translateY(0)}
+  }
+  /* アニメーションを嫌う設定の人には動きを出さない(アクセシビリティ配慮) */
+  @media(prefers-reduced-motion:reduce){
+    .fixed-cta{animation:none}
   }
 
   /* 上部:訴求ラベル(濃緑背景・白文字・カード上辺の黄枠を兼ねる) */
@@ -176,3 +194,22 @@ const {
   .fixed-cta-label{font-size:.75rem}
 }
 </style>
+
+<script>
+  // スクロール中だけ固定CTAを半透明(60%)にする
+  // スクロールが止まると元の不透明に戻る
+  const cta = document.querySelector('.fixed-cta');
+  if (cta) {
+    let scrollTimer: ReturnType<typeof setTimeout> | undefined;
+    window.addEventListener('scroll', () => {
+      // スクロール中:半透明クラスを付ける
+      cta.classList.add('is-scrolling');
+      // 直前のタイマーをリセット(連続スクロール中は戻さない)
+      if (scrollTimer) clearTimeout(scrollTimer);
+      // スクロールが150ミリ秒止まったら元に戻す
+      scrollTimer = setTimeout(() => {
+        cta.classList.remove('is-scrolling');
+      }, 150);
+    }, { passive: true });
+  }
+</script>
