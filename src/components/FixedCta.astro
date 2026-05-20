@@ -78,7 +78,7 @@ const {
     z-index:150;
     padding:0 .6rem .6rem;
     /* 初回表示時に下からふわっと(1回だけ・JS不要) */
-    animation:ctaSlideUp .5s ease-out both;
+    animation:ctaSlideUp .5s ease-out backwards;
     /* スクロール中の透明度変化をなめらかに */
     transition:opacity .25s ease;
   }
@@ -207,7 +207,7 @@ const {
       clearTimeout(scrollTimer);                    // 直前のタイマーを取り消す
       scrollTimer = setTimeout(() => {
         cta.classList.remove('is-scrolling');       // 300ミリ秒止まったら元に戻す
-      }, 300);
+      }, 150);
     };
   
     window.addEventListener('scroll', onScroll, { passive: true });
