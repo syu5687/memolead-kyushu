@@ -1,0 +1,170 @@
+---
+// ─────────────────────────────────────────
+// モバイル固定CTAバー(共通コンポーネント)
+// 全ページで使用する、画面下部固定のCTA。
+//
+// 【props】すべて任意。指定しなければデフォルト値を使用。
+//   - labelText : 上部ラベルの文言
+//   - telHref   : 電話ボタンのリンク先(tel:)
+//   - telMain   : 電話ボタンのメイン文言
+//   - telSub    : 電話ボタンのサブ文言
+//   - mailHref  : メールボタンのリンク先(デフォルト /contact)
+//                 contactページでは "#contact-form" などを渡してページ内移動にできる
+//   - mailMain  : メールボタンのメイン文言
+//   - mailSub   : メールボタンのサブ文言
+// ─────────────────────────────────────────
+import Icon from './Icon.astro';
+
+interface Props {
+  labelText?: string;
+  telHref?: string;
+  telMain?: string;
+  telSub?: string;
+  mailHref?: string;
+  mailMain?: string;
+  mailSub?: string;
+}
+
+const {
+  labelText = 'どんなご質問もOK',
+  telHref   = 'tel:095-865-4400',
+  telMain   = '電話で相談する',
+  telSub    = '10:00-17:00（店休日無し）',
+  mailHref  = '/contact',
+  mailMain  = 'メールで相談する',
+  mailSub   = '24時間受付・無料',
+} = Astro.props;
+---
+
+<!-- モバイル固定CTAバー(ハイブリッド型:訴求ラベル+2ボタン) -->
+<div class="fixed-cta">
+  <p class="fixed-cta-label">
+    <span class="fixed-cta-check" aria-hidden="true">✓</span>
+    {labelText}
+  </p>
+  <div class="fixed-cta-btns">
+    <a href={telHref} class="tel-f">
+      <Icon name="phone" size={24} />
+      <span class="cta-text">
+        <span class="cta-main">{telMain}</span>
+        <span class="cta-sub">{telSub}</span>
+      </span>
+    </a>
+    <a href={mailHref} class="web-f">
+      <Icon name="mail" size={24} />
+      <span class="cta-text">
+        <span class="cta-main">{mailMain}</span>
+        <span class="cta-sub">{mailSub}</span>
+      </span>
+    </a>
+  </div>
+</div>
+
+<style>
+/* ─────────────────────────────────────────
+   MOBILE FIXED CTA(ハイブリッド型・50代以上対応)
+   PC表示では非表示、768px以下で表示
+   ───────────────────────────────────────── */
+.fixed-cta{display:none}
+
+@media(max-width:768px){
+  /* バー全体:画面端から浮かせるためのラッパー */
+  .fixed-cta{
+    display:block;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:150;
+    padding:0 .6rem .6rem;
+  }
+
+  /* 上部:訴求ラベル(角丸カードの上に乗る帯) */
+  .fixed-cta-label{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.4rem;
+    background:var(--yellow);
+    color:var(--gd);
+    padding:.45rem 1rem;
+    font-size:.82rem;
+    font-weight:700;
+    letter-spacing:.03em;
+    text-align:center;
+    line-height:1.4;
+    border-radius:var(--corner) var(--corner) 0 0;
+  }
+  .fixed-cta-check{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:18px;
+    height:18px;
+    background:var(--gd);
+    color:var(--yellow);
+    border-radius:50%;
+    font-size:.7rem;
+    font-weight:700;
+    flex-shrink:0;
+  }
+
+  /* 下部:2つのボタン(角丸カード本体 + 影で浮遊感) */
+  .fixed-cta-btns{
+    display:flex;
+    border-radius:0 0 var(--corner) var(--corner);
+    overflow:hidden;
+    box-shadow:0 4px 16px rgba(0,0,0,.22);
+  }
+  .fixed-cta-btns a{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.6rem;
+    padding:.85rem .5rem;
+    transition:.15s ease;
+    min-height:64px;
+  }
+  /* 押した時:沈み込む(translateY) + 少し暗く */
+  .fixed-cta-btns a:active{
+    transform:translateY(1px);
+    filter:brightness(.92);
+  }
+  .fixed-cta-btns .cta-text{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    line-height:1.3;
+  }
+  .fixed-cta-btns .cta-main{
+    font-size:.95rem;
+    font-weight:700;
+    letter-spacing:.02em;
+  }
+  .fixed-cta-btns .cta-sub{
+    font-size:.68rem;
+    opacity:.8;
+    letter-spacing:0;
+    margin-top:.15rem;
+  }
+
+  /* 電話ボタン:緑背景 + 白文字 */
+  .tel-f{
+    background:var(--gd);
+    color:#fff;
+  }
+  /* メールボタン:明るめグリーン + 白文字 */
+  .web-f{
+    background:var(--gm);
+    color:#fff;
+  }
+}
+
+/* スマホ縦長(380px以下)では文字サイズ縮小 */
+@media(max-width:380px){
+  .fixed-cta-btns .cta-main{font-size:.85rem}
+  .fixed-cta-btns .cta-sub{font-size:.62rem}
+  .fixed-cta-label{font-size:.75rem}
+}
+</style>

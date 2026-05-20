@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
+import FixedCta from '../../components/FixedCta.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/butsudan/hero-image.jpg';
 
@@ -305,10 +306,8 @@ const tamotoItems = [
 
   <Footer />
 
-  <div class="fixed-cta">
-    <a href="tel:0958256386" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
-    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
-  </div>
+  <!-- モバイル固定CTAバー(共通コンポーネント) -->
+  <FixedCta />
 </BaseLayout>
 
 <style>
@@ -439,7 +438,6 @@ const tamotoItems = [
 
   .note-block{background:#fffbf0;border-left:3px solid var(--gold);padding:1rem 1.25rem;font-size:.875rem;line-height:1.9;color:var(--mid)}
 
-  .fixed-cta{display:none}
 
   .fi{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
   .fi.show{opacity:1;transform:none}
@@ -463,11 +461,7 @@ const tamotoItems = [
     .cta-btns{flex-direction:column;align-items:center}
     .cta-btn-gold,.cta-btn-out{width:100%;max-width:320px;text-align:center}
 
-    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
-    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
-    .fixed-cta .tel-f{background:var(--brown);color:#fff}
-    .fixed-cta .web-f{background:#333;color:#fff}
-  }
+    .fixed-cta    .fixed-cta  }
   @media(max-width:480px){
     .type-grid{grid-template-columns:1fr}
     .lineup-grid{grid-template-columns:repeat(2,1fr)}

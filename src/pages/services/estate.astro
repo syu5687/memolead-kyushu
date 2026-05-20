@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
+import FixedCta from '../../components/FixedCta.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/estate/hero-image.jpg';
 import { getServicePricing, formatYen } from '../../data/pricing';
@@ -262,10 +263,8 @@ const areas = [
 
   <Footer />
 
-  <div class="fixed-cta">
-    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
-    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
-  </div>
+  <!-- モバイル固定CTAバー(共通コンポーネント) -->
+  <FixedCta />
 </BaseLayout>
 
 <style>
@@ -491,8 +490,6 @@ const areas = [
   }
   .cta-web-btn:hover{background:rgba(255,255,255,.1)}
 
-  /* FIXED CTA(モバイル) */
-  .fixed-cta{display:none}
 
   /* RESPONSIVE */
   @media(max-width:1024px){
@@ -511,11 +508,6 @@ const areas = [
     .price-table{font-size:.85rem}
     .price-table th,.price-table td{padding:.7rem .8rem}
     .cta-btns{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}
-    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
-    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
-    .tel-f{background:var(--gd);color:#fff}
-    .web-f{background:#333;color:#fff}
-    body{padding-bottom:52px}
   }
 </style>
 

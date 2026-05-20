@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
+import FixedCta from '../../components/FixedCta.astro';
 import { pricing, formatYenWithTax } from '../../data/pricing';
 ---
 
@@ -158,16 +159,14 @@ import { pricing, formatYenWithTax } from '../../data/pricing';
   </main>
   <Footer />
 
-  <div class="fixed-cta">
-    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
-    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
-  </div>
+  <!-- モバイル固定CTAバー(共通コンポーネント) -->
+  <FixedCta />
 </BaseLayout>
 
 <style>
-  .breadcrumb{padding:.65rem 1.5rem;font-size:.78rem;color:var(--gm);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .breadcrumb{background:var(--clight);padding:.65rem 1.5rem;font-size:.78rem;color:var(--light);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
   .breadcrumb a{color:var(--mid)}
-  .breadcrumb a:hover{color:var(--gm)}
+  .breadcrumb a:hover{color:var(--gd)}
 
   /* PAGE HEAD */
   .page-head{padding:4rem 1.5rem 3rem;text-align:center;background:var(--white)}
@@ -268,7 +267,6 @@ import { pricing, formatYenWithTax } from '../../data/pricing';
   .cta-web-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.5rem;font-size:.9rem;letter-spacing:0;transition:.2s;border-radius:var(--corner)}
   .cta-web-btn:hover{background:rgba(255,255,255,.1)}
 
-  .fixed-cta{display:none}
 
   @media(max-width:1024px){
     .sim-layout{grid-template-columns:1fr;gap:1.5rem}
@@ -287,11 +285,6 @@ import { pricing, formatYenWithTax } from '../../data/pricing';
     .notice-inner{padding:1.25rem 1.35rem}
     .cta-sec{padding:3.5rem 1rem}
     .cta-btns{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}
-    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
-    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
-    .tel-f{background:var(--gd);color:#fff}
-    .web-f{background:#333;color:#fff}
-    body{padding-bottom:52px}
   }
 </style>
 

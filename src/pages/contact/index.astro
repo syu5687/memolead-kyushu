@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
+import FixedCta from '../../components/FixedCta.astro';
 ---
 
 <BaseLayout
@@ -193,10 +194,8 @@ import Icon from '../../components/Icon.astro';
   </main>
   <Footer />
 
-  <div class="fixed-cta">
-    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
-    <a href="#contact-form" class="web-f"><Icon name="mail" size={18} />フォームへ</a>
-  </div>
+  <!-- モバイル固定CTAバー(共通コンポーネント・フォームへ誘導) -->
+  <FixedCta mailHref="#contact-form" mailMain="フォームから相談" />
 </BaseLayout>
 
 <style>
@@ -296,8 +295,6 @@ import Icon from '../../components/Icon.astro';
   }
   .submit-note{font-size:.78rem;color:var(--light);margin-top:1rem;line-height:1.85}
 
-  /* FIXED CTA */
-  .fixed-cta{display:none}
 
   @media(max-width:1024px){
     .access-wrap{grid-template-columns:1fr;gap:1.5rem}
@@ -312,11 +309,6 @@ import Icon from '../../components/Icon.astro';
     .access-info{padding:1.5rem}
     .access-row{grid-template-columns:5rem 1fr;font-size:.82rem}
     .access-map iframe{height:280px}
-    .fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}
-    .fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}
-    .tel-f{background:var(--gd);color:#fff}
-    .web-f{background:#333;color:#fff}
-    body{padding-bottom:52px}
   }
 </style>
 

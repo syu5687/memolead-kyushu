@@ -20,24 +20,19 @@ const {
   <slot />
 </body>
 </html>
+
 <style is:global>
 :root{
-  --gd:#2d5a3d;/*深緑*/
-  --gm:#3d7a52;/*緑*/
-  --gl:#e8f0eb;/*灰*/
-  --cream:#f5f0ea;/*薄クリーム*/
-  --clight:#faf7f3;/*極薄灰*/
-  --text:#1a1a1a;
-  --mid:#555;/*濃灰*/
-  --light:#999;
-  --border:#e0e0d8;/*薄灰*/
-  --white:#fff;
+  --gd:#2d5a3d;--gm:#3d7a52;--gl:#e8f0eb;
+  --cream:#f5f0ea;--clight:#faf7f3;
+  --text:#1a1a1a;--mid:#555;--light:#999;
+  --border:#e0e0d8;--white:#fff;
   --yellow:#f5c842;
+  --corner:4px;
   --serif:'Noto Serif JP',serif;
   --sans:'BIZ UDPGothic','Noto Sans JP',sans-serif;
   --roman:'Noto Serif JP',serif;
   --num:'Noto Serif JP',serif;
-  --corner:4px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -46,4 +41,8 @@ a{text-decoration:none;color:inherit}
 img{max-width:100%;display:block}
 .fade-init{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}
 .fade-in{opacity:1;transform:none}
+/* SP時:画面下部の固定CTAバー(FixedCta.astro)と重ならないよう余白を確保 */
+@media(max-width:768px){
+  body{padding-bottom:116px}
+}
 </style>

@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
+import FixedCta from '../../components/FixedCta.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/memento/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
@@ -171,10 +172,8 @@ const steps = [
 
   </main>
   <Footer />
-  <div class="fixed-cta">
-    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
-    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
-  </div>
+  <!-- モバイル固定CTAバー(共通コンポーネント) -->
+  <FixedCta />
 </BaseLayout>
 
 <script>

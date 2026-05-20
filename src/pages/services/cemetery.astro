@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
+import FixedCta from '../../components/FixedCta.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/cemetery/hero-image.jpg';
 
@@ -198,10 +199,8 @@ const priceRows = [
 
   <Footer />
 
-  <div class="fixed-cta">
-    <a href="tel:0958654400" class="tel-f"><Icon name="phone" size={18} />電話で相談</a>
-    <a href="/#contact" class="web-f"><Icon name="mail" size={18} />Webで相談</a>
-  </div>
+  <!-- モバイル固定CTAバー(共通コンポーネント) -->
+  <FixedCta />
 </BaseLayout>
 
 <style>
@@ -260,10 +259,8 @@ const priceRows = [
   .cta-tel-btn:hover{background:var(--gl)}
   .cta-web-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.5rem;font-size:.9rem;letter-spacing:0;transition:.2s;border-radius:var(--corner)}
   .cta-web-btn:hover{background:rgba(255,255,255,.1)}
-  .fixed-cta{display:none}
   @media(max-width:1024px){.features{grid-template-columns:repeat(2,1fr)}.steps-grid{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:768px){.page-hero{padding:3.5rem 1.25rem;min-height:auto}.page-hero-inner{margin:0 auto;text-align:left}.features,.steps-grid,.items-grid{grid-template-columns:1fr}.sec{padding:3.5rem 1rem}.price-table{font-size:.85rem}.price-table th,.price-table td{padding:.7rem .8rem}.cta-btns{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}.fixed-cta{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:150}.fixed-cta a{flex:1;display:flex;align-items:center;justify-content:center;padding:1rem;font-size:.92rem;gap:.4rem;font-weight:500}.tel-f{background:var(--gd);color:#fff}.web-f{background:#333;color:#fff}body{padding-bottom:52px}}
-</style>
+  @media(max-width:768px){.page-hero{padding:3.5rem 1.25rem;min-height:auto}.page-hero-inner{margin:0 auto;text-align:left}.features,.steps-grid,.items-grid{grid-template-columns:1fr}.sec{padding:3.5rem 1rem}.price-table{font-size:.85rem}.price-table th,.price-table td{padding:.7rem .8rem}.cta-btns{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}</style>
 
 <script>
 const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
