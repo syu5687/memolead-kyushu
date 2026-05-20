@@ -79,7 +79,7 @@ const services = [
 
       <!-- テキストコンテンツ(右側に配置) -->
       <div class="hero-content">
-        <p class="hero-label">SERVICE — 葬儀後の供養</p>
+        
         <h1 class="hero-title">
           葬儀後の供養、<br>
           <em>まるごとお任せ</em>ください
@@ -472,8 +472,8 @@ const services = [
   .hero-overlay{
     background:linear-gradient(
       180deg,
-      rgba(45,90,61,0.3)  0%,
-      rgba(45,90,61,0.45) 35%,
+      rgba(45,90,61,0.0)  0%,
+      rgba(45,90,61,0.1) 25%,
       rgba(45,90,61,0.85) 70%,
       rgba(45,90,61,0.96) 100%
     );
@@ -481,9 +481,12 @@ const services = [
 
   /* テキストエリアを下揃え */
   .hero-content{
-    padding:2rem 1.5rem 8rem;
+    padding:2rem 1.5rem 7.2rem;
     align-items:flex-start;
     justify-content:flex-end;  /* 下寄せ */
+  }
+  .hero-desc{
+  margin:0 auto 1rem;
   }
   .hero-content > *{
     max-width:none;
@@ -493,6 +496,7 @@ const services = [
     font-size:1.5rem;
     line-height:1.55;
     letter-spacing:.06em;
+    margin:0 auto 0.5rem;
   }
   .hero-desc br{display:none}
 
