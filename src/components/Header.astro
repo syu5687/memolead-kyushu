@@ -112,6 +112,11 @@ const estimates = [
       <span class="mm-logo-en">Angel Center</span>
       <span class="mm-logo-ja">ぶっこうどう</span>
     </a>
+    <!-- 閉じるボタン -->
+    <button class="mm-close" id="mmClose" type="button" aria-label="メニューを閉じる">
+      <span></span>
+      <span></span>
+    </button>
   </div>
 
   <!-- 電話番号バナー -->
@@ -302,10 +307,11 @@ a.nav-item:hover{color:var(--gd)}
   transition:opacity .35s ease, visibility 0s linear 0s;
 }
 
-/* メニュー上部:ロゴ */
+/* メニュー上部:ロゴ + 閉じるボタン */
 .mm-head{
   display:flex;
   align-items:center;
+  justify-content:space-between;
   padding:1rem 1.25rem;
   min-height:60px;
   border-bottom:1px solid rgba(255,255,255,.12);
@@ -313,6 +319,42 @@ a.nav-item:hover{color:var(--gd)}
 .mm-logo{display:flex;flex-direction:column;line-height:1.25;color:#fff}
 .mm-logo-en{font-family:var(--roman);font-size:.72rem;letter-spacing:0;color:rgba(255,255,255,.65);text-transform:uppercase}
 .mm-logo-ja{font-family:var(--serif);font-size:1.05rem;letter-spacing:.13em;color:#fff}
+
+/* 閉じるボタン(円形・×アイコン) */
+.mm-close{
+  position:relative;
+  width:40px;
+  height:40px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:50%;
+  cursor:pointer;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.2s ease;
+  flex-shrink:0;
+}
+.mm-close:hover,
+.mm-close:active{
+  background:rgba(255,255,255,.2);
+  border-color:rgba(255,255,255,.5);
+}
+.mm-close span{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:18px;
+  height:1.5px;
+  background:#fff;
+}
+.mm-close span:nth-child(1){
+  transform:translate(-50%,-50%) rotate(45deg);
+}
+.mm-close span:nth-child(2){
+  transform:translate(-50%,-50%) rotate(-45deg);
+}
 
 /* 電話番号バナー */
 .mm-tel-bar{
@@ -579,6 +621,10 @@ hamburger?.addEventListener('click', () => {
     openMobileMenu();
   }
 });
+
+// 閉じるボタンクリックで閉じる
+const mmClose = document.getElementById('mmClose');
+mmClose?.addEventListener('click', closeMobileMenu);
 
 // メニュー内リンククリックで閉じる
 mobileMenu?.querySelectorAll('a').forEach(a =>
