@@ -196,20 +196,24 @@ const {
 </style>
 
 <script>
-  // スクロール中だけ固定CTAを半透明(60%)にする
-  // スクロールが止まると元の不透明に戻る
-  const cta = document.querySelector('.fixed-cta');
-  if (cta) {
-    let scrollTimer: ReturnType<typeof setTimeout> | undefined;
-    window.addEventListener('scroll', () => {
-      // スクロール中:半透明クラスを付ける
-      cta.classList.add('is-scrolling');
-      // 直前のタイマーをリセット(連続スクロール中は戻さない)
-      if (scrollTimer) clearTimeout(scrollTimer);
-      // スクロールが150ミリ秒止まったら元に戻す
+  // スクロール中だけ固定CTAを半透明にする
+  function initCtaScroll() {
+    const cta = document.querySelector('.fixed-cta');
+    if (!cta) return; // 要素がなければ何もしない
+  
+    let scrollTimer;
+    const onScroll = () => {
+      cta.classList.add('is-scrolling');           // スクロール中:半透明クラスを付与
+      clearTimeout(scrollTimer);                    // 直前のタイマーを取り消す
       scrollTimer = setTimeout(() => {
-        cta.classList.remove('is-scrolling');
-      }, 150);
-    }, { passive: true });
+        cta.classList.remove('is-scrolling');       // 300ミリ秒止まったら元に戻す
+      }, 300);
+    };
+  
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
+  
+  // 通常の読み込みと、Astroのページ遷移の両方で実行する
+  initCtaScroll();
+  document.addEventListener('astro:page-load', initCtaScroll);
 </script>
