@@ -102,7 +102,7 @@ const services = [
       </a>
     </section>
 
-    <div class="wave"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,26 C360,52 1080,0 1440,26 L1440,52 L0,52 Z" fill="#2d5a3d"/></svg></div>
+    <!--<div class="wave"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,26 C360,52 1080,0 1440,26 L1440,52 L0,52 Z" fill="#2d5a3d"/></svg></div>-->
 
     <!-- POINTS -->
     <section class="points">
@@ -113,7 +113,7 @@ const services = [
       </div>
     </section>
 
-    <div class="wave"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,26 C360,0 1080,52 1440,26 L1440,0 L0,0 Z" fill="#2d5a3d"/></svg></div>
+    <!--<div class="wave"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,26 C360,0 1080,52 1440,26 L1440,0 L0,0 Z" fill="#2d5a3d"/></svg></div>-->
 
     <!-- SERVICES -->
     <section class="sec bg-cream" id="services">
@@ -521,11 +521,11 @@ const services = [
 }
 
 /* POINTS */
-.points{background:var(--gd);padding:3.5rem 1.5rem}
-.pts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;max-width:1100px;margin:0 auto}
-.pt{border:1px solid rgba(255,255,255,.2);padding:2rem 1.5rem;text-align:center;color:#fff}
+.points{padding:3.5rem 0rem;background:var(--gd);}
+.pts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;max-width:1100px;margin:0 auto;background:linear-gradient(rgba(60, 120, 80, .4),  rgba(60, 120, 80, .8)),url("../_assets/img/index/point_image.jpg");padding:1.5rem 2rem;}
+.pt{border:1px solid rgba(255,255,255,.2);padding:2rem 1.5rem;text-align:center;color:#000;background:rgba(255,255,255,.8);border-radius:var(--corner);}
 .pt-num{font-family:var(--roman);font-size:.78rem;letter-spacing:0;opacity:.55;margin-bottom:.6rem}
-.pt-title{font-family:var(--serif);font-size:1rem;font-weight:400;margin-bottom:.8rem}
+.pt-title{font-family:var(--serif);font-size:1rem;font-weight:400;margin-bottom:.8rem;color:var(--gm);font-weight:bold;border-bottom:1px solid var(--gd);}
 .pt-desc{font-size:.9rem;line-height:1.95;opacity:.85}
 
 /* SECTION */
