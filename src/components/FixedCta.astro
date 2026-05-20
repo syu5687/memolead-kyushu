@@ -79,20 +79,22 @@ const {
     padding:0 .6rem .6rem;
   }
 
-  /* 上部:訴求ラベル(角丸カードの上に乗る帯) */
+  /* 上部:訴求ラベル(濃緑背景・白文字・カード上辺の黄枠を兼ねる) */
   .fixed-cta-label{
     display:flex;
     align-items:center;
     justify-content:center;
     gap:.4rem;
-    background:var(--yellow);
-    color:var(--gd);
+    background:var(--gd);
+    color:var(--white);
     padding:.45rem 1rem;
     font-size:.82rem;
     font-weight:700;
     letter-spacing:.03em;
     text-align:center;
     line-height:1.4;
+    border:2px solid var(--yellow);    /* カード上辺＋左右の黄枠 */
+    border-bottom:none;                /* ボタンとの境目は下のborder-topで描く */
     border-radius:var(--corner) var(--corner) 0 0;
   }
   .fixed-cta-check{
@@ -101,17 +103,19 @@ const {
     justify-content:center;
     width:18px;
     height:18px;
-    background:var(--gd);
-    color:var(--yellow);
+    background:var(--yellow);
+    color:var(--gd);
     border-radius:50%;
     font-size:.7rem;
     font-weight:700;
     flex-shrink:0;
   }
 
-  /* 下部:2つのボタン(角丸カード本体 + 影で浮遊感) */
+  /* 下部:2つのボタン(黄枠でカード下辺＋左右を描く) */
   .fixed-cta-btns{
     display:flex;
+    border:2px solid var(--yellow);                 /* 下辺＋左右の黄枠 */
+    border-top:2px solid var(--yellow);             /* ラベルとの境の黄線 */
     border-radius:0 0 var(--corner) var(--corner);
     overflow:hidden;
     box-shadow:0 4px 16px rgba(0,0,0,.22);
@@ -125,6 +129,10 @@ const {
     padding:.85rem .5rem;
     transition:.15s ease;
     min-height:64px;
+  }
+  /* 電話とメールの境目に黄色の仕切り線 */
+  .fixed-cta-btns a + a{
+    border-left:2px solid var(--yellow);
   }
   /* 押した時:沈み込む(translateY) + 少し暗く */
   .fixed-cta-btns a:active{
@@ -149,15 +157,15 @@ const {
     margin-top:.15rem;
   }
 
-  /* 電話ボタン:緑背景 + 白文字 */
+  /* 電話ボタン:明緑背景 + 白文字 */
   .tel-f{
-    background:var(--gd);
-    color:#fff;
-  }
-  /* メールボタン:明るめグリーン + 白文字 */
-  .web-f{
     background:var(--gm);
     color:#fff;
+  }
+  /* メールボタン:白背景 + 濃緑文字 */
+  .web-f{
+    background:var(--white);
+    color:var(--gd);
   }
 }
 
