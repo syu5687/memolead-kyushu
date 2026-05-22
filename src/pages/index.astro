@@ -33,19 +33,51 @@ const heroSP = heroImageSP
   : null;
 
 const services = [
-  { num:'01', en:'Estate Clearance',         ja:'遺品整理',         desc:'故人のお部屋や自宅を丁寧に整理します。大切な品の仕分けから不用品の処分まで、心を込めて対応いたします。', tags:['仮見積り対応'], link:'/services/estate/', estimate:true },
-  { num:'02', en:'Unwanted Items Removal',   ja:'不用品回収',       desc:'家具・家電から日用品まで、迅速・丁寧に回収します。仏壇・人形などのお焚き上げ供養も承ります。エンゼル号1台11,000円〜。', tags:['仮見積り対応'], link:'/services/junk/', estimate:true },
-  { num:'03', en:'Antique Purchase',         ja:'古物買取',         desc:'遺品の中から価値ある品を査定・買取。専門スタッフが丁寧に評価し、適正価格でお買い取りします。', tags:[], link:'/services/antique/', estimate:false },
-  { num:'04', en:'Buddhist Altar & Items',   ja:'仏壇・仏具販売',   desc:'コンパクトな現代仏壇から伝統的な金仏壇・唐木仏壇まで幅広くご用意。位牌の字彫りサービスも。', tags:['仮見積り対応'], link:'/services/butsudan/', estimate:true },
-  { num:'05', en:'Cemetery & Garden Burial', ja:'墓地・霊園ご紹介', desc:'墓地・墓石・納骨堂・樹木葬など、ご希望に合った埋葬の方法を丁寧にご案内します。', tags:[], link:'/services/cemetery/', estimate:false },
-  { num:'06', en:'Altar Closing Ceremony',   ja:'仏壇（神棚）じまい', desc:'閉眼供養から搬出・処分まで、心を込めた儀式とともに丁寧に対応いたします。', tags:['仮見積り対応'], link:'/services/altar-closing/', estimate:true },
-  { num:'07', en:'Altar Remake',             ja:'仏壇リメイク',     desc:'代々受け継いだ仏壇をモダンにリメイク。お部屋のインテリアに馴染むデザインへの改装が可能です。', tags:['人気サービス','仮見積り対応'], link:'/services/altar-remake/', estimate:true },
-  { num:'08', en:'Grave Closure',            ja:'墓じまい',         desc:'改葬許可申請から石材の撤去、閉眼供養まで。複雑な手続きをまとめてサポートします。', tags:['仮見積り対応'], link:'/services/grave-closure/', estimate:true },
-  { num:'09', en:'Grave Keeping Agency',     ja:'墓守代行サービス', desc:'遠方にお住まいの方に代わり、お墓参り・清掃・献花などを定期的に代行いたします。', tags:['仮見積り対応'], link:'/services/grave-keeping/', estimate:true },
-  { num:'10', en:'Ocean Scattering',         ja:'海洋散骨',         desc:'大海原に還る自然葬。チャータープランと合同プランをご用意。海を愛した方への新しい供養のかたちです。', tags:['仮見積り対応'], link:'/services/ocean/', estimate:true },
-  { num:'11', en:'Memento Items',            ja:'手元供養品販売',   desc:'遺骨・遺灰を活用したペンダントやミニ骨壺など、手元でご供養いただける品をご提案します。', tags:[], link:'/services/memento/', estimate:false },
-  { num:'12', en:'Inheritance Consultation', ja:'相続（不動産）相談', desc:'不動産の相続・売却・活用など、専門家と連携しながら最善の選択肢をご案内します。', tags:[], link:'/services/inheritance/', estimate:false },
-];
+    { num:'01', en:'Estate Clearance',         ja:'遺品整理',         desc:'大切な品の仕分けから処分まで、心を込めて整理。', tags:['仮見積り対応'], link:'/services/estate/', estimate:true },
+    { num:'02', en:'Unwanted Items Removal',   ja:'不用品回収',       desc:'家具・家電からお焚き上げ供養まで。1台11,000円〜。', tags:['仮見積り対応'], link:'/services/junk/', estimate:true },
+    { num:'03', en:'Antique Purchase',         ja:'古物買取',         desc:'価値ある遺品を、専門スタッフが適正に査定・買取。', tags:[], link:'/services/antique/', estimate:false },
+    { num:'04', en:'Buddhist Altar & Items',   ja:'仏壇・仏具販売',   desc:'現代仏壇から金仏壇まで。位牌の字彫りも対応。', tags:['仮見積り対応'], link:'/services/butsudan/', estimate:true },
+    { num:'05', en:'Cemetery & Garden Burial', ja:'墓地・霊園ご紹介', desc:'墓石・納骨堂・樹木葬まで、ご希望に合う埋葬を。', tags:[], link:'/services/cemetery/', estimate:false },
+    { num:'06', en:'Altar Closing Ceremony',   ja:'仏壇（神棚）じまい', desc:'閉眼供養から搬出・処分まで、丁寧に対応。', tags:['仮見積り対応'], link:'/services/altar-closing/', estimate:true },
+    { num:'07', en:'Altar Remake',             ja:'仏壇リメイク',     desc:'代々の仏壇を、お部屋に馴染むモダンな形へ。', tags:['人気サービス','仮見積り対応'], link:'/services/altar-remake/', estimate:true },
+    { num:'08', en:'Grave Closure',            ja:'墓じまい',         desc:'改葬許可申請から石材撤去・閉眼供養まで一括対応。', tags:['仮見積り対応'], link:'/services/grave-closure/', estimate:true },
+    { num:'09', en:'Grave Keeping Agency',     ja:'墓守代行サービス', desc:'遠方の方に代わり、お墓参り・清掃を定期代行。', tags:['仮見積り対応'], link:'/services/grave-keeping/', estimate:true },
+    { num:'10', en:'Ocean Scattering',         ja:'海洋散骨',         desc:'海に還る自然葬。チャーター・合同プランをご用意。', tags:['仮見積り対応'], link:'/services/ocean/', estimate:true },
+    { num:'11', en:'Memento Items',            ja:'手元供養品販売',   desc:'遺骨を納めるペンダントやミニ骨壺で手元供養。', tags:[], link:'/services/memento/', estimate:false },
+    { num:'12', en:'Inheritance Consultation', ja:'相続（不動産）相談', desc:'不動産の相続・売却・活用を、専門家と一緒に。', tags:[], link:'/services/inheritance/', estimate:false },
+  ];
+  // 各サービスのヒーロー画像をまとめて読み込む（ビルド時にWebP化するには import が必要）
+  // パス規約は「src/_assets/img/services/{slug}/hero.(jpg/png/webp)」を想定
+  // ※実際の保存場所に合わせて、このパス文字列“だけ”を調整してください
+  const serviceHeroModules = import.meta.glob(
+    '../_assets/img/*/hero-image.{jpg,jpeg,png,webp}',
+    { eager: true, import: 'default' }
+  );
+  
+  // globのキー（パス文字列）からslug（フォルダ名）を取り出し、slugで画像を引けるようにする
+  const heroBySlug: Record<string, ImageMetadata> = {};
+  for (const [path, img] of Object.entries(serviceHeroModules)) {
+    const m = path.match(/\/([^/]+)\/[^/]+$/); // 画像が入っているフォルダ名を取得（例: .../img/estate/hero-image.jpg → estate）
+    if (m) heroBySlug[m[1]] = img as ImageMetadata;
+  }
+  
+  // link（例: '/services/estate/'）からslugを取り出す
+  function slugFromLink(link: string) {
+    const parts = link.replace(/\/$/, '').split('/'); // 末尾スラッシュを外して最後の区切りを取得
+    return parts[parts.length - 1];
+  }
+  
+  // 各サービスにカード用の最適化画像（小さい幅のWebP）を付与する
+  // 対応画像が無いサービスは card:null になり、カード側で出し分ける（画像なしでも崩れない）
+  const servicesWithImg = await Promise.all(
+    services.map(async (s) => {
+      const src = heroBySlug[slugFromLink(s.link)];
+      const card = src
+        ? await getImage({ src, widths: [320, 480, 768], format: 'webp' }) // カードは小さいので大きい派生は作らない
+        : null;
+      return { ...s, card };
+    })
+  );
 ---
 <BaseLayout>
   <Header />
@@ -124,9 +156,23 @@ const services = [
         <p class="sec-desc">葬儀後のさまざまなお悩みに対応する12のサービスをご用意しています。<br>まずはお気軽にご相談ください。</p>
       </div>
       <div class="svc-grid fi">
-        {services.map(s => (
+        {servicesWithImg.map(s => (
           s.link
             ? <a href={s.link} class="svc-card svc-card--link">
+                {/* 画像がある時だけサムネイルを表示（無ければ出さない＝崩れない） */}
+                {s.card && (
+                  <div class="svc-thumb">
+                    <img
+                      src={s.card.src}
+                      srcset={s.card.srcSet.attribute}
+                      sizes="(max-width:768px) 100vw, 350px"
+                      alt={`${s.ja}のイメージ`}
+                      loading="lazy"
+                      decoding="async"
+                      class="svc-thumb-img"
+                    />
+                  </div>
+                )}
                 <div class="svc-hd"><span class="svc-num">{s.num}</span><div><p class="svc-title">{s.ja}</p><p class="svc-en">{s.en}</p></div></div>
                 <p class="svc-desc">{s.desc}</p>
                 <div class="svc-foot">
@@ -135,6 +181,19 @@ const services = [
                 </div>
               </a>
             : <div class="svc-card">
+                {s.card && (
+                  <div class="svc-thumb">
+                    <img
+                      src={s.card.src}
+                      srcset={s.card.srcSet.attribute}
+                      sizes="(max-width:768px) 100vw, 350px"
+                      alt={`${s.ja}のイメージ`}
+                      loading="lazy"
+                      decoding="async"
+                      class="svc-thumb-img"
+                    />
+                  </div>
+                )}
                 <div class="svc-hd"><span class="svc-num">{s.num}</span><div><p class="svc-title">{s.ja}</p><p class="svc-en">{s.en}</p></div></div>
                 <p class="svc-desc">{s.desc}</p>
                 <div class="svc-foot">
@@ -435,6 +494,20 @@ const services = [
 @keyframes scrollIndicator{
   0%, 100%{opacity:.4; transform:translateY(0)}
   50%     {opacity:1;  transform:translateY(4px)}
+}
+.svc-thumb{
+  margin:-1.5rem -1.35rem 1.1rem;
+  aspect-ratio:16/9;
+  overflow:hidden;
+}
+.svc-thumb-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.svc-card--link:hover .svc-thumb{
+  border-radius:var(--corner) var(--corner) 0 0;
 }
 
 /* タブレット */
