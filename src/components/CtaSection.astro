@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+
+// ページから受け取れる値の一覧（? は「省略可能」の意味）
+interface Props {
+  title?: string;
+  desc?: string;        // HTML可（<br> などが使えます）
+  sub?: string;         // 任意。渡さなければ表示されません
+  tel?: string;         // 表示用の電話番号（ハイフンあり）。tel:リンクは自動生成
+  hours?: string;
+  contactHref?: string; // 「Webで相談する」ボタンのリンク先
+  telLabel?: string;
+  webLabel?: string;
+}
+
+// 受け取った値を取り出す。= の右側は「渡されなかった時の初期値」
+const {
+  title = 'まずはお気軽にご相談ください',
+  desc = 'どんな小さなことでも、専門スタッフが丁寧にお答えします。',
+  sub,
+  tel = '095-865-4400',
+  hours = '営業時間 10:00〜17:00（年中無休）',
+  contactHref = '/#contact',
+  telLabel = '今すぐ電話する',
+  webLabel = 'Webで相談する',
+} = Astro.props;
+
+// 表示番号からハイフンを除いて tel: リンクを作る（例 095-825-6386 → tel:0958256386）
+const telHref = `tel:${tel.replace(/-/g, '')}`;
+---
+
+<section class="cta-sec fi">
+  <h2 class="cta-title">{title}</h2>
+  <p class="cta-desc" set:html={desc}></p>
+  {sub && <p class="cta-sub" set:html={sub}></p>}
+  <a href={telHref} class="cta-tel-num">{tel}</a>
+  <p class="cta-hours">{hours}</p>
+  <div class="cta-btns">
+    <a href={telHref} class="cta-btn-gold"><Icon name="phone" size={18} />{telLabel}</a>
+    <a href={contactHref} class="cta-btn-out"><Icon name="mail" size={18} />{webLabel}</a>
+  </div>
+</section>
+
+<style>
+  .cta-sec{background:linear-gradient(135deg,#2c2218,#4a3728);padding:4rem 1.5rem;text-align:center;color:#fff}
+  .cta-title{font-family:var(--serif);font-size:clamp(1.3rem,3vw,1.75rem);font-weight:400;letter-spacing:.1em;margin-bottom:.75rem}
+  .cta-desc{font-size:.92rem;color:rgba(255,255,255,.8);margin-bottom:.5rem;line-height:2}
+  .cta-sub{font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:2rem}
+  .cta-tel-num{font-family:var(--num);font-size:clamp(1.75rem,4vw,2.5rem);display:block;color:var(--gold,#c8a84b);margin-bottom:.3rem;letter-spacing:.1em}
+  .cta-hours{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:1.5rem}
+  .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .cta-btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--gold,#c8a84b);color:#fff;padding:.95rem 2.25rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
+  .cta-btn-gold:hover{background:#b8943b}
+  .cta-btn-out{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid rgba(255,255,255,.35);color:#fff;padding:.95rem 2.25rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
+  .cta-btn-out:hover{background:rgba(255,255,255,.08)}
+
+  .fi{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+  .fi.show{opacity:1;transform:none}
+
+  @media(max-width:768px){
+    .cta-btns{flex-direction:column;align-items:center}
+    .cta-btn-gold,.cta-btn-out{width:100%;max-width:320px;text-align:center}
+  }
+</style>
+
+<script>
+  // このセクション自身のフェードイン（ページ側のスクリプトに依存せず単体で動く）
+  document.querySelectorAll('.cta-sec.fi').forEach(el => {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('show');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    io.observe(el);
+  });
+</script>

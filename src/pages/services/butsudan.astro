@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import FixedCta from '../../components/FixedCta.astro';
+import CtaSection from '../../components/CtaSection.astro';
 import { Image, getImage } from 'astro:assets';
 import heroImage from '../../_assets/img/butsudan/hero-image.jpg';
 import type { ImageMetadata } from 'astro'; // 画像の型（Imageに渡すため）
@@ -350,17 +351,14 @@ const tamotoItems = [
       </div>
     </section>
 
-    <section class="cta-sec fi">
-      <h2 class="cta-title">店頭でゆっくりとご覧ください</h2>
-      <p class="cta-desc">実物を見て、触れて、専門スタッフにご相談いただけます。<br>仏壇の選び方から位牌の字彫りまで、丁寧にご対応いたします。</p>
-      <p class="cta-sub">ご来店の際は中陰表もしくは白木位牌の表裏の画像をお持ちください</p>
-      <a href="tel:0958256386" class="cta-tel-num">095-825-6386</a>
-      <p class="cta-hours">営業時間 10:00〜17:00（店休日無し）</p>
-      <div class="cta-btns">
-        <a href="tel:0958256386" class="cta-btn-gold"><Icon name="phone" size={18} />今すぐ電話する</a>
-        <a href="/#contact" class="cta-btn-out"><Icon name="mail" size={18} />Webで相談する</a>
-      </div>
-    </section>
+    <CtaSection
+      title="店頭でゆっくりとご覧ください"
+      desc="実物を見て、触れて、専門スタッフにご相談いただけます。<br>仏壇の選び方から位牌の字彫りまで、丁寧にご対応いたします。"
+      sub="ご来店の際は中陰表もしくは白木位牌の表裏の画像をお持ちください"
+      tel="095-825-6386"
+      hours="営業時間 10:00〜17:00（店休日無し）"
+      contactHref="/#contact"
+    />
 
   </main>
 
@@ -494,17 +492,6 @@ const tamotoItems = [
   .shop-map{background:var(--gl);display:flex;align-items:center;justify-content:center;min-height:250px;flex-direction:column;gap:.5rem;font-size:.9rem;color:var(--mid);padding:1.5rem}
   .shop-parking{background:var(--gd);color:#fff;padding:.35rem .75rem;font-size:.78rem;letter-spacing:.06em}
 
-  .cta-sec{background:linear-gradient(135deg,#2c2218,#4a3728);padding:4rem 1.5rem;text-align:center;color:#fff}
-  .cta-title{font-family:var(--serif);font-size:clamp(1.3rem,3vw,1.75rem);font-weight:400;letter-spacing:.1em;margin-bottom:.75rem}
-  .cta-desc{font-size:.92rem;color:rgba(255,255,255,.8);margin-bottom:.5rem;line-height:2}
-  .cta-sub{font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:2rem}
-  .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-  .cta-tel-num{font-family:var(--num);font-size:clamp(1.75rem,4vw,2.5rem);display:block;color:var(--gold);margin-bottom:.3rem;letter-spacing:.1em}
-  .cta-hours{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:1.5rem}
-  .cta-btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--gold);color:#fff;padding:.95rem 2.25rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
-  .cta-btn-gold:hover{background:#b8943b}
-  .cta-btn-out{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid rgba(255,255,255,.35);color:#fff;padding:.95rem 2.25rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
-  .cta-btn-out:hover{background:rgba(255,255,255,.08)}
 
   .note-block{background:#fffbf0;border-left:3px solid var(--gold);padding:1rem 1.25rem;font-size:.875rem;line-height:1.9;color:var(--mid)}
 
@@ -548,8 +535,7 @@ const tamotoItems = [
     .tamoto-grid{grid-template-columns:1fr}
     .shop-block{grid-template-columns:1fr}
     .shop-map{min-height:200px}
-    .cta-btns{flex-direction:column;align-items:center}
-    .cta-btn-gold,.cta-btn-out{width:100%;max-width:320px;text-align:center}
+    
 
     .fixed-cta    .fixed-cta  }
   @media(max-width:480px){
