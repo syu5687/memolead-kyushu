@@ -4,7 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import FixedCta from '../../components/FixedCta.astro';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import heroImage from '../../_assets/img/butsudan/hero-image.jpg';
 import type { ImageMetadata } from 'astro'; // 画像の型（Imageに渡すため）
 
@@ -14,6 +14,15 @@ const productPhotos = import.meta.glob(
   '../../_assets/img/butsudan/products/**/*.{jpg,jpeg,png,webp}',
   { eager: true, import: 'default' }
 ) as Record<string, ImageMetadata>;
+
+// 拡大表示（lightbox）用に、各写真の大きめWebPを事前生成しておく
+// 元画像より大きくしないよう width をクランプ（「width is greater than original」エラー防止）
+const fullByMetaSrc: Record<string, string> = {};
+for (const img of Object.values(productPhotos)) {
+  const w = Math.min(1600, img.width); // 最大1600px。元がそれより小さければ元の幅のまま
+  const big = await getImage({ src: img, width: w, format: 'webp' });
+  fullByMetaSrc[img.src] = big.src; // 元画像をキーに、拡大用URLを引けるようにする
+}
 
 // 指定したフォルダの中から、img（ファイル名）で写真を探す。未指定/無ければ null（=アイコン表示）
 function findPhoto(folder: string, img?: string) {
@@ -81,9 +90,9 @@ const ihaiList = [
 ];
 
 const miscItems = [
-  { icon: 'document', title: '過去帳',         desc: '故人の名前や命日を記す過去帳は、先祖代々のご供養に欠かせない大切な記録です。蘭・ウォールナット・鳥の子など豊富なデザインをご用意。',img: 'mirror-tamo.png' },
-  { icon: 'altar',    title: '白木位牌',       desc: '白木の位牌はもともと野位牌といって野辺送りに必要なもので、仮の位牌です。忌明け法要には本位牌もしくは過去帳が必要となりますので、早めのご準備をお勧めします。',img: 'mirror-tamo.png' },
-  { icon: 'lotus',    title: 'キリスト教位牌', desc: 'ご希望の位牌でキリスト教の位牌をつくることができます。オリジナル「祈念碑」（総高19.5cm）もございます。各宗派に対応いたします。',img: 'mirror-tamo.png' },
+  { icon: 'document', title: '過去帳',         desc: '故人の名前や命日を記す過去帳は、先祖代々のご供養に欠かせない大切な記録です。蘭・ウォールナット・鳥の子など豊富なデザインをご用意。',img: 'note.png' },
+  { icon: 'altar',    title: '白木位牌',       desc: '白木の位牌はもともと野位牌といって野辺送りに必要なもので、仮の位牌です。忌明け法要には本位牌もしくは過去帳が必要となりますので、早めのご準備をお勧めします。',img: 'ihai_w.png' },
+  { icon: 'lotus',    title: 'キリスト教位牌', desc: 'ご希望の位牌でキリスト教の位牌をつくることができます。オリジナル「祈念碑」（総高19.5cm）もございます。各宗派に対応いたします。',img: 'kyl.png' },
 ];
 
 const tamotoItems = [
@@ -159,10 +168,12 @@ const tamotoItems = [
           <p class="sec-desc">家具調上置タイプを中心に、豊富なカラーとデザインからお選びいただけます。</p>
         </div>
         <div class="lineup-grid fi">
-          {compactAltars.map(a => { const photo = findPhoto('compact', a.img);
+          {compactAltars.map(a => {
+            const photo = findPhoto('compact', a.img);
+            const full = photo ? fullByMetaSrc[photo.src] : null; // 拡大用URL（写真がある時だけ）
             return (
               <div class="product-card">
-                <div class="product-img">
+                <div class:list={["product-img", { "js-zoom": photo }]} data-full={full} data-title={plainName(a.name)}>
                   {photo
                     ? <Image src={photo} alt={plainName(a.name)} widths={[240, 480]} sizes="(max-width:768px) 33vw, 200px" format="webp" class="product-photo" />
                     : <Icon name="altar" size={36} />}
@@ -183,10 +194,12 @@ const tamotoItems = [
           <p class="sec-desc">すっきりとした縦長デザインから家具調タイプまで、現代の住空間に馴染むラインナップ。</p>
         </div>
         <div class="lineup-grid fi" style="grid-template-columns:repeat(4,1fr)">
-          {modernAltars.map(a => { const photo = findPhoto('modern', a.img);
+          {modernAltars.map(a => {
+            const photo = findPhoto('modern', a.img);
+            const full = photo ? fullByMetaSrc[photo.src] : null;
             return (
-              <div class="product-card">
-                <div class="product-img" style="background:linear-gradient(135deg,#ede0d8,#d4c4ba)">
+            <div class="product-card">
+            <div class:list={["product-img", { "js-zoom": photo }]} style="background:linear-gradient(135deg,#ede0d8,#d4c4ba)" data-full={full} data-title={plainName(a.name)}>
                   {photo
                     ? <Image src={photo} alt={plainName(a.name)} widths={[240, 480]} sizes="(max-width:768px) 33vw, 220px" format="webp" class="product-photo" />
                     : <Icon name="tree" size={32} />}
@@ -213,11 +226,13 @@ const tamotoItems = [
           ご来店の際は中陰表もしくは白木位牌の表裏の画像をお持ちください。</span>
         </div>
         <div class="ihai-grid fi">
-          {ihaiList.map(item => { const photo = findPhoto('ihai', item.img);
+          {ihaiList.map(item => {
+           const photo = findPhoto('ihai', item.img);
+           const full = photo ? fullByMetaSrc[photo.src] : null;
             return (
-              <div class="ihai-card">
-                <p class="ihai-num">{item.num}</p>
-                <div class="ihai-img">
+            <div class="ihai-card">
+            <p class="ihai-num">{item.num}</p>
+            <div class:list={["ihai-img", { "js-zoom": photo }]} data-full={full} data-title={plainName(item.name)}>
                   {photo
                     ? <Image src={photo} alt={plainName(item.name)} widths={[240, 480]} sizes="(max-width:768px) 33vw, 200px" format="webp" class="ihai-photo" />
                     : <Icon name="altar" size={32} />}
@@ -241,15 +256,23 @@ const tamotoItems = [
           <h2 class="sec-title">過去帳・その他位牌</h2>
         </div>
         <div class="misc-grid fi">
-          {miscItems.map(it => (
+          {miscItems.map(it => {
+            const photo = findPhoto('other', it.img); 
+            const full = photo ? fullByMetaSrc[photo.src] : null;
+            return (
             <div class="misc-card">
-              <div class="misc-icon-box"><Icon name={it.icon} size={24} /></div>
-              <div>
-                <h3 class="misc-title">{it.title}</h3>
-                <p class="misc-desc">{it.desc}</p>
+            <div class:list={["misc-img", { "js-zoom": photo }]} data-full={full} data-title={it.title}>
+                  {photo
+                    ? <Image src={photo} alt={it.title} widths={[400, 800]} sizes="(max-width:768px) 100vw, 350px" format="webp" class="misc-photo" />
+                    : <Icon name={it.icon} size={32} />}
+                </div>
+                <div class="misc-body">
+                  <h3 class="misc-title">{it.title}</h3>
+                  <p class="misc-desc">{it.desc}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -345,6 +368,14 @@ const tamotoItems = [
 
   <!-- モバイル固定CTAバー(共通コンポーネント) -->
   <FixedCta />
+  <!-- 写真の拡大表示（lightbox） -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" aria-label="閉じる">×</button>
+    <div class="lightbox-inner">
+      <img class="lightbox-img" alt="">
+      <p class="lightbox-title"></p>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
@@ -435,8 +466,10 @@ const tamotoItems = [
   .ihai-tag{display:inline-block;background:var(--brown);color:#fff;font-size:.72rem;padding:.18rem .6rem;margin-bottom:.35rem}
 
   .misc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-  .misc-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start}
-  .misc-icon-box{width:52px;height:52px;background:var(--gl);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gd)}
+  .misc-card{background:var(--white);border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column}
+  .misc-img{aspect-ratio:4/3;background:var(--gl);display:flex;align-items:center;justify-content:center;color:var(--gd);overflow:hidden}
+  .misc-photo{width:100%;height:100%;object-fit:cover;display:block}
+  .misc-body{padding:1.5rem}
   .misc-title{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--gd);margin-bottom:.45rem}
   .misc-desc{font-size:.875rem;line-height:1.9;color:var(--mid)}
 
@@ -483,6 +516,21 @@ const tamotoItems = [
   .ihai-img{overflow:hidden}
   .product-photo,
   .ihai-photo{width:100%;height:100%;object-fit:cover;display:block}
+  
+  .js-zoom{cursor:pointer}
+  
+  .lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+  .lightbox.is-open{opacity:1;visibility:visible}
+  .lightbox-inner{max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:1rem;transform:scale(.96);transition:transform .3s ease;background:#fff;padding:10px 0 15px;}
+  .lightbox.is-open .lightbox-inner{transform:scale(1)}
+  
+  @media(prefers-reduced-motion:reduce){
+    .lightbox,.lightbox-inner{transition:none}
+    .lightbox-inner{transform:none}
+  }
+  .lightbox-img{max-width:100%;max-height:80vh;object-fit:contain;display:block}
+  .lightbox-title{color:#000;font-family:var(--serif);font-size:1rem;letter-spacing:.06em;text-align:center}
+  .lightbox-close{position:absolute;top:1rem;right:1.25rem;width:44px;height:44px;background:none;border:none;color:#fff;font-size:2rem;line-height:1;cursor:pointer}
 
   @media(max-width:1024px){
     .type-grid{grid-template-columns:repeat(2,1fr)}
@@ -531,4 +579,39 @@ const tamotoItems = [
     });
   }, { threshold: .1 });
   document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+  
+  
+  // ===== 商品写真の拡大表示（lightbox）=====
+// HTMLはテンプレート側に置いたので、ここでは取得するだけ
+  const lb = document.getElementById('lightbox')!;
+  const lbImg = lb.querySelector('.lightbox-img') as HTMLImageElement;
+  const lbTitle = lb.querySelector('.lightbox-title') as HTMLElement;
+  
+  // 開く
+  function openLightbox(src: string, title: string) {
+    lbImg.src = src;            // クリックされて初めて大きい画像を読み込む
+    lbImg.alt = title;
+    lbTitle.textContent = title;
+    lb.classList.add('is-open');
+    document.body.style.overflow = 'hidden'; // 背景のスクロールを止める
+  }
+  // 閉じる
+  function closeLightbox() {
+    lb.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  
+  // 写真ありのカード（.js-zoom）をクリックで開く
+  document.querySelectorAll('.js-zoom').forEach(card => {
+    card.addEventListener('click', () => {
+      const src = card.getAttribute('data-full');
+      const title = card.getAttribute('data-title') || '';
+      if (src) openLightbox(src, title);
+    });
+  });
+  
+  // 閉じる操作：×ボタン / 黒背景クリック / Escキー
+  lb.querySelector('.lightbox-close')!.addEventListener('click', closeLightbox);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); }); // 写真の外側（黒地）クリックで閉じる
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
