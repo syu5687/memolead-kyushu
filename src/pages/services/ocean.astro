@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import FixedCta from '../../components/FixedCta.astro';
+import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/ocean/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
@@ -128,17 +129,15 @@ const steps = [
         </div>
       </div>
     </section>
+    <CtaSection
+      title="まずはお気軽にご相談ください"
+      desc="ご相談・お見積もりは無料です。「海洋散骨の件で…」とお伝えください。"
+      tel="095-825-6386"
+      hours="受付時間 10:00〜17:00（店休日無し）"
+      estimateHref="/estimate/?service=ocean"
+      contactHref="/#contact"
+    />
 
-    <section class="cta-sec fi">
-      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
-      <p class="cta-desc">ご相談・お見積もりは無料です。「海洋散骨の件で…」とお伝えください。</p>
-      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
-      <div class="cta-btns">
-        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
-        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
-        <a href="/estimate/?service=ocean" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
-      </div>
-    </section>
 
   </main>
   <Footer />

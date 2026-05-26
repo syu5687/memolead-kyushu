@@ -9,8 +9,10 @@ interface Props {
   tel?: string;         // 表示用の電話番号（ハイフンあり）。tel:リンクは自動生成
   hours?: string;
   contactHref?: string; // 「Webで相談する」ボタンのリンク先
+  estimateHref?: string;
   telLabel?: string;
   webLabel?: string;
+  estimateLabel?: string;
 }
 
 // 受け取った値を取り出す。= の右側は「渡されなかった時の初期値」
@@ -21,8 +23,10 @@ const {
   tel = '095-865-4400',
   hours = '営業時間 10:00〜17:00（年中無休）',
   contactHref = '/#contact',
+  estimateHref,
   telLabel = '今すぐ電話する',
   webLabel = 'Webで相談する',
+  estimateLabel = '仮見積りする',
 } = Astro.props;
 
 // 表示番号からハイフンを除いて tel: リンクを作る（例 095-825-6386 → tel:0958256386）
@@ -36,6 +40,7 @@ const telHref = `tel:${tel.replace(/-/g, '')}`;
   <a href={telHref} class="cta-tel-num">{tel}</a>
   <p class="cta-hours">{hours}</p>
   <div class="cta-btns">
+    {estimateHref && <a href={estimateHref} class="cta-btn-est">{estimateLabel}</a>}
     <a href={telHref} class="cta-btn-gold"><Icon name="phone" size={18} />{telLabel}</a>
     <a href={contactHref} class="cta-btn-out"><Icon name="mail" size={18} />{webLabel}</a>
   </div>
@@ -53,13 +58,15 @@ const telHref = `tel:${tel.replace(/-/g, '')}`;
   .cta-btn-gold:hover{background:#b8943b}
   .cta-btn-out{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid rgba(255,255,255,.35);color:#fff;padding:.95rem 2.25rem;font-size:.9rem;letter-spacing:.08em;transition:.2s}
   .cta-btn-out:hover{background:rgba(255,255,255,.08)}
+  .cta-btn-est{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:#fff;color:#2c2218;padding:.95rem 2.25rem;font-size:.9rem;font-weight:500;letter-spacing:.08em;transition:.2s}
+  .cta-btn-est:hover{background:#f0e9df}
 
   .fi{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
   .fi.show{opacity:1;transform:none}
 
   @media(max-width:768px){
     .cta-btns{flex-direction:column;align-items:center}
-    .cta-btn-gold,.cta-btn-out{width:100%;max-width:320px;text-align:center}
+    .cta-btn-gold,.cta-btn-out,.cta-btn-est{width:100%;max-width:320px;text-align:center}
   }
 </style>
 

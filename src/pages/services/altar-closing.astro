@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import FixedCta from '../../components/FixedCta.astro';
+import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/altar-closing/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
@@ -135,15 +136,14 @@ const priceRows = [
       </div>
     </section>
 
-    <section class="cta-sec fi">
-      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
-      <p class="cta-desc">お見積もり・ご相談は無料です。「仏壇じまいの件で…」とお伝えください。</p>
-      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
-      <div class="cta-btns">
-        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
-        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
-      </div>
-    </section>
+    <CtaSection
+      title="まずはお気軽にご相談ください"
+      desc="お見積もり・ご相談は無料です。「仏壇じまいの件で…」とお伝えください。"
+      sub="ご来店の際は中陰表もしくは白木位牌の表裏の画像をお持ちください"
+      tel="0958654400"
+      hours="受付時間 10:00〜17:00（店休日無し）"
+      contactHref="/#contact"
+    />
 
   </main>
   <Footer />

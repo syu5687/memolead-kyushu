@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import FixedCta from '../../components/FixedCta.astro';
+import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/grave-keeping/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
@@ -156,16 +157,15 @@ const steps = [
       </div>
     </section>
 
-    <section class="cta-sec fi">
-      <h2 class="cta-title">まずはお気軽にご相談ください</h2>
-      <p class="cta-desc">お試し単発からご利用いただけます。「墓守代行の件で…」とお伝えください。</p>
-      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
-      <div class="cta-btns">
-        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
-        <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
-        <a href="/estimate/?service=grave-keeping" class="cta-web-btn"><Icon name="document" size={18} />仮見積りを依頼する</a>
-      </div>
-    </section>
+    <CtaSection
+      title="まずはお気軽にご相談ください"
+      desc="お試し単発からご利用いただけます。「墓守代行の件で…」とお伝えください。"
+      tel="0958654400"
+      hours="受付時間 10:00〜17:00（店休日無し）"
+      estimateHref="/estimate/?service=grave-keeping"
+      contactHref="/#contact"
+    />
+
 
   </main>
   <Footer />
