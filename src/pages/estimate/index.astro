@@ -125,7 +125,7 @@ import { pricing, formatYenWithTax } from '../../data/pricing';
             
               <!-- CTA -->
               <div class="result-cta" id="resultCta">
-                <a href="#contact-form" class="cta-primary">
+                <a href="/contact/" class="cta-primary">
                   <Icon name="mail" size={16} />
                   この内容で問い合わせる
                 </a>
@@ -421,6 +421,52 @@ import { pricing, formatYenWithTax } from '../../data/pricing';
       // スクロール
       check.closest('.q-block')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  }
+  
+  // 「この内容で問い合わせる」を押したとき、選んだ内容を sessionStorage に保存して /contact/ へ渡す
+  // #resultCta の中の .cta-primary に限定（ページ下部のCTAボタンと取り違えないため）
+  const ctaPrimary = document.querySelector('#resultCta .cta-primary');
+  
+  if (ctaPrimary) {
+    ctaPrimary.addEventListener('click', () => {
+      // state（選択中のプラン）を配列にして扱いやすくする
+      const items = Array.from(state.values());
+  
+      // 念のため：未選択なら保存せず、通常の遷移だけに任せる
+      if (items.length === 0) return;
+  
+      // 合計（税込）を計算（表示と同じ計算式に合わせる）
+      const total = items.reduce((sum, i) => sum + i.price, 0);
+  
+      // メール本文 / textarea にそのまま入れられる整形テキストを作る
+      // 例: ・遺品整理（1LDK）：132,000円
+      const lines = items.map(
+        (i) => `・${i.serviceLabel}（${i.planLabel}）：${i.price.toLocaleString('ja-JP')}円`
+      );
+      const text =
+        '【概算お見積り】\n' +
+        lines.join('\n') + '\n' +
+        `合計（税込）：${total.toLocaleString('ja-JP')}円〜\n` +
+        '※本シミュレーションの概算です。';
+  
+      // contact 側で後から細かく使えるよう、生データ(JSON)も一緒に持たせる
+      const payload = {
+        text,                       // textarea にそのまま入れる用の整形テキスト
+        total,                      // 数値の合計（後で hidden 等に使える）
+        items: items.map((i) => ({  // 内訳（将来 service select の自動選択などに使える）
+          serviceKey: i.serviceKey,
+          serviceLabel: i.serviceLabel,
+          planLabel: i.planLabel,
+          price: i.price,
+        })),
+      };
+  
+      // sessionStorage は文字列しか保存できないので JSON 文字列にして保存
+      sessionStorage.setItem('estimateData', JSON.stringify(payload));
+  
+      // preventDefault はしない → <a href="/contact/"> の通常遷移にそのまま任せる
+      // （sessionStorage への保存は同期処理なので、遷移より先に確実に終わる）
+    });
   }
 
   // フェードイン

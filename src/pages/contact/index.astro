@@ -318,4 +318,35 @@ import FixedCta from '../../components/FixedCta.astro';
     e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }});
   }, { threshold: 0.1 });
   document.querySelectorAll('.fi').forEach(el => { el.classList.add('fade-init'); obs.observe(el); });
+  
+  // estimate から渡ってきた概算データを読み出し、問い合わせフォームに反映する
+  (function () {
+    // 保存した文字列を取り出す
+    const raw = sessionStorage.getItem('estimateData');
+    if (!raw) return; // estimate を経由していなければ何もしない
+  
+    // 文字列を JSON.parse でオブジェクトに戻す。壊れていたら捨てて中断
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch (e) {
+      sessionStorage.removeItem('estimateData');
+      return;
+    }
+  
+    // message（textarea）に整形テキストを差し込む
+    // getElementById は HTMLElement 型なので、value を使うため textarea 型として扱う
+    const message = /** @type {HTMLTextAreaElement | null} */ (
+      document.getElementById('message')
+    );
+    if (message && data.text) {
+      // すでにユーザーが入力していたら上書きしない（入力を守る）
+      if (message.value.trim() === '') {
+        message.value = data.text + '\n\n';
+      }
+    }
+  
+    // 一度使ったら消す（ブラウザの「戻る」や再読込で二重に入らないようにする）
+    sessionStorage.removeItem('estimateData');
+  })();
 </script>
