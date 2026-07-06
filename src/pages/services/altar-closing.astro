@@ -8,6 +8,8 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/altar-closing/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
+import { SITE, companyOf } from '../../data/site';
+const company = companyOf('altar-closing');
 
 const features = [
   { icon: 'lotus',    title: '閉眼供養に対応',           desc: 'お寺様による閉眼供養(魂抜き)を行ったうえで処分いたします。ご家族の心の整理にもつながる大切な儀式です。' },
@@ -36,7 +38,7 @@ const priceRows = [
 ---
 
 <BaseLayout
-  title="仏壇(神棚)じまい | エンジェルセンター ぶっこうどう"
+  title={`仏壇(神棚)じまい | ${SITE.fullName}`}
   description="閉眼供養(魂抜き)から搬出・お焚き上げまで、心を込めて対応いたします。仏壇・神棚・位牌の処分でお困りの方はご相談ください。供養証明書発行可能。"
 >
   <ServicePageStyles />
@@ -47,7 +49,7 @@ const priceRows = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="仏壇じまい - エンジェルセンター ぶっこうどう"
+          alt={`仏壇じまい - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"
@@ -140,8 +142,8 @@ const priceRows = [
       title="まずはお気軽にご相談ください"
       desc="お見積もり・ご相談は無料です。「仏壇じまいの件で…」とお伝えください。"
       sub="ご来店の際は中陰表もしくは白木位牌の表裏の画像をお持ちください"
-      tel="0958654400"
-      hours="受付時間 10:00〜17:00（店休日無し）"
+      tel={company?.tel} 
+      hours={`受付時間 ${company?.hours}`}
       contactHref="/#contact"
     />
 

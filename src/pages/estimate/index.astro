@@ -3,13 +3,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
-import FixedCta from '../../components/FixedCta.astro';
 import { pricing, formatYenWithTax } from '../../data/pricing';
+import { SITE } from '../../data/site';
+
 ---
 
 <BaseLayout
-  title="仮見積りシミュレーション | エンジェルセンター ぶっこうどう"
-  description="遺品整理・不用品回収・墓じまい・墓守代行・海洋散骨の概算料金をその場でシミュレーションできます。複数サービスの合計金額も確認できます。"
+  title={`仮見積りシミュレーション | ${SITE.fullName}`}
+  description="遺品整理・不用品回収・墓じまい・海洋散骨の概算料金をその場でシミュレーションできます。複数サービスの合計金額も確認できます。"
 >
   <Header />
   <main>

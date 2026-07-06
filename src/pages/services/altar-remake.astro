@@ -8,6 +8,8 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/altar-remake/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
+import { SITE, companyOf } from '../../data/site';
+const company = companyOf('altar-remake');
 
 const features = [
   { icon: 'altar',     title: '想いを残しつつ現代の暮らしへ', desc: '代々受け継がれた仏壇の一部材を使い、現代のお部屋に馴染むサイズ・デザインへ作り変えます。ご先祖様への想いはそのままに。' },
@@ -42,7 +44,7 @@ const priceRows = [
 ---
 
 <BaseLayout
-  title="仏壇リメイク | エンジェルセンター ぶっこうどう"
+  title={`仏壇リメイク | ${SITE.fullName}`}
   description="代々受け継がれた仏壇を、現代のお部屋に馴染むデザインへ。コンパクト型・モダン家具型・ステージ型など、ご家族の暮らしに合わせたリメイクをご提案。"
 >
   <ServicePageStyles />
@@ -53,7 +55,7 @@ const priceRows = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="仏壇リメイク - エンジェルセンター ぶっこうどう"
+          alt={`仏壇リメイク - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"
@@ -162,8 +164,8 @@ const priceRows = [
     <CtaSection
       title="まずはお気軽にご相談ください"
       desc="お見積もり・ご相談は無料です。「仏壇リメイクの件で…」とお伝えください。"
-      tel="0958654400"
-      hours="受付時間 10:00〜17:00（店休日無し）"
+      tel="${company?.tel}"
+      hours={`受付時間 ${company?.hours}`}
       contactHref="/#contact"
     />
 

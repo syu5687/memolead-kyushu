@@ -8,6 +8,7 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/estate/hero-image.jpg';
 import { getServicePricing, formatYen } from '../../data/pricing';
+import { SITE } from '../../data/site';
 
 // 料金データを一元管理(src/data/pricing.ts)から取得
 // このファイルを変更すると、サービスページと仮見積りシミュレーション両方に反映されます
@@ -58,7 +59,7 @@ const areas = [
 ---
 
 <BaseLayout
-  title="遺品整理 | エンジェルセンター ぶっこうどう"
+ title={`遺品整理・不用品回収 | ${SITE.fullName}`}
   description="遺品整理士の有資格者が、故人様のお部屋を丁寧に整理いたします。仕分け・買取・処分・清掃までワンストップ。1K〜一軒家まで、明朗な料金プランをご用意。長崎市・時津町・長与町対応。"
 >
   <Header />
@@ -69,7 +70,7 @@ const areas = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="遺品整理 - 故人様のお部屋を丁寧に整える"
+          alt={`遺品整理・不用品回収 - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"
@@ -81,12 +82,12 @@ const areas = [
       <div class="breadcrumb">
       <a href="/">ホーム</a><span>›</span>
       <a href="/#services">サービス一覧</a><span>›</span>
-      <span>遺品整理</span>
+      <span>遺品整理・不用品回収</span>
     </div>
 
       <div class="page-hero-inner">
         <p class="page-hero-label">SERVICE 01 — Estate Clearance</p>
-        <h1 class="page-hero-title">遺品整理</h1>
+        <h1 class="page-hero-title">遺品整理・不用品回収</h1>
         <p class="page-hero-catch">故人が大切にされていた品を、ご家族の歩幅で。</p>
         <p class="page-hero-desc">
           遺品整理士の資格を持つスタッフが、ご遺族のお気持ちに寄り添いながら、<br>

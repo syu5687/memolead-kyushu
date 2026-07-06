@@ -9,11 +9,11 @@ import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/grave-keeping/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
 import { getServicePricing } from '../../data/pricing';
+import { SITE } from '../../data/site';
 
 // 料金データを一元管理から取得
 const keepingPricing = getServicePricing('grave-keeping');
 const priceRows = keepingPricing?.plans ?? [];
-const priceNotes = keepingPricing?.notes ?? [];
 
 const features = [
   { icon: 'home',     title: '遠方の方でも安心',         desc: '長崎を離れて暮らすご家族に代わり、お墓の清掃・お参りを定期的に代行いたします。' },
@@ -40,7 +40,7 @@ const steps = [
 ---
 
 <BaseLayout
-  title="墓守代行サービス | エンジェルセンター ぶっこうどう"
+  title={`墓守代行サービス | ${SITE.fullName}`}
   description="遠方にお住まいの方に代わり、お墓の清掃・献花・お参りを代行いたします。作業前後の写真ご報告つき。単発1回から月1回の定期プランまで対応。"
 >
   <ServicePageStyles />
@@ -51,7 +51,7 @@ const steps = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="墓守代行 - エンジェルセンター ぶっこうどう"
+          alt={`墓守代行サービス - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"

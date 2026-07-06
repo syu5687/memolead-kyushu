@@ -7,8 +7,8 @@ import FixedCta from '../../components/FixedCta.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/junk/hero-image.jpg';
-import { getServicePricing, formatYenWithTax } from '../../data/pricing';
-
+import { getServicePricing } from '../../data/pricing';
+import { SITE } from '../../data/site';
 // 料金データを一元管理(src/data/pricing.ts)から取得
 const junkPricing = getServicePricing('junk');
 const priceRows = junkPricing?.plans ?? [];
@@ -58,7 +58,7 @@ const areas = [
 ---
 
 <BaseLayout
-  title="不用品回収 | エンジェルセンター ぶっこうどう"
+  title={`不用品回収 | ${SITE.fullName}`}
   description="遺品・不用品の回収、仏壇・神棚・人形などのお焚き上げ、ハウスクリーニング、家屋の解体まで。エンゼル号1台11,000円〜。長崎市・時津町・長与町対応。"
 >
   <Header />
@@ -68,7 +68,7 @@ const areas = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="不用品回収 - エンジェルセンター ぶっこうどう"
+          alt={`不用品回収 - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"

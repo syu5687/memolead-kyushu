@@ -8,6 +8,7 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/inheritance/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
+import { SITE } from '../../data/site';
 
 const features = [
   { icon: 'home',     title: '専門家ネットワークでサポート',   desc: '司法書士・税理士・宅地建物取引士など、相続に関わる専門家と連携。ワンストップで手続きをサポートいたします。' },
@@ -44,7 +45,7 @@ const priceRows = [
 ---
 
 <BaseLayout
-  title="相続(不動産)相談 | エンジェルセンター ぶっこうどう"
+  title={`相続(不動産)相談 | ${SITE.fullName}`}
   description="相続登記・相続税申告・不動産売却・遺産分割協議など、相続に関するお悩みをワンストップでサポート。司法書士・税理士・宅建士など専門家ネットワーク。"
 >
   <ServicePageStyles />
@@ -55,7 +56,7 @@ const priceRows = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="相続相談 - エンジェルセンター ぶっこうどう"
+         alt={`相続(不動産)相談 - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"

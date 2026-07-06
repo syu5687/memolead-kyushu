@@ -8,6 +8,7 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image, getImage } from 'astro:assets';
 import heroImage from '../../_assets/img/butsudan/hero-image.jpg';
 import type { ImageMetadata } from 'astro'; // 画像の型（Imageに渡すため）
+import { SITE } from '../../data/site';
 
 // 商品写真をまとめて読み込む。置き場所: src/_assets/img/butsudan/products/
 // ファイルが無い商品は自動でアイコン表示に戻るので、用意できた分から差し替え可能
@@ -104,7 +105,7 @@ const tamotoItems = [
 ---
 
 <BaseLayout
-  title="仏壇・位牌・仏具販売 | メモリード 仏光堂"
+  title={`仏壇・位牌・仏具販売 | ${SITE.fullName}`}
   description="小型仏壇・近代仏壇・唐木仏壇・金仏壇・位牌・過去帳・手元供養品まで。大切な想いを、そっと暮らしの中に。メモリード仏光堂（長崎市幸町）"
 >
   <Header />
@@ -114,7 +115,7 @@ const tamotoItems = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="仏壇・仏具販売 - エンジェルセンター ぶっこうどう"
+          alt={`仏壇・仏具販売 - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"

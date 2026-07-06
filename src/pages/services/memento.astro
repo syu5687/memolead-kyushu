@@ -8,6 +8,7 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/memento/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
+import { SITE } from '../../data/site';
 
 const features = [
   { icon: 'lotus',     title: 'いつもそばに、故人を感じて',   desc: 'ペンダント・ミニ骨壺・遺骨アクセサリーなど、いつでも身近に故人を感じられる供養のかたちをご提案します。' },
@@ -44,7 +45,7 @@ const steps = [
 ---
 
 <BaseLayout
-  title="手元供養品販売 | エンジェルセンター ぶっこうどう"
+  title={`手元供養品販売 | ${SITE.fullName}`}
   description="ペンダント・ミニ骨壺・ステージ型仏壇など、現代の暮らしに馴染む手元供養品を多数取り揃え。宗派を問わずご利用いただけます。"
 >
   <ServicePageStyles />
@@ -55,7 +56,8 @@ const steps = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="手元供養品販売 - エンジェルセンター ぶっこうどう"
+          alt={`手元供養品販売 - ${SITE.fullName}`}
+
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"

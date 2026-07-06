@@ -1,43 +1,34 @@
 ---
-// ヘッダーナビゲーション
-// - PC:「サービス」「仮見積り」はクリックでアコーディオン開閉(全幅パネル)
-// - スマホ:ハンバーガーメニュー → フルスクリーンオーバーレイ(緑背景)
-//          「サービス」「仮見積り」はタップで +/- アコーディオン
-
-// 12サービスの一覧
+import { SITE } from '../data/site';
 const services = [
-  { num: '01', label: '遺品整理',           href: '/services/estate/' },
-  { num: '02', label: '不用品回収',         href: '/services/junk/' },
-  { num: '03', label: '古物買取',           href: '/services/antique/' },
-  { num: '04', label: '仏壇・仏具販売',     href: '/services/butsudan/' },
-  { num: '05', label: '墓地・霊園紹介',     href: '/services/cemetery/' },
-  { num: '06', label: '仏壇（神棚）じまい', href: '/services/altar-closing/' },
-  { num: '07', label: '仏壇リメイク',       href: '/services/altar-remake/' },
-  { num: '08', label: '墓じまい',           href: '/services/grave-closure/' },
-  { num: '09', label: '墓守代行',           href: '/services/grave-keeping/' },
-  { num: '10', label: '海洋散骨',           href: '/services/ocean/' },
-  { num: '11', label: '手元供養品販売',     href: '/services/memento/' },
-  { num: '12', label: '相続（不動産）相談', href: '/services/inheritance/' },
+  { num: '01', label: '遺品整理・不用品回収',           href: '/services/estate/' },
+  { num: '02', label: '古物買取',           href: '/services/antique/' },
+  { num: '03', label: '仏壇・仏具販売',     href: '/services/butsudan/' },
+  { num: '04', label: '墓地・霊園紹介',     href: '/services/cemetery/' },
+  { num: '05', label: '仏壇（神棚）じまい', href: '/services/altar-closing/' },
+  { num: '06', label: '仏壇リメイク',       href: '/services/altar-remake/' },
+  { num: '07', label: '墓じまい',           href: '/services/grave-closure/' },
+  { num: '08', label: '海洋散骨',           href: '/services/ocean/' },
+  { num: '09', label: '手元供養品販売',     href: '/services/memento/' },
+  { num: '10', label: '相続（不動産）相談', href: '/services/inheritance/' },
 ];
 
 // 仮見積り対応5サービス
 const estimates = [
-  { label: '遺品整理',    href: '/estimate/?service=estate' },
-  { label: '不用品回収',  href: '/estimate/?service=junk' },
+  { label: '遺品整理・不用品回収',  href: '/estimate/?service=junk' },
   { label: '墓じまい',    href: '/estimate/?service=grave-closure' },
-  { label: '墓守代行',    href: '/estimate/?service=grave-keeping' },
   { label: '海洋散骨',    href: '/estimate/?service=ocean' },
 ];
 ---
 <header class="hd" id="hd">
   <div class="hd-top">
-    <span>受付時間 10:00〜17:00（店休日無し）</span>
+    <span>受付時間 9：00〜17：00（店休日無し）</span>
     <a href="tel:0958654400" class="hd-tel">095-865-4400</a>
   </div>
   <div class="hd-main">
     <a href="/" class="logo">
-      <span class="logo-en">Angel Center</span>
-      <span class="logo-ja">ぶっこうどう</span>
+      <span class="logo-en">{SITE.name.sub}</span>
+      <span class="logo-ja">{SITE.name.main}</span>
     </a>
 
     <!-- PC ナビゲーション(クリックでアコーディオン) -->
@@ -109,8 +100,8 @@ const estimates = [
   <!-- 上部:ロゴと電話番号 -->
   <div class="mm-head">
     <a href="/" class="mm-logo">
-      <span class="mm-logo-en">Angel Center</span>
-      <span class="mm-logo-ja">ぶっこうどう</span>
+      <span class="mm-logo-en">{SITE.name.sub}</span>
+      <span class="mm-logo-ja">{SITE.name.main}</span>
     </a>
     <!-- 閉じるボタン -->
     <button class="mm-close" id="mmClose" type="button" aria-label="メニューを閉じる">

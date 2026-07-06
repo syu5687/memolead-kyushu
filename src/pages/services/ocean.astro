@@ -8,6 +8,8 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/ocean/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
+import { SITE,companyOf } from '../../data/site';
+const company = companyOf('ocean'); 
 
 const features = [
   { icon: 'tree',     title: '自然に還る、新しい供養',     desc: '広い海原へお見送りする海洋散骨は、自然と一体化したい方や、お墓を継承する方がいないご家族に選ばれています。' },
@@ -34,7 +36,7 @@ const steps = [
 ---
 
 <BaseLayout
-  title="海洋散骨 | エンジェルセンター ぶっこうどう"
+  title={`海洋散骨 | ${SITE.fullName}`}
   description="長崎の海へ、故人を自然に還す海洋散骨。チャーター・合同・委託・部分散骨の4プランをご用意。厚生労働省ガイドラインに沿った適切な対応。"
 >
   <ServicePageStyles />
@@ -45,7 +47,7 @@ const steps = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="海洋散骨 - エンジェルセンター ぶっこうどう"
+          alt={`海洋散骨 - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"
@@ -132,13 +134,11 @@ const steps = [
     <CtaSection
       title="まずはお気軽にご相談ください"
       desc="ご相談・お見積もりは無料です。「海洋散骨の件で…」とお伝えください。"
-      tel="095-825-6386"
-      hours="受付時間 10:00〜17:00（店休日無し）"
+      tel={company?.tel}
+      hours={`受付時間 ${company?.hours}`}
       estimateHref="/estimate/?service=ocean"
       contactHref="/#contact"
     />
-
-
   </main>
   <Footer />
   <!-- モバイル固定CTAバー(共通コンポーネント) -->

@@ -4,11 +4,13 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import FixedCta from '../../components/FixedCta.astro';
+import { SITE } from '../../data/site';
+
 ---
 
 <BaseLayout
-  title="お問合せ | エンジェルセンター ぶっこうどう"
-  description="エンジェルセンター ぶっこうどうへのお問合せはこちらから。お電話・Webフォームでお気軽にご相談ください。受付時間 10:00〜17:00（店休日無し）"
+  title={`お問合せ | ${SITE.fullName}`}
+  description={`${SITE.fullName}へのお問合せはこちらから。お電話・Webフォームでお気軽にご相談ください。`}
 >
   <Header />
   <main>
@@ -79,7 +81,7 @@ import FixedCta from '../../components/FixedCta.astro';
 
         <div class="access-wrap fi">
           <div class="access-info">
-            <h3 class="access-name">エンジェルセンター ぶっこうどう</h3>
+            <h3 class="access-name">SITE.name.fullName</h3>
             <dl class="access-list">
               <div class="access-row">
                 <dt>住所</dt>
@@ -116,7 +118,7 @@ import FixedCta from '../../components/FixedCta.astro';
               allowfullscreen=""
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
-              title="エンジェルセンター ぶっこうどう 地図"
+              title="エンゼルセンター 仏光堂 地図"
             ></iframe>
           </div>
         </div>
@@ -335,10 +337,9 @@ import FixedCta from '../../components/FixedCta.astro';
     }
   
     // message（textarea）に整形テキストを差し込む
-    // getElementById は HTMLElement 型なので、value を使うため textarea 型として扱う
-    const message = /** @type {HTMLTextAreaElement | null} */ (
-      document.getElementById('message')
-    );
+    // message は textarea。.value を使うので HTMLTextAreaElement 型として扱う
+    const message = document.getElementById('message') as HTMLTextAreaElement;
+    
     if (message && data.text) {
       // すでにユーザーが入力していたら上書きしない（入力を守る）
       if (message.value.trim() === '') {

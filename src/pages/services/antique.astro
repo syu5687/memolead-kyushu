@@ -7,6 +7,7 @@ import FixedCta from '../../components/FixedCta.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/antique/hero-image.jpg';
+import { SITE } from '../../data/site';
 
 const features = [
   { icon: 'tag',      title: '専門スタッフによる査定',   desc: '骨董品・古美術品の知識を持つ専門スタッフが、お品物一点一点を丁寧に査定いたします。価値あるお品を見落とすことはありません。' },
@@ -52,7 +53,7 @@ const areas = [
 ---
 
 <BaseLayout
-  title="古物買取 | エンジェルセンター ぶっこうどう"
+  title={`古物買取 | ${SITE.fullName}`}
   description="骨董品・古美術品・茶道具・着物・古書など、遺品の中の価値あるお品を専門スタッフが丁寧に査定・買取いたします。長崎市・時津町・長与町対応。"
 >
   <Header />
@@ -63,7 +64,7 @@ const areas = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="古物買取 - エンジェルセンター ぶっこうどう"
+          alt={`古物買取 - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"

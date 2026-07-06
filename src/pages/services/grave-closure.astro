@@ -1,4 +1,4 @@
----
+ ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
@@ -9,11 +9,13 @@ import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/grave-closure/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
 import { getServicePricing } from '../../data/pricing';
+import { SITE, companyOf } from '../../data/site';
+const company = companyOf('grave-closure');
 
 // 料金データを一元管理から取得
 const gravePricing = getServicePricing('grave-closure');
 const priceRows = gravePricing?.plans ?? [];
-const priceNotes = gravePricing?.notes ?? [];
+
 
 const features = [
   { icon: 'document', title: '行政手続きを代行',         desc: '改葬許可申請・受入証明書の取得など、複雑な行政手続きを代行いたします。書類作成のサポートも万全。' },
@@ -34,7 +36,7 @@ const steps = [
 ---
 
 <BaseLayout
-  title="墓じまい | エンジェルセンター ぶっこうどう"
+  title={`墓じまい | ${SITE.fullName}`}
   description="改葬許可申請から閉眼供養・墓石撤去・新たな供養先までワンストップ対応。後継者問題・遠方管理など、お墓のお悩みをサポートいたします。"
 >
   <ServicePageStyles />
@@ -45,7 +47,7 @@ const steps = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="墓じまい - エンジェルセンター ぶっこうどう"
+          alt={`墓じまい - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"
@@ -137,8 +139,8 @@ const steps = [
     <CtaSection
       title="まずはお気軽にご相談ください"
       desc="ご相談・お見積もりは無料です。「墓じまいの件で…」とお伝えください。"
-      tel="0958654400"
-      hours="受付時間 10:00〜17:00（店休日無し）"
+      tel={company?.tel}
+      hours={`受付時間 ${company?.hours}`}
       estimateHref="/estimate/?service=grave-closure"
       contactHref="/#contact"
     />

@@ -70,16 +70,15 @@ export const pricing: ServicePricing[] = [
     ],
   },
 
-  // ─── 02 不用品回収 ───
+  // ─── 02 遺品整理・不用品回収 ───
   {
     serviceKey: 'junk',
-    serviceLabel: '不用品回収',
-    serviceUrl: '/services/junk/',
+    serviceLabel: '遺品整理・不用品回収',
+    serviceUrl: '/services/estate/',
     questionLabel: '回収量・追加サービスをお選びください',
     plans: [
       { id: 'junk-angel-1',   label: 'エンゼル号1台',  size: '軽トラック1台分',  price: 11000, popular: true },
       { id: 'junk-angel-2',   label: 'エンゼル号2台',  size: '軽トラック2台分',  price: 22000 },
-      { id: 'junk-angel-3',   label: '2tトラック',     size: '中規模住宅',         price: 38500 },
       { id: 'junk-otakiage',  label: '仏壇お焚き上げ供養', size: '閉眼供養つき',   price: 33000 },
       { id: 'junk-doll',      label: '人形・節句人形供養', size: '1セット',         price: 16500 },
       { id: 'junk-cleaning',  label: 'ハウスクリーニング(1K相当)', size: '清掃のみ',  price: 27500 },
@@ -111,28 +110,8 @@ export const pricing: ServicePricing[] = [
     ],
   },
 
-  // ─── 09 墓守代行 ───
-  {
-    serviceKey: 'grave-keeping',
-    serviceLabel: '墓守代行',
-    serviceUrl: '/services/grave-keeping/',
-    questionLabel: 'ご希望のプランをお選びください',
-    plans: [
-      { id: 'keep-trial',      label: 'お試し単発',          size: '1回・基本清掃',         price: 5500 },
-      { id: 'keep-single',     label: '単発',                size: '1回・基本清掃+献花', price: 8800, popular: true },
-      { id: 'keep-twice',      label: '年2回プラン',         size: 'お盆・お彼岸',          price: 16500 },
-      { id: 'keep-quarter',    label: '年4回プラン',         size: '四季ごと',              price: 30800 },
-      { id: 'keep-monthly',    label: '月1回プラン',         size: '年12回',                price: 88000 },
-      { id: 'keep-grass',      label: '草刈り単独',          size: '墓地周辺',              price: 11000 },
-    ],
-    notes: [
-      '定期プランの料金は年額です。月割りでのお支払いも可能です。',
-      'お墓の場所・規模により追加料金が発生する場合があります(離島・山間部など)。',
-      'お花の種類のご希望は、別途ご相談ください。',
-    ],
-  },
 
-  // ─── 10 海洋散骨 ───
+  // ─── 09海洋散骨 ───
   {
     serviceKey: 'ocean',
     serviceLabel: '海洋散骨',

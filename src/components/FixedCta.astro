@@ -14,6 +14,7 @@
 //   - mailSub   : メールボタンのサブ文言
 // ─────────────────────────────────────────
 import Icon from './Icon.astro';
+import { SITE } from '../data/site';
 
 interface Props {
   labelText?: string;
@@ -29,7 +30,7 @@ const {
   labelText = 'どんなご質問もOK',
   telHref   = 'tel:095-865-4400',
   telMain   = '電話で相談する',
-  telSub    = '10:00-17:00（店休日無し）',
+  telSub    = SITE.name.sub,
   mailHref  = '/contact/',
   mailMain  = 'メールで相談する',
   mailSub   = '24時間受付・無料',
@@ -68,7 +69,6 @@ const {
 .fixed-cta{display:none}
 
 @media(max-width:768px){
-  /* バー全体:画面端から浮かせるためのラッパー */
   .fixed-cta{
     display:block;
     position:fixed;
@@ -77,27 +77,26 @@ const {
     right:0;
     z-index:150;
     padding:0 .6rem .6rem;
-    /* 初回表示時に下からふわっと(1回だけ・JS不要) */
     animation:ctaSlideUp .5s ease-out backwards;
     /* スクロール中の透明度変化をなめらかに */
     transition:opacity .25s ease;
   }
-  /* スクロール中だけ半透明(JSが is-scrolling クラスを付与) */
+  /* スクロール中だけ半透明 */
   .fixed-cta.is-scrolling{
     opacity:.6;
   }
 
-  /* 下からふわっと出るアニメーション */
+  /* アニメーション */
   @keyframes ctaSlideUp{
     from{opacity:0; transform:translateY(100%)}
     to{opacity:1; transform:translateY(0)}
   }
-  /* アニメーションを嫌う設定の人には動きを出さない(アクセシビリティ配慮) */
+  /* アニメーション(アクセシビリティ配慮) */
   @media(prefers-reduced-motion:reduce){
     .fixed-cta{animation:none}
   }
 
-  /* 上部:訴求ラベル(濃緑背景・白文字・カード上辺の黄枠を兼ねる) */
+  /* 上部:訴求ラベル */
   .fixed-cta-label{
     display:flex;
     align-items:center;
@@ -111,8 +110,8 @@ const {
     letter-spacing:.03em;
     text-align:center;
     line-height:1.4;
-    border:2px solid var(--yellow);    /* カード上辺＋左右の黄枠 */
-    border-bottom:none;                /* ボタンとの境目は下のborder-topで描く */
+    border:2px solid var(--yellow);
+    border-bottom:none; 
     border-radius:var(--corner) var(--corner) 0 0;
   }
   .fixed-cta-check{
@@ -129,11 +128,11 @@ const {
     flex-shrink:0;
   }
 
-  /* 下部:2つのボタン(黄枠でカード下辺＋左右を描く) */
+  /* 下部:2つのボタン */
   .fixed-cta-btns{
     display:flex;
-    border:2px solid var(--yellow);                 /* 下辺＋左右の黄枠 */
-    border-top:2px solid var(--yellow);             /* ラベルとの境の黄線 */
+    border:2px solid var(--yellow);
+    border-top:2px solid var(--yellow);
     border-radius:0 0 var(--corner) var(--corner);
     overflow:hidden;
     box-shadow:0 4px 16px rgba(0,0,0,.22);
@@ -199,14 +198,15 @@ const {
   // スクロール中だけ固定CTAを半透明にする
   function initCtaScroll() {
     const cta = document.querySelector('.fixed-cta');
-    if (!cta) return; // 要素がなければ何もしない
+    if (!cta) return;
   
-    let scrollTimer;
+    // setTimeout の戻り値と同じ型にする（ブラウザなら number、Node環境なら別型でも自動で正しくなる）
+    let scrollTimer: ReturnType<typeof setTimeout>;
     const onScroll = () => {
-      cta.classList.add('is-scrolling');           // スクロール中:半透明クラスを付与
-      clearTimeout(scrollTimer);                    // 直前のタイマーを取り消す
+      cta.classList.add('is-scrolling');
+      clearTimeout(scrollTimer);
       scrollTimer = setTimeout(() => {
-        cta.classList.remove('is-scrolling');       // 300ミリ秒止まったら元に戻す
+        cta.classList.remove('is-scrolling');
       }, 150);
     };
   

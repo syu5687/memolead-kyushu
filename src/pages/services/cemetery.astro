@@ -7,6 +7,7 @@ import FixedCta from '../../components/FixedCta.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/cemetery/hero-image.jpg';
+import { SITE } from '../../data/site';
 
 const burialTypes = [
   { icon: 'altar', title: '一般墓', desc: '従来型の墓石を建てる供養方法。先祖代々のお墓として、家族の絆を継承していくかたちです。建立費用 000,000円〜。' },
@@ -41,7 +42,7 @@ const priceRows = [
 ---
 
 <BaseLayout
-  title="墓地・霊園ご紹介 | エンジェルセンター ぶっこうどう"
+  title={`墓地・霊園ご紹介 | ${SITE.fullName}`}
   description="一般墓・納骨堂・樹木葬・永代供養墓まで、ご希望に合った供養のかたちをご提案いたします。長崎県内の主要霊園と提携。見学同行・相見積もりサポート。"
 >
   <Header />
@@ -51,7 +52,7 @@ const priceRows = [
       <div class="hero-bg">
         <Image
           src={heroImage}
-          alt="墓地・霊園紹介 - エンジェルセンター ぶっこうどう"
+          alt={`墓地・霊園ご紹介 - ${SITE.fullName}`}
           widths={[800, 1200, 1600, 2000]}
           sizes="100vw"
           loading="eager"
