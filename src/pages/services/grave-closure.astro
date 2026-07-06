@@ -15,7 +15,7 @@ const company = companyOf('grave-closure');
 // 料金データを一元管理から取得
 const gravePricing = getServicePricing('grave-closure');
 const priceRows = gravePricing?.plans ?? [];
-
+const priceNotes = gravePricing?.notes ?? [];
 
 const features = [
   { icon: 'document', title: '行政手続きを代行',         desc: '改葬許可申請・受入証明書の取得など、複雑な行政手続きを代行いたします。書類作成のサポートも万全。' },
@@ -119,9 +119,9 @@ const steps = [
             </tbody>
           </table>
           <p style="font-size:.78rem;color:var(--light);margin-top:.85rem;line-height:1.9">
-            ※墓地の立地(山間部・離島など)により搬出費用が変動いたします。<br>
-            ※新たな供養先の費用は別途必要です(永代供養墓・納骨堂など)。<br>
-            ※詳細は現地確認のうえ、お見積もりさせていただきます。
+            {priceNotes.map((note, i) => (
+              <>※{note}{i < priceNotes.length - 1 && <br />}</>
+            ))}
           </p>
         </div>
       </div>

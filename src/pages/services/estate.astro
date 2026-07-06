@@ -8,7 +8,8 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/estate/hero-image.jpg';
 import { getServicePricing, formatYen } from '../../data/pricing';
-import { SITE } from '../../data/site';
+import { SITE,companyOf } from '../../data/site';
+const company = companyOf('estate');
 
 // 料金データを一元管理(src/data/pricing.ts)から取得
 // このファイルを変更すると、サービスページと仮見積りシミュレーション両方に反映されます
@@ -253,8 +254,8 @@ const areas = [
     <CtaSection
       title="まずはお気軽にご相談ください"
       desc="現地お見積り・ご相談は無料です。「遺品整理の件で…」とお伝えください。<br>遺品整理士が丁寧にご案内いたします。"
-      tel="0958654400"
-      hours="受付時間 10:00〜17:00（店休日無し）"
+      tel={company?.tel}
+      hours=`受付時間 ${company?.hours}`
       estimateHref="/estimate/?service=estate"
       contactHref="/#contact"
     />
