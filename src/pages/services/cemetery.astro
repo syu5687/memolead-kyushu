@@ -7,7 +7,8 @@ import FixedCta from '../../components/FixedCta.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/cemetery/hero-image.jpg';
-import { SITE } from '../../data/site';
+import { SITE, companyOf } from '../../data/site';
+const company = companyOf('cemetery');
 
 const burialTypes = [
   { icon: 'altar', title: '一般墓', desc: '従来型の墓石を建てる供養方法。先祖代々のお墓として、家族の絆を継承していくかたちです。建立費用 000,000円〜。' },
@@ -190,8 +191,8 @@ const priceRows = [
     <CtaSection
       title="まずはお気軽にご相談ください"
       desc="ご相談・資料請求は無料です。「お墓の件で…」とお伝えください。<br>専門スタッフが丁寧にご案内いたします。"
-      tel="0958654400"
-      hours="受付時間 10:00〜17:00（店休日無し）"
+      tel={company?.tel}
+      hours={`受付時間 ${company?.hours}`}
       contactHref="/#contact"
     />
 

@@ -8,7 +8,8 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/inheritance/hero-image.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
-import { SITE } from '../../data/site';
+import { SITE, companyOf } from '../../data/site';
+const company = companyOf('inheritance');
 
 const features = [
   { icon: 'home',     title: '専門家ネットワークでサポート',   desc: '司法書士・税理士・宅地建物取引士など、相続に関わる専門家と連携。ワンストップで手続きをサポートいたします。' },
@@ -165,8 +166,8 @@ const priceRows = [
     <CtaSection
       title="まずはお気軽にご相談ください"
       desc="初回相談は無料です(60分まで)。「相続の件で…」とお伝えください。"
-      tel="0958654400"
-      hours="受付時間 10:00〜17:00（店休日無し）"
+      tel={company?.tel}
+      hours={`受付時間 ${company?.hours}`}
       contactHref="/#contact"
     />
 

@@ -7,7 +7,8 @@ import FixedCta from '../../components/FixedCta.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/antique/hero-image.jpg';
-import { SITE } from '../../data/site';
+import { SITE, companyOf } from '../../data/site';
+const company = companyOf('antique');
 
 const features = [
   { icon: 'tag',      title: '専門スタッフによる査定',   desc: '骨董品・古美術品の知識を持つ専門スタッフが、お品物一点一点を丁寧に査定いたします。価値あるお品を見落とすことはありません。' },
@@ -222,9 +223,9 @@ const areas = [
     <!-- CTA -->
     <CtaSection
       title="まずはお気軽にご相談ください"
-      desc=">査定・お見積もりは無料です。「古物買取の件で…」とお伝えください。<br>専門スタッフが丁寧にご案内いたします。"
-      tel="0958654400"
-      hours="受付時間 10:00〜17:00（店休日無し）"
+      desc="査定・お見積もりは無料です。「古物買取の件で…」とお伝えください。<br>専門スタッフが丁寧にご案内いたします。"
+      tel={company?.tel}
+      hours={`受付時間 ${company?.hours}`}
       contactHref="/#contact"
     />
 

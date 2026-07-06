@@ -8,7 +8,8 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image, getImage } from 'astro:assets';
 import heroImage from '../../_assets/img/butsudan/hero-image.jpg';
 import type { ImageMetadata } from 'astro'; // 画像の型（Imageに渡すため）
-import { SITE } from '../../data/site';
+import { SITE, companyOf } from '../../data/site';
+const company = companyOf('butsudan');
 
 // 商品写真をまとめて読み込む。置き場所: src/_assets/img/butsudan/products/
 // ファイルが無い商品は自動でアイコン表示に戻るので、用意できた分から差し替え可能
@@ -356,8 +357,8 @@ const tamotoItems = [
       title="店頭でゆっくりとご覧ください"
       desc="実物を見て、触れて、専門スタッフにご相談いただけます。<br>仏壇の選び方から位牌の字彫りまで、丁寧にご対応いたします。"
       sub="ご来店の際は中陰表もしくは白木位牌の表裏の画像をお持ちください"
-      tel="095-825-6386"
-      hours="営業時間 10:00〜17:00（店休日無し）"
+      tel={company?.tel}
+      hours={`受付時間 ${company?.hours}`}
       contactHref="/#contact"
     />
 
