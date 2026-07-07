@@ -4,8 +4,13 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import FixedCta from '../../components/FixedCta.astro';
-import { SITE } from '../../data/site';
+import PhoneConsultModal from '../../components/PhoneConsultModal.astro';
+import { SITE, COMPANIES } from '../../data/site'; // COMPANIES＝A社/B社の会社データ（住所・電話・営業時間など）
 
+const mapEmbeds = [
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3356.332817197784!2d129.8272426!3d32.7303522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3515526e262ff8bf%3A0xbf9c354d7c1dfa1b!2z44CSODUwLTAwNzcg6ZW35bSO55yM6ZW35bSO5biC5bCP54Cs5oi455S677yY77yQ77yZ4oiS77yR77yS!5e0!3m2!1sja!2sjp!4v1783391180256!5m2!1sja!2sjp', // A社
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3355.3299010380197!2d129.8661348!3d32.756979799999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3515532f8507bac1%3A0x12a38646aaaefa79!2z44CSODUwLTAwNDYg6ZW35bSO55yM6ZW35bSO5biC5bm455S677yU4oiS77yR77yT!5e0!3m2!1sja!2sjp!4v1783391238933!5m2!1sja!2sjp', // B社
+];
 ---
 
 <BaseLayout
@@ -43,7 +48,7 @@ import { SITE } from '../../data/site';
 
         <div class="contact-cards fi">
 
-          <!-- 電話 -->
+          <!-- TEL -->
           <div class="contact-card">
             <div class="contact-icon"><Icon name="phone" size={32} /></div>
             <h3 class="contact-card-title">お電話でのご相談</h3>
@@ -51,8 +56,7 @@ import { SITE } from '../../data/site';
               スタッフが直接ご対応します。<br>
               お急ぎの場合はお電話が便利です。
             </p>
-            <a href="tel:0958654400" class="contact-tel">095-865-4400</a>
-            <p class="contact-hours">受付時間 10:00〜17:00（店休日無し）</p>
+            <div style="margin-top:1.5rem"><PhoneConsultModal /></div>
           </div>
 
           <!-- Webフォーム -->
@@ -80,52 +84,53 @@ import { SITE } from '../../data/site';
         </div>
 
         <div class="access-wrap fi">
+        {[COMPANIES.A, COMPANIES.B].map((c, i) => (
           <div class="access-info">
-            <h3 class="access-name">SITE.name.fullName</h3>
+            <h3 class="access-name">{c.name}</h3>
             <dl class="access-list">
               <div class="access-row">
                 <dt>住所</dt>
-                <dd>
-                  〒850-0046<br>
-                  長崎県長崎市幸町4-13
-                </dd>
+                <dd>〒{c.zip}<br>{c.address}</dd>
               </div>
               <div class="access-row">
                 <dt>電話</dt>
-                <dd><a href="tel:0958654400">095-865-4400</a></dd>
+                <dd><a href={`tel:${c.tel.replace(/-/g, '')}`}>{c.tel}</a></dd>
               </div>
               <div class="access-row">
                 <dt>営業時間</dt>
-                <dd>10:00〜17:00</dd>
+                <dd>{c.hours}</dd>
               </div>
-              <div class="access-row">
-                <dt>定休日</dt>
-                <dd>店休日無し</dd>
-              </div>
-              <div class="access-row">
-                <dt>対応エリア</dt>
-                <dd>長崎市・時津町・長与町(エリア外応相談)</dd>
-              </div>
+              {c.closed && (
+                <div class="access-row">
+                  <dt>定休日</dt>
+                  <dd>{c.closed}</dd>
+                </div>
+              )}
+              {c.area && (
+                <div class="access-row">
+                  <dt>対応エリア</dt>
+                  <dd>{c.area}</dd>
+                </div>
+              )}
             </dl>
-          </div>
-
-          <div class="access-map">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3318.5!2d129.866!3d32.766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0:0x0!2zMzLCsDQ2JzAwLjAiTiAxMjnCsDUyJzAwLjAiRQ!5e0!3m2!1sja!2sjp!4v1234567890"
-              width="100%"
-              height="400"
-              style="border:0"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title="エンゼルセンター 仏光堂 地図"
-            ></iframe>
-          </div>
-        </div>
+                <div class="access-map">
+                  <iframe
+                    src={mapEmbeds[i]}
+                    width="100%"
+                    height="100%"
+                    style="border:0"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title={`${c.name} 地図`}
+                  ></iframe>
+                </div>
+              </div>
+            ))}
       </div>
     </section>
 
-    <!-- FORM(仮表示) -->
+    <!-- FORM -->
     <section class="sec" id="contact-form">
       <div class="sec-inner sec-inner-narrow">
         <div class="sec-head fi">
@@ -134,7 +139,7 @@ import { SITE } from '../../data/site';
           <p class="sec-desc">下記のフォームよりお問合せください。<br>1営業日以内にご返信いたします。</p>
         </div>
 
-        <!-- ⚠ 仮フォーム(送信機能は未実装)
+        <!-- 仮フォーム(送信機能は未実装)
              将来 Cloudflare Worker + Resend API で送信機能を実装予定 -->
         <div class="form-notice fi">
           <p>
@@ -237,8 +242,8 @@ import { SITE } from '../../data/site';
   .contact-form-btn:hover{background:var(--gm)}
 
   /* ACCESS */
-  .access-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:2.5rem;align-items:flex-start;max-width:1000px;margin:0 auto}
-  .access-info{background:var(--white);padding:2rem;border:1px solid var(--border);border-radius:var(--corner)}
+  .access-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:flex-start;max-width:1000px;margin:0 auto 3rem;}
+  .access-info{background:var(--white);padding:2rem;border:1px solid var(--border);border-radius:var(--corner);width:100%;}
   .access-name{font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--gd);margin-bottom:1.5rem;padding-bottom:.85rem;border-bottom:1px solid var(--border);letter-spacing:.05em}
   .access-list{display:flex;flex-direction:column;gap:1rem}
   .access-row{display:grid;grid-template-columns:5.5rem 1fr;gap:1rem;font-size:.875rem;line-height:1.85}
@@ -246,7 +251,7 @@ import { SITE } from '../../data/site';
   .access-row dd{color:var(--mid)}
   .access-row dd a{color:var(--mid);transition:.2s}
   .access-row dd a:hover{color:var(--gd)}
-  .access-map{border:1px solid var(--border);overflow:hidden;border-radius:var(--corner)}
+  .access-map{border:1px solid var(--border);overflow:hidden;border-radius:var(--corner);width:100%;height:auto;aspect-ratio:4/3;margin-top:1rem;}
   .access-map iframe{display:block}
 
   /* FORM NOTICE */

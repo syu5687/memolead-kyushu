@@ -1,12 +1,12 @@
 ---
 import Icon from './Icon.astro';
 
-// ページから受け取れる値の一覧（? は「省略可能」の意味）
+// ページから受け取れる値の一覧
 interface Props {
   title?: string;
   desc?: string;        // HTML可（<br> などが使えます）
   sub?: string;         // 任意。渡さなければ表示されません
-  tel?: string;         // 表示用の電話番号（ハイフンあり）。tel:リンクは自動生成
+  tel?: string;         // 表示用の電話番号（自動生成）
   hours?: string;
   contactHref?: string; // 「Webで相談する」ボタンのリンク先
   estimateHref?: string;
@@ -15,7 +15,7 @@ interface Props {
   estimateLabel?: string;
 }
 
-// 受け取った値を取り出す。= の右側は「渡されなかった時の初期値」
+// 受け取った値を取り出す
 const {
   title = 'まずはお気軽にご相談ください',
   desc = 'どんな小さなことでも、専門スタッフが丁寧にお答えします。',
@@ -29,7 +29,7 @@ const {
   estimateLabel = '仮見積りする',
 } = Astro.props;
 
-// 表示番号からハイフンを除いて tel: リンクを作る（例 095-825-6386 → tel:0958256386）
+// 表示番号からハイフンを除去
 const telHref = `tel:${tel.replace(/-/g, '')}`;
 ---
 
@@ -71,7 +71,7 @@ const telHref = `tel:${tel.replace(/-/g, '')}`;
 </style>
 
 <script>
-  // このセクション自身のフェードイン（ページ側のスクリプトに依存せず単体で動く）
+  
   document.querySelectorAll('.cta-sec.fi').forEach(el => {
     const io = new IntersectionObserver((entries, obs) => {
       entries.forEach(e => {

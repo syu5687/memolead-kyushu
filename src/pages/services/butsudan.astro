@@ -107,7 +107,7 @@ const tamotoItems = [
 
 <BaseLayout
   title={`仏壇・位牌・仏具販売 | ${SITE.fullName}`}
-  description="小型仏壇・近代仏壇・唐木仏壇・金仏壇・位牌・過去帳・手元供養品まで。大切な想いを、そっと暮らしの中に。メモリード仏光堂（長崎市幸町）"
+  description="小型仏壇・近代仏壇・唐木仏壇・金仏壇・位牌・過去帳・手元供養品まで。大切な想いを、そっと暮らしの中に。"
 >
   <Header />
   <main>
@@ -134,10 +134,6 @@ const tamotoItems = [
         <h1 class="hero-title">仏壇・位牌・仏具のご案内</h1>
         <p class="hero-catch">大切な想いを、そっと暮らしの中に。</p>
         <p class="hero-desc">小型仏壇から金仏壇・唐木仏壇まで幅広くご用意。位牌の字彫りサービスや過去帳・手元供養品なども取り揃えています。ご予算やお部屋のスタイルに合わせて、専門スタッフがご提案いたします。</p>
-        <div class="hero-shop">
-          <Icon name="map-pin" size={16} />
-          <span>メモリード <strong>仏光堂</strong>　長崎市幸町4-13　駐車場完備</span>
-        </div>
       </div>
     </section>
 
@@ -184,19 +180,26 @@ const tamotoItems = [
                 <p class="product-name" set:html={a.name}></p>
               </div>
             );
-          })}
-        </div>
-      </div>
-    </section>
-
-    <section class="sec bg-cream">
-      <div class="sec-inner">
-        <div class="sec-head fi">
-          <p class="sec-label">MODERN ALTAR</p>
+                  })}
+                </div>
+                <p class="lineup-more">
+                      <a href="https://nagasaki-bukkoudou.com" target="_blank" rel="noopener noreferrer">
+                        その他ラインナップはこちら
+                      </a>
+                      <span>（外部サイト長崎仏光堂のサイトへ移動します）</span>
+                    </p>
+                  </div>
+                </section>
+                
+                <section class="sec bg-cream">
+                  <div class="sec-inner">
+                    <div class="sec-head fi">
+                      <p class="sec-label">MODERN ALTAR</p>
           <h2 class="sec-title">近代仏壇 ラインナップ</h2>
           <p class="sec-desc">すっきりとした縦長デザインから家具調タイプまで、現代の住空間に馴染むラインナップ。</p>
         </div>
-        <div class="lineup-grid fi" style="grid-template-columns:repeat(4,1fr)">
+        <!-- lineup-modern＝近代仏壇専用の目印クラス（SPで2列に上書きするため） -->
+        <div class="lineup-grid fi lineup-modern" style="grid-template-columns:repeat(4,1fr)">
           {modernAltars.map(a => {
             const photo = findPhoto('modern', a.img);
             const full = photo ? fullByMetaSrc[photo.src] : null;
@@ -210,9 +213,16 @@ const tamotoItems = [
                 <p class="product-name" set:html={a.name}></p>
               </div>
             );
-          })}
-        </div>
-        <p style="text-align:center;font-size:.78rem;color:var(--light);margin-top:1.25rem">※上記のほか、近代唐木仏壇・金仏壇・唐木仏壇も取り揃えております。店頭にてご確認ください。</p>
+              })}
+            </div>
+            <!-- その他ラインナップへの外部リンク（長崎仏光堂サイト） -->
+            <p class="lineup-more">
+              <a href="https://nagasaki-bukkoudou.com" target="_blank" rel="noopener noreferrer">
+                その他ラインナップはこちら
+              </a>
+              <span>（外部サイト長崎仏光堂のサイトへ移動します）</span>
+            </p>
+            <p style="text-align:center;font-size:.78rem;color:var(--light);margin-top:1.25rem">※上記のほか、近代唐木仏壇・金仏壇・唐木仏壇も取り揃えております。店頭にてご確認ください。</p>
       </div>
     </section>
 
@@ -243,14 +253,19 @@ const tamotoItems = [
                 <p class="ihai-name" set:html={item.name}></p>
                 {item.tag && <span class="ihai-tag">{item.tag}</span>}
               </div>
-            );
-          })}
-        </div>
-        <div class="note-block fi" style="margin-top:1.5rem">
-          ※表示寸法と実際の寸法は手づくりの木製品のため誤差が生じる場合がございます。また、印刷の性質上実際の色とは異なる場合がございます。
-        </div>
-      </div>
-    </section>
+                  );
+                })}
+                    </div>
+                    <!-- その他ラインナップへの外部リンク（長崎仏光堂サイト） -->
+                    <p class="lineup-more">
+                      <a href="https://nagasaki-bukkoudou.com" target="_blank" rel="noopener noreferrer">
+                        その他ラインナップはこちら
+                      </a>
+                      <span>（外部サイト長崎仏光堂のサイトへ移動します）</span>
+                    </p>
+                    <p style="text-align:center;font-size:.78rem;color:var(--light);margin-top:1.25rem">※上記のほか、近代唐木仏壇・金仏壇・唐木仏壇も取り揃えております。店頭にてご確認ください。</p>
+                  </div>
+                </section>
 
     <section class="sec">
       <div class="sec-inner">
@@ -274,17 +289,24 @@ const tamotoItems = [
                   <p class="misc-desc">{it.desc}</p>
                 </div>
               </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-
-    <section class="sec bg-cream">
-      <div class="sec-inner">
-        <div class="sec-head fi">
-          <p class="sec-label">MEMORIAL KEEPSAKES</p>
-          <h2 class="sec-title">手元供養品</h2>
+                      );
+                    })}
+                  </div>
+                  <!-- その他ラインナップへの外部リンク（長崎仏光堂サイト） -->
+                  <p class="lineup-more">
+                    <a href="https://nagasaki-bukkoudou.com" target="_blank" rel="noopener noreferrer">
+                      その他ラインナップはこちら
+                    </a>
+                    <span>（外部サイト長崎仏光堂のサイトへ移動します）</span>
+                  </p>
+                </div>
+              </section>
+              
+              <section class="sec bg-cream">
+                <div class="sec-inner">
+                  <div class="sec-head fi">
+                    <p class="sec-label">MEMORIAL KEEPSAKES</p>
+                    <h2 class="sec-title">手元供養品</h2>
           <p class="sec-desc">手元供養は、大切な故人を身近に感じながら祈る新しい供養のかたち。暮らしの中にやさしく寄り添います。</p>
         </div>
         <div class="tamoto-grid fi">
@@ -307,47 +329,57 @@ const tamotoItems = [
         </div>
         <div class="shop-block fi">
           <div class="shop-info">
-            <span class="shop-badge">メモリードグループ</span>
-            <h3 class="shop-name">仏 光 堂</h3>
-            <p class="shop-name-sub">仏壇・仏具・神具専門店</p>
+            <h3 class="shop-name">{company?.name}</h3>
+            
             <div class="shop-row">
               <span class="shop-row-label">所在地</span>
-              <span class="shop-row-val">〒850-0046<br>長崎県長崎市幸町4-13</span>
+              {/* site.ts の zip・address を参照。〒記号は表示側で付ける */}
+              <span class="shop-row-val">〒{company?.zip}<br>{company?.address}<br><p style="font-size:.8rem;color:var(--light);padding-top:.5rem;">長崎スタジアムシティ近く<br>NBC長崎放送 向かい付近</p></span>
+              
             </div>
             <div class="shop-row">
               <span class="shop-row-label">TEL</span>
-              <a href="tel:0958256386" class="shop-tel-big">095-825-6386</a>
+              
+              <a href={`tel:${company?.tel.replace(/-/g, '')}`} class="shop-tel-big">{company?.tel}</a>
             </div>
             <div class="shop-row">
               <span class="shop-row-label">FAX</span>
-              <span class="shop-row-val">095-825-6395</span>
+              <span class="shop-row-val">{company?.fax}</span>
             </div>
             <div class="shop-row">
               <span class="shop-row-label">営業時間</span>
-              <span class="shop-row-val">10:00〜17:00<br><small style="color:var(--gd)">店休日無し</small></span>
+              <span class="shop-row-val">{company?.hours}</span>
+              
+            </div>
+            <div class="shop-row">
+              <span class="shop-row-label">店休日</span>
+              <span class="shop-row-val">{company?.closed}</span>
             </div>
             <div class="shop-row">
               <span class="shop-row-label">メール</span>
-              <span class="shop-row-val" style="word-break:break-all;font-size:.78rem">bukkoudou@memolead.co.jp</span>
+              <span class="shop-row-val" style="word-break:break-all;font-size:.78rem">{company?.email}</span>
             </div>
             <div style="margin-top:1.25rem">
               <span style="display:inline-flex;align-items:center;gap:.4rem;background:var(--gl);color:var(--gd);font-size:.78rem;padding:.32rem .78rem;border:1px solid var(--gd)"><Icon name="parking" size={14} />駐車場完備（無料）</span>
+              <p style="font-size:.78rem;color:var(--mid);margin-top:.65rem;line-height:1.8">
+                駐車場をご利用の際は弊社指定の駐車場を<br>ご利用ください。駐車券を店内でご提示いただければ無料。
+              </p>
             </div>
           </div>
           <div class="shop-map">
-            <span class="shop-parking">駐車場完備</span>
-            <div style="background:var(--white);border:1px solid var(--border);padding:1.5rem;width:100%;text-align:center">
-              <p style="font-family:var(--serif);font-size:1rem;margin-bottom:.5rem">メモリード 仏光堂</p>
-              <p style="font-size:.875rem;color:var(--mid)">長崎市幸町4-13</p>
-              <p style="font-size:.78rem;color:var(--light);margin-top:.5rem">長崎スタジアムシティ近く<br>NBC長崎放送 向かい付近</p>
-              <a href="https://maps.google.com/?q=長崎市幸町4-13+仏光堂" target="_blank"
-                 style="display:inline-block;margin-top:1rem;background:var(--gd);color:#fff;padding:.6rem 1.3rem;font-size:.875rem;letter-spacing:.06em">
-                Google マップで見る →
-              </a>
+            
+            <div class="shop-map-embed">
+              <iframe
+                src={company?.mapEmbed}
+                width="100%"
+                height="100%"
+                style="border:0"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title={`${company?.name} 地図`}
+              ></iframe>
             </div>
-            <p style="font-size:.78rem;color:var(--mid);margin-top:.65rem;text-align:center;line-height:1.8">
-              駐車場をご利用の際は弊社指定の駐車場を<br>ご利用ください。駐車券を店内でご提示いただければ無料。
-            </p>
           </div>
         </div>
       </div>
@@ -485,15 +517,17 @@ const tamotoItems = [
   }
   .shop-info{padding:2.25rem 2rem}
   .shop-badge{display:inline-block;background:var(--gd);color:#fff;font-size:.72rem;padding:.22rem .7rem;letter-spacing:.06em;margin-bottom:.85rem}
-  .shop-name{font-family:var(--serif);font-size:1.35rem;font-weight:400;letter-spacing:.12em;margin-bottom:.2rem}
-  .shop-name-sub{font-size:.78rem;color:var(--light);margin-bottom:1.25rem;font-family:var(--roman);letter-spacing:.1em}
-  .shop-row{display:flex;gap:.75rem;margin-bottom:.6rem;font-size:.9rem;align-items:flex-start}
-  .shop-row-label{font-size:.85rem;color:var(--light);white-space:nowrap;min-width:4em;padding-top:.15rem}
-  .shop-row-val{color:var(--text)}
-  .shop-tel-big{font-family:var(--num);font-size:1.65rem;color:var(--gd);letter-spacing:.08em}
-  .shop-map{background:var(--gl);display:flex;align-items:center;justify-content:center;min-height:250px;flex-direction:column;gap:.5rem;font-size:.9rem;color:var(--mid);padding:1.5rem}
-  .shop-parking{background:var(--gd);color:#fff;padding:.35rem .75rem;font-size:.78rem;letter-spacing:.06em}
-
+  .shop-name{font-family:var(--serif);font-size:1.35rem;font-weight:400;letter-spacing:.12em;margin-bottom:1.8rem;border-bottom:1px solid var(--gl)}
+  .shop-name-sub{font-size:.78rem;color:var(--light);margin-bottom:1.25rem;font-family:var(--roman);letter-spacing:.1em;}
+  .shop-row{display:flex;gap:.75rem;margin-bottom:1.1rem;font-size:.9rem;align-items:flex-start}
+  .shop-row-label{font-size:.85rem;color:var(--gm);white-space:nowrap;min-width:4em;padding-top:.15rem;align-self:center;}
+  .shop-row-val{color:var(--text);}
+  .shop-tel-big{font-family:var(--num);font-size:1.65rem;color:var(--gd);letter-spacing:.08em;align-items:center;}
+  .shop-tel-big,.shop-row-val{border-left:2px solid var(--gl);padding:0 0 0 .8rem;}
+  .shop-map{align-items:center;min-height:250px;}
+  
+  .shop-map-embed{width:100%;aspect-ratio:1/1.15;border:1px solid var(--border);overflow:hidden;border-radius:var(--corner)}
+  .shop-map-embed iframe{display:block;width:100%;height:100%}
 
   .note-block{background:#fffbf0;border-left:3px solid var(--gold);padding:1rem 1.25rem;font-size:.875rem;line-height:1.9;color:var(--mid)}
 
@@ -512,6 +546,13 @@ const tamotoItems = [
   .lightbox.is-open{opacity:1;visibility:visible}
   .lightbox-inner{max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:1rem;transform:scale(.96);transition:transform .3s ease;background:#fff;padding:10px 0 15px;}
   .lightbox.is-open .lightbox-inner{transform:scale(1)}
+  
+  .lineup-more{text-align:center;margin-top:1.75rem;display:flex;flex-direction:column; width:300px;margin:2rem auto 0;}
+  .lineup-more a{display:inline-flex;align-items:center;gap:.4rem;font-size:1rem;background:var(--brown);color:var(--white);font-family:var(--serif);letter-spacing:.04em;border:1px solid var(--brown);padding:.5rem;transition:all .2s;border-radius:4px; margin:0 auto 1rem;}
+  .lineup-more a::after{content:'→'}
+  .lineup-more a:hover{background:var(--white);color:var(--brown);}
+  .lineup-more a:active{background:var(--brown);color:var(--white);}
+  .lineup-more span{font-size:.85rem;color:var(--mid);letter-spacing:0}
   
   @media(prefers-reduced-motion:reduce){
     .lightbox,.lightbox-inner{transition:none}
@@ -532,11 +573,15 @@ const tamotoItems = [
     .sec{padding:3.5rem 1rem}
     .type-grid{grid-template-columns:1fr 1fr;gap:1rem}
     .lineup-grid{grid-template-columns:repeat(3,1fr);gap:.75rem}
+    .lineup-modern{grid-template-columns:repeat(2,1fr) !important}
     .ihai-grid{grid-template-columns:repeat(3,1fr);gap:.75rem}
     .misc-grid{grid-template-columns:1fr}
     .tamoto-grid{grid-template-columns:1fr}
     .shop-block{grid-template-columns:1fr}
     .shop-map{min-height:200px}
+    .shop-info{padding:1rem}
+    .shop-tel-big{font-size:1.4rem;}
+    .product-card{padding:1rem}
     
 
     .fixed-cta    .fixed-cta  }

@@ -1,7 +1,6 @@
 ---
 // ─────────────────────────────────────────
-// モバイル固定CTAバー(共通コンポーネント)
-// 全ページで使用する、画面下部固定のCTA。
+// モバイル固定CTAバー(全ページ使用)
 //
 // 【props】すべて任意。指定しなければデフォルト値を使用。
 //   - labelText : 上部ラベルの文言
@@ -37,7 +36,7 @@ const {
 } = Astro.props;
 ---
 
-<!-- モバイル固定CTAバー(ハイブリッド型:訴求ラベル+2ボタン) -->
+<!-- SP CTA -->
 <div class="fixed-cta">
   <p class="fixed-cta-label">
     <span class="fixed-cta-check" aria-hidden="true">✓</span>
@@ -62,10 +61,7 @@ const {
 </div>
 
 <style>
-/* ─────────────────────────────────────────
-   MOBILE FIXED CTA(ハイブリッド型・50代以上対応)
-   PC表示では非表示、768px以下で表示
-   ───────────────────────────────────────── */
+
 .fixed-cta{display:none}
 
 @media(max-width:768px){
@@ -78,10 +74,8 @@ const {
     z-index:150;
     padding:0 .6rem .6rem;
     animation:ctaSlideUp .5s ease-out backwards;
-    /* スクロール中の透明度変化をなめらかに */
     transition:opacity .25s ease;
   }
-  /* スクロール中だけ半透明 */
   .fixed-cta.is-scrolling{
     opacity:.6;
   }
@@ -91,7 +85,6 @@ const {
     from{opacity:0; transform:translateY(100%)}
     to{opacity:1; transform:translateY(0)}
   }
-  /* アニメーション(アクセシビリティ配慮) */
   @media(prefers-reduced-motion:reduce){
     .fixed-cta{animation:none}
   }
@@ -147,11 +140,9 @@ const {
     transition:.15s ease;
     min-height:64px;
   }
-  /* 電話とメールの境目に黄色の仕切り線 */
   .fixed-cta-btns a + a{
     border-left:2px solid var(--yellow);
   }
-  /* 押した時:沈み込む(translateY) + 少し暗く */
   .fixed-cta-btns a:active{
     transform:translateY(1px);
     filter:brightness(.92);
@@ -174,19 +165,18 @@ const {
     margin-top:.15rem;
   }
 
-  /* 電話ボタン:明緑背景 + 白文字 */
+  /* 電話ボタン */
   .tel-f{
     background:var(--gm);
     color:#fff;
   }
-  /* メールボタン:白背景 + 濃緑文字 */
+  /* メールボタン */
   .web-f{
     background:var(--white);
     color:var(--gd);
   }
 }
 
-/* スマホ縦長(380px以下)では文字サイズ縮小 */
 @media(max-width:380px){
   .fixed-cta-btns .cta-main{font-size:.85rem}
   .fixed-cta-btns .cta-sub{font-size:.62rem}
@@ -195,12 +185,10 @@ const {
 </style>
 
 <script>
-  // スクロール中だけ固定CTAを半透明にする
   function initCtaScroll() {
     const cta = document.querySelector('.fixed-cta');
     if (!cta) return;
   
-    // setTimeout の戻り値と同じ型にする（ブラウザなら number、Node環境なら別型でも自動で正しくなる）
     let scrollTimer: ReturnType<typeof setTimeout>;
     const onScroll = () => {
       cta.classList.add('is-scrolling');
@@ -213,7 +201,6 @@ const {
     window.addEventListener('scroll', onScroll, { passive: true });
   }
   
-  // 通常の読み込みと、Astroのページ遷移の両方で実行する
   initCtaScroll();
   document.addEventListener('astro:page-load', initCtaScroll);
 </script>

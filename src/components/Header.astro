@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/site';
+
 const services = [
   { num: '01', label: '遺品整理・不用品回収',           href: '/services/estate/' },
   { num: '02', label: '古物買取',           href: '/services/antique/' },
@@ -13,7 +14,6 @@ const services = [
   { num: '10', label: '相続（不動産）相談', href: '/services/inheritance/' },
 ];
 
-// 仮見積り対応5サービス
 const estimates = [
   { label: '遺品整理・不用品回収',  href: '/estimate/?service=junk' },
   { label: '墓じまい',    href: '/estimate/?service=grave-closure' },
@@ -22,8 +22,6 @@ const estimates = [
 ---
 <header class="hd" id="hd">
   <div class="hd-top">
-    <span>受付時間 9：00〜17：00（店休日無し）</span>
-    <a href="tel:0958654400" class="hd-tel">095-865-4400</a>
   </div>
   <div class="hd-main">
     <a href="/" class="logo">
@@ -31,7 +29,7 @@ const estimates = [
       <span class="logo-ja">{SITE.name.main}</span>
     </a>
 
-    <!-- PC ナビゲーション(クリックでアコーディオン) -->
+    <!-- PC menu -->
     <nav class="pc-nav">
       <div class="nav-item nav-has-drop" data-drop="services">
         <button class="nav-trigger" type="button" aria-expanded="false">
@@ -46,17 +44,16 @@ const estimates = [
       <a href="/blog/" class="nav-item">ブログ</a>
       <a href="/voices/" class="nav-item">お客様の声</a>
       <a href="/#flow" class="nav-item">ご相談の流れ</a>
-      <a href="/contact/" class="nav-item">お問合せ</a>
     </nav>
 
-    <a href="/contact/" class="btn-cta">無料相談はこちら</a>
+    <a href="/contact/" class="btn-cta">お問い合わせ</a>
 
     <button class="hamburger" id="hamburger" aria-label="メニュー" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 
-  <!-- ─── PC用 ドロップダウンパネル(ヘッダー直下に全幅展開) ─── -->
+  <!--　PC submenu -->
   <div class="drop-panel" id="dropServices" aria-hidden="true">
     <div class="drop-panel-inner">
       <div class="drop-panel-head">
@@ -95,22 +92,19 @@ const estimates = [
   </div>
 </header>
 
-<!-- ─── スマホ用フルスクリーンメニュー(緑背景) ─── -->
+<!-- SPmenu -->
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <!-- 上部:ロゴと電話番号 -->
   <div class="mm-head">
     <a href="/" class="mm-logo">
       <span class="mm-logo-en">{SITE.name.sub}</span>
       <span class="mm-logo-ja">{SITE.name.main}</span>
     </a>
-    <!-- 閉じるボタン -->
     <button class="mm-close" id="mmClose" type="button" aria-label="メニューを閉じる">
       <span></span>
       <span></span>
     </button>
   </div>
 
-  <!-- 電話番号バナー -->
   <a href="tel:0958654400" class="mm-tel-bar">
     <span class="mm-tel-icon" aria-hidden="true">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -124,9 +118,8 @@ const estimates = [
     </span>
   </a>
 
-  <!-- メニュー本体 -->
+  <!-- SPsubmenu -->
   <nav class="mm-nav">
-    <!-- サービス:アコーディオン -->
     <div class="mm-acc">
       <button class="mm-acc-trigger" type="button" aria-expanded="false">
         <span>サービス</span>
@@ -142,7 +135,7 @@ const estimates = [
       </div>
     </div>
 
-    <!-- 仮見積り:アコーディオン -->
+    <!-- 仮見積り -->
     <div class="mm-acc">
       <button class="mm-acc-trigger" type="button" aria-expanded="false">
         <span>仮見積り</span>
@@ -164,7 +157,6 @@ const estimates = [
     <a href="/contact/" class="mm-link">お問合せ<span class="mm-arr">›</span></a>
   </nav>
 
-  <!-- 下部CTA -->
   <div class="mm-cta-wrap">
     <a href="/contact/" class="mm-cta">無料相談はこちら</a>
   </div>
@@ -202,7 +194,7 @@ a.nav-item:hover{color:var(--gd)}
 .nav-has-drop.is-open .nav-arrow{transform:rotate(180deg)}
 .nav-has-drop.is-open .nav-trigger{color:var(--gd)}
 
-/* ─── PC ドロップダウンパネル ─── */
+/* ─── PCパネル ─── */
 .drop-panel{
   position:absolute;
   left:0;
@@ -245,10 +237,10 @@ a.nav-item:hover{color:var(--gd)}
 .drop-label{font-family:var(--serif)}
 
 /* CTA */
-.btn-cta{background:var(--gd);color:#fff;padding:.6rem 1.3rem;font-size:.875rem;letter-spacing:0;white-space:nowrap;transition:.2s;flex-shrink:0;border-radius:var(--corner)}
+.btn-cta{background:var(--gd);color:#fff;padding:.62rem 1rem;font-size:.9rem;letter-spacing:0;white-space:nowrap;transition:.2s;flex-shrink:0;border-radius:var(--corner)}
 .btn-cta:hover{background:var(--gm)}
 
-/* ─── HAMBURGER(×変化対応) ─── */
+/* ─── HAMBURGER ─── */
 .hamburger{
   display:none;
   position:relative;
@@ -272,17 +264,17 @@ a.nav-item:hover{color:var(--gd)}
 .hamburger span:nth-child(1){top:8px}
 .hamburger span:nth-child(2){top:14px}
 .hamburger span:nth-child(3){top:20px}
-/* メニュー開いた状態:×印 */
+
 .hamburger.is-open span{background:#fff}
 .hamburger.is-open span:nth-child(1){top:14px;transform:rotate(45deg)}
 .hamburger.is-open span:nth-child(2){opacity:0}
 .hamburger.is-open span:nth-child(3){top:14px;transform:rotate(-45deg)}
 
-/* ─────────────────────────────────────────
-   MOBILE MENU(フルスクリーンオーバーレイ・緑背景)
-   ───────────────────────────────────────── */
+/* ─────────────────
+   MOBILE MENU
+   ────────────── */
 .mobile-menu{
-  display:none;  /* スマホでのみ表示 */
+  display:none; 
   position:fixed;
   inset:0;
   background:linear-gradient(180deg, var(--gd) 0%, #1e3d2a 100%);
@@ -298,7 +290,7 @@ a.nav-item:hover{color:var(--gd)}
   transition:opacity .35s ease, visibility 0s linear 0s;
 }
 
-/* メニュー上部:ロゴ + 閉じるボタン */
+/* メニュー上部 */
 .mm-head{
   display:flex;
   align-items:center;
@@ -311,7 +303,7 @@ a.nav-item:hover{color:var(--gd)}
 .mm-logo-en{font-family:var(--roman);font-size:.72rem;letter-spacing:0;color:rgba(255,255,255,.65);text-transform:uppercase}
 .mm-logo-ja{font-family:var(--serif);font-size:1.05rem;letter-spacing:.13em;color:#fff}
 
-/* 閉じるボタン(円形・×アイコン) */
+/* 閉じる */
 .mm-close{
   position:relative;
   width:40px;
@@ -347,7 +339,7 @@ a.nav-item:hover{color:var(--gd)}
   transform:translate(-50%,-50%) rotate(-45deg);
 }
 
-/* 電話番号バナー */
+/* 電話番号 */
 .mm-tel-bar{
   display:flex;
   align-items:center;
@@ -385,7 +377,7 @@ a.nav-item:hover{color:var(--gd)}
   color:#fff;
   border-bottom:1px solid rgba(255,255,255,.12);
   transition:.2s;
-  min-height:56px;  /* タッチターゲット確保 */
+  min-height:56px;
 }
 .mm-link:hover,
 .mm-link:active{
@@ -418,7 +410,7 @@ a.nav-item:hover{color:var(--gd)}
 .mm-acc-trigger:hover,
 .mm-acc-trigger:active{background:rgba(255,255,255,.08)}
 
-/* +/- アイコン(CSS だけで描画) */
+/* +/- アイコン */
 .mm-icon{
   position:relative;
   width:18px;
@@ -434,13 +426,13 @@ a.nav-item:hover{color:var(--gd)}
   background:#fff;
   transition:.3s ease;
 }
-/* 横棒(常にあり) */
+
 .mm-icon::before{
   width:14px;
   height:2px;
   transform:translate(-50%,-50%);
 }
-/* 縦棒(閉じている時は表示、開いている時は非表示) */
+
 .mm-icon::after{
   width:2px;
   height:14px;
@@ -485,7 +477,7 @@ a.nav-item:hover{color:var(--gd)}
   min-width:1.8rem;
 }
 
-/* 下部CTA */
+/* CTA */
 .mm-cta-wrap{padding:1.75rem 1.5rem 2.5rem;background:rgba(0,0,0,.15)}
 .mm-cta{
   display:block;
@@ -522,7 +514,7 @@ a.nav-item:hover{color:var(--gd)}
 </style>
 
 <script>
-// ─── PC:クリック式ドロップダウン ───
+// ─── PC:ドロップダウン ───
 const navTriggers = document.querySelectorAll<HTMLButtonElement>('.pc-nav .nav-trigger');
 const navItems = document.querySelectorAll<HTMLElement>('.pc-nav .nav-has-drop');
 const dropPanels = {
@@ -579,7 +571,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ─── スマホ:フルスクリーンメニュー ───
+// ───  SPメニュー ───
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 
@@ -598,7 +590,7 @@ function closeMobileMenu() {
   hamburger?.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = '';
 
-  // 開いていたアコーディオンも閉じる
+  
   document.querySelectorAll('.mm-acc').forEach(acc => acc.classList.remove('is-open'));
   document.querySelectorAll<HTMLButtonElement>('.mm-acc-trigger').forEach(t =>
     t.setAttribute('aria-expanded', 'false')
@@ -613,16 +605,13 @@ hamburger?.addEventListener('click', () => {
   }
 });
 
-// 閉じるボタンクリックで閉じる
 const mmClose = document.getElementById('mmClose');
 mmClose?.addEventListener('click', closeMobileMenu);
 
-// メニュー内リンククリックで閉じる
 mobileMenu?.querySelectorAll('a').forEach(a =>
   a.addEventListener('click', closeMobileMenu)
 );
 
-// スマホ:アコーディオン
 document.querySelectorAll<HTMLButtonElement>('.mm-acc-trigger').forEach(trigger => {
   trigger.addEventListener('click', () => {
     const acc = trigger.closest('.mm-acc');

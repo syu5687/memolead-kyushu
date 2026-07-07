@@ -1,8 +1,6 @@
 ---
 import { SITE } from '../data/site.ts';
-// 各リンクの定義
-// available: true なら通常リンク / false なら「準備中」のグレーアウト表示
-// 新しいページを公開したら、該当行の available を true に変更するだけでOK
+// true→通常リンク / false→準備中のグレーアウト表示
 const services = [
   { href: '/services/estate/',         label: '遺品整理・不用品回収',           available: true },
   { href: '/services/antique/',        label: '古物買取',   available: true },
@@ -80,9 +78,7 @@ const company = [
 .f-col a{display:block;font-size:.875rem;color:rgba(255,255,255,.65);padding:.35rem 0;transition:.15s}
 .f-col a:hover{color:#fff}
 
-/* 準備中(未公開ページ)のスタイル
-   グレーアウト + クリック不可 + 「準備中」バッジ表示
-   ページ公開後は available: true に変更すれば通常リンクに戻る */
+/* 準備中 */
 .f-col .f-disabled{
   display:flex;align-items:center;gap:.5rem;
   font-size:.875rem;color:rgba(255,255,255,.32);

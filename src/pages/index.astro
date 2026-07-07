@@ -295,18 +295,24 @@ const services = [
     <section class="contact" id="contact">
       <h2 class="contact-title">お問合せ・無料相談</h2>
       <p class="contact-sub">どんな小さなことでも、まずはお気軽にご連絡ください。</p>
+      <div class="contact-cards">
       <div class="contact-card">
         <h3>お電話でのご相談</h3>
         <p>スタッフが直接ご対応します。<br>お急ぎの場合はお電話が便利です。</p>
-        <!-- 電話番号の直書きをやめ、電話相談モーダル（隣のWebボタンと同系統の見た目）に差し替え -->
         <div style="margin-top:1.5rem"><PhoneConsultModal /></div>
+      </div>
+      <div class="contact-card">
+        <h3>Webからのご相談</h3>
+        <p>24時間受付中。内容を確認後、<br>1営業日以内にご連絡いたします。</p>
+        <div style="margin-top:1.5rem"><a href="/contact/" class="btn-cta-contact">無料相談フォームへ</a></div>
+      </div>
       </div>
     </section>
 
   </main>
   <Footer />
 
-  <!-- モバイル固定CTAバー(共通コンポーネント) -->
+  <!-- モバイル固定CTAバー-->
   <FixedCta />
   </BaseLayout>
 
@@ -710,7 +716,7 @@ const services = [
 .contact-card p{font-size:.9rem;line-height:1.95;color:var(--mid)}
 .contact-tel{display:block;font-family:var(--num);font-size:2.2rem;color:var(--gd);letter-spacing:0;margin:1.1rem 0 .38rem}
 .contact-hours{font-size:.78rem;color:var(--light)}
-.btn-cta-contact{display:inline-block;background:var(--gd);color:#fff;padding:.9rem 2rem;font-size:.9rem;letter-spacing:0;transition:.2s;border-radius:var(--corner);}
+.btn-cta-contact{display:inline-block;background:var(--gd);color:#fff;padding:.65rem 1rem;font-size:.9rem;letter-spacing:0;transition:.2s;border-radius:var(--corner);}
 .btn-cta-contact:hover{background:var(--gm)}
 
 /* MOBILE FIXED CTA は FixedCta.astro コンポーネントに共通化済み */
