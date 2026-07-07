@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import BlogCards from '../components/BlogCards.astro';
 import Icon from '../components/Icon.astro';
 import FixedCta from '../components/FixedCta.astro';
+import PhoneConsultModal from '../components/PhoneConsultModal.astro'; 
 import { Image, getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import heroImagePC from '../_assets/img/index/hero-image.jpg';
@@ -33,18 +34,16 @@ const heroSP = heroImageSP
   : null;
 
 const services = [
-    { num:'01', en:'Estate Clearance',         ja:'遺品整理',         desc:'大切な品の仕分けから処分まで、心を込めて整理。', tags:['仮見積り対応'], link:'/services/estate/', estimate:true },
-    { num:'02', en:'Unwanted Items Removal',   ja:'不用品回収',       desc:'家具・家電からお焚き上げ供養まで。1台11,000円〜。', tags:['仮見積り対応'], link:'/services/junk/', estimate:true },
-    { num:'03', en:'Antique Purchase',         ja:'古物買取',         desc:'価値ある遺品を、専門スタッフが適正に査定・買取。', tags:[], link:'/services/antique/', estimate:false },
-    { num:'04', en:'Buddhist Altar & Items',   ja:'仏壇・仏具販売',   desc:'現代仏壇から金仏壇まで。位牌の字彫りも対応。', tags:['仮見積り対応'], link:'/services/butsudan/', estimate:true },
-    { num:'05', en:'Cemetery & Garden Burial', ja:'墓地・霊園ご紹介', desc:'墓石・納骨堂・樹木葬まで、ご希望に合う埋葬を。', tags:[], link:'/services/cemetery/', estimate:false },
-    { num:'06', en:'Altar Closing Ceremony',   ja:'仏壇（神棚）じまい', desc:'閉眼供養から搬出・処分まで、丁寧に対応。', tags:['仮見積り対応'], link:'/services/altar-closing/', estimate:true },
-    { num:'07', en:'Altar Remake',             ja:'仏壇リメイク',     desc:'代々の仏壇を、お部屋に馴染むモダンな形へ。', tags:['人気サービス','仮見積り対応'], link:'/services/altar-remake/', estimate:true },
-    { num:'08', en:'Grave Closure',            ja:'墓じまい',         desc:'改葬許可申請から石材撤去・閉眼供養まで一括対応。', tags:['仮見積り対応'], link:'/services/grave-closure/', estimate:true },
-    { num:'09', en:'Grave Keeping Agency',     ja:'墓守代行サービス', desc:'遠方の方に代わり、お墓参り・清掃を定期代行。', tags:['仮見積り対応'], link:'/services/grave-keeping/', estimate:true },
-    { num:'10', en:'Ocean Scattering',         ja:'海洋散骨',         desc:'海に還る自然葬。チャーター・合同プランをご用意。', tags:['仮見積り対応'], link:'/services/ocean/', estimate:true },
-    { num:'11', en:'Memento Items',            ja:'手元供養品販売',   desc:'遺骨を納めるペンダントやミニ骨壺で手元供養。', tags:[], link:'/services/memento/', estimate:false },
-    { num:'12', en:'Inheritance Consultation', ja:'相続（不動産）相談', desc:'不動産の相続・売却・活用を、専門家と一緒に。', tags:[], link:'/services/inheritance/', estimate:false },
+    { num:'01', en:'Estate Clearance',         ja:'遺品整理・不用品回収',         desc:'大切な品の仕分けから処分まで、心を込めて整理。', tags:['仮見積り対応'], link:'/services/estate/', estimate:true },
+    { num:'02', en:'Antique Purchase',         ja:'古物買取',         desc:'価値ある遺品を、専門スタッフが適正に査定・買取。', tags:[], link:'/services/antique/', estimate:false },
+    { num:'03', en:'Buddhist Altar & Items',   ja:'仏壇・仏具販売',   desc:'現代仏壇から金仏壇まで。位牌の字彫りも対応。', tags:['仮見積り対応'], link:'/services/butsudan/', estimate:true },
+    { num:'04', en:'Cemetery & Garden Burial', ja:'墓地・霊園ご紹介', desc:'墓石・納骨堂・樹木葬まで、ご希望に合う埋葬を。', tags:[], link:'/services/cemetery/', estimate:false },
+    { num:'05', en:'Altar Closing Ceremony',   ja:'仏壇（神棚）じまい', desc:'閉眼供養から搬出・処分まで、丁寧に対応。', tags:['仮見積り対応'], link:'/services/altar-closing/', estimate:true },
+    { num:'06', en:'Altar Remake',             ja:'仏壇リメイク',     desc:'代々の仏壇を、お部屋に馴染むモダンな形へ。', tags:['人気サービス','仮見積り対応'], link:'/services/altar-remake/', estimate:true },
+    { num:'07', en:'Grave Closure',            ja:'墓じまい',         desc:'改葬許可申請から石材撤去・閉眼供養まで一括対応。', tags:['仮見積り対応'], link:'/services/grave-closure/', estimate:true },
+    { num:'08', en:'Ocean Scattering',         ja:'海洋散骨',         desc:'海に還る自然葬。チャーター・合同プランをご用意。', tags:['仮見積り対応'], link:'/services/ocean/', estimate:true },
+    { num:'09', en:'Memento Items',            ja:'手元供養品販売',   desc:'遺骨を納めるペンダントやミニ骨壺で手元供養。', tags:[], link:'/services/memento/', estimate:false },
+    { num:'10', en:'Inheritance Consultation', ja:'相続（不動産）相談', desc:'不動産の相続・売却・活用を、専門家と一緒に。', tags:[], link:'/services/inheritance/', estimate:false },
   ];
   // 各サービスのヒーロー画像をまとめて読み込む（ビルド時にWebP化するには import が必要）
   // パス規約は「src/_assets/img/services/{slug}/hero.(jpg/png/webp)」を想定
@@ -153,7 +152,7 @@ const services = [
       <div class="sec-head fi">
         <p class="sec-label">SERVICES</p>
         <h2 class="sec-title">サービス一覧</h2>
-        <p class="sec-desc">葬儀後のさまざまなお悩みに対応する12のサービスをご用意しています。<br>まずはお気軽にご相談ください。</p>
+        <p class="sec-desc">葬儀後のさまざまなお悩みに対応する10のサービスをご用意しています。<br>まずはお気軽にご相談ください。</p>
       </div>
       <div class="svc-grid fi">
         {servicesWithImg.map(s => (
@@ -227,11 +226,9 @@ const services = [
           <p class="est-note">※仮見積りはあくまでも概算です。正式なお見積りは現地確認後に確定いたします。</p>
         </div>
         <div>
-          <a href="/estimate/?service=estate"        class="est-item"><span>遺品整理の仮見積り</span><span class="est-arr">›</span></a>
-          <a href="/estimate/?service=junk"          class="est-item"><span>不用品回収の仮見積り</span><span class="est-arr">›</span></a>
+          <a href="/estimate/?service=junk"        class="est-item"><span>遺品整理・不用品回収の仮見積り</span><span class="est-arr">›</span></a>
           <a href="/estimate/?service=grave-closure" class="est-item"><span>墓じまいの仮見積り</span><span class="est-arr">›</span></a>
           <a href="/estimate/?service=ocean"         class="est-item"><span>海洋散骨の仮見積り</span><span class="est-arr">›</span></a>
-          <a href="/estimate/?service=grave-keeping" class="est-item"><span>墓守代行の仮見積り</span><span class="est-arr">›</span></a>
         </div>
       </div>
     </section>
@@ -298,18 +295,11 @@ const services = [
     <section class="contact" id="contact">
       <h2 class="contact-title">お問合せ・無料相談</h2>
       <p class="contact-sub">どんな小さなことでも、まずはお気軽にご連絡ください。</p>
-      <div class="contact-cards fi">
-        <div class="contact-card">
-          <h3>お電話でのご相談</h3>
-          <p>スタッフが直接ご対応します。<br>お急ぎの場合はお電話が便利です。</p>
-          <a href="tel:095-865-4400" class="contact-tel">095-865-4400</a>
-          <p class="contact-hours">受付時間 10:00〜17:00（年中無休）</p>
-        </div>
-        <div class="contact-card">
-          <h3>Webからのご相談</h3>
-          <p>24時間受付中。内容を確認後、<br>1営業日以内にご連絡いたします。</p>
-          <div style="margin-top:1.5rem"><a href="/contact/" class="btn-cta-contact">無料相談フォームへ</a></div>
-        </div>
+      <div class="contact-card">
+        <h3>お電話でのご相談</h3>
+        <p>スタッフが直接ご対応します。<br>お急ぎの場合はお電話が便利です。</p>
+        <!-- 電話番号の直書きをやめ、電話相談モーダル（隣のWebボタンと同系統の見た目）に差し替え -->
+        <div style="margin-top:1.5rem"><PhoneConsultModal /></div>
       </div>
     </section>
 

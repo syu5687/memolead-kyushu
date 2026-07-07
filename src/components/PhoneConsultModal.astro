@@ -1,0 +1,246 @@
+---
+// PhoneConsultModal.astro
+// 「電話で相談する」ボタン＋電話相談ポップアップ（モーダル）の共通部品。
+// 電話番号は site.ts の COMPANIES を参照し、番号の直書き（＝会社取り違えの温床）を避ける。
+import Icon from './Icon.astro';
+import { COMPANIES } from '../data/site';
+
+// ポップアップに並べる「対象サービス名」。ここは画面に出す表示名なので文字列でOK（slugではない）。
+const groupA = ['遺品整理', '不用品回収', '古物買取', '仏壇神棚じまい', '墓じまい', '相続相談'];
+const groupB = ['仏壇仏具販売', '墓地霊園紹介', '仏壇リメイク', '海洋散骨'];
+
+// 電話番号は site.ts から取得（表示用＝ハイフンあり）。A社=095-865-4400 / B社=095-825-6386。
+const telA = COMPANIES.A.tel;
+const telB = COMPANIES.B.tel;
+
+// tel: リンク用に、ハイフンを除いた発信用の href をあらかじめ作る。
+// ここで作らず href="tel:${...}" と直接書くと文字列化バグ（資料11章15番）を踏みやすいので、変数にしておく。
+const telAHref = 'tel:' + telA.replace(/-/g, '');
+const telBHref = 'tel:' + telB.replace(/-/g, '');
+
+// 受付時間（A社・B社とも 9:00-17:00 の同値）。表示側で「受付時間」の語を付ける方針（資料6章）。
+const hours = COMPANIES.A.hours;
+---
+
+<!-- トリガー：隣の「フォームへ進む」ボタンと揃う見た目にする。色はページCSSに依存せず部品側で持つ -->
+<button type="button" class="phone-consult-btn" data-phone-open>
+  <Icon name="phone" size={18} /> 電話で相談する
+</button>
+
+<!-- ポップアップ本体。初期は非表示（.is-open が付いたら表示）。テンプレート内に置くのが重要（上の説明参照） -->
+<div class="phone-modal" data-phone-modal aria-hidden="true">
+  <!-- 黒い背景。ここをクリックしても閉じる（data-phone-close を付けた要素はすべて閉じるボタン扱い） -->
+  <div class="phone-modal-backdrop" data-phone-close></div>
+
+  <div class="phone-modal-panel" role="dialog" aria-modal="true" aria-label="電話相談の番号一覧">
+    <!-- 閉じるボタン。×は絵文字ではなくSVGの線で描く（絵文字全廃のデザインルールに合わせる） -->
+    <button type="button" class="phone-modal-close" data-phone-close aria-label="閉じる">
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+        <line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="1.8" />
+        <line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="1.8" />
+      </svg>
+    </button>
+
+    <p class="phone-modal-title">お電話でのご相談</p>
+    <p class="phone-modal-lead">ご相談内容によって窓口が異なります。<br>下記からお選びください。</p>
+
+    <!-- グループA（A社の対象サービス） -->
+    <div class="phone-group">
+      <ul class="phone-services">
+        {groupA.map(s => <li>{s}</li>)}
+      </ul>
+      <p class="phone-guide">上記のご相談はこちら</p>
+      <!-- 番号ボタン。タップすると発信（tel:リンク） -->
+      <a href={telAHref} class="phone-num-btn">
+        <Icon name="phone" size={18} /> {telA}
+      </a>
+    </div>
+
+    <!-- グループB（B社の対象サービス） -->
+    <div class="phone-group">
+      <ul class="phone-services">
+        {groupB.map(s => <li>{s}</li>)}
+      </ul>
+      <p class="phone-guide">上記のご相談はこちら</p>
+      <a href={telBHref} class="phone-num-btn">
+        <Icon name="phone" size={18} /> {telB}
+      </a>
+    </div>
+
+    <p class="phone-modal-hours">受付時間 {hours}</p>
+  </div>
+</div>
+
+<style>
+.phone-consult-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  background:var(--gd, #2d5a3d);
+  color:#fff;
+  padding:.85rem 2.25rem;
+  font-size:.92rem;
+  border:none;
+  cursor:pointer;
+  border-radius:var(--corner, 4px);
+  font-family:inherit;
+  transition:.2s;
+}
+.phone-consult-btn:hover{background:var(--gm, #3d7a52)}
+
+.phone-modal{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1.5rem;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .25s ease, visibility .25s ease;
+}
+.phone-modal.is-open{
+  opacity:1;
+  visibility:visible;
+}
+
+.phone-modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.55);
+}
+
+.phone-modal-panel{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:420px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:var(--white, #fff);
+  border-radius:var(--corner, 4px);
+  padding:2rem 1.75rem;
+  text-align:center;
+}
+
+.phone-modal-close{
+  position:absolute;
+  top:.75rem;
+  right:.75rem;
+  width:36px;
+  height:36px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent;
+  border:none;
+  color:var(--mid, #555);
+  cursor:pointer;
+  border-radius:var(--corner, 4px);
+}
+.phone-modal-close:hover{color:var(--gd, #2d5a3d)}
+
+.phone-modal-title{
+  font-family:var(--serif, serif);
+  font-size:1.2rem;
+  color:var(--gd, #2d5a3d);
+  margin-bottom:.5rem;
+}
+.phone-modal-lead{
+  font-size:.85rem;
+  color:var(--mid, #555);
+  line-height:1.8;
+  margin-bottom:1.5rem;
+}
+
+.phone-group{
+  border:1px solid var(--border, #e0e0d8);
+  border-radius:var(--corner, 4px);
+  padding:1.25rem 1rem;
+  margin-bottom:1rem;
+}
+.phone-services{
+  list-style:none;
+  padding:0;
+  margin:0 0 .85rem;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.4rem .5rem;
+}
+.phone-services li{
+  font-size:.82rem;
+  color:var(--text, #1a1a1a);
+  background:var(--gl, #e8f0eb);
+  padding:.2rem .6rem;
+  border-radius:var(--corner, 4px);
+}
+.phone-guide{
+  font-size:.8rem;
+  color:var(--mid, #555);
+  margin-bottom:.5rem;
+}
+.phone-num-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  width:100%;
+  background:var(--gd, #2d5a3d);
+  color:#fff;
+  font-family:var(--num, inherit);
+  font-size:1.35rem;
+  padding:.75rem 1rem;
+  border-radius:var(--corner, 4px);
+  transition:.2s;
+}
+.phone-num-btn:hover{background:var(--gm, #3d7a52)}
+
+.phone-modal-hours{
+  font-size:.78rem;
+  color:var(--light, #999);
+  margin-top:.5rem;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .phone-modal{transition:none}
+}
+</style>
+
+<script>
+  // 電話相談モーダルの開閉。
+  // data-* 属性で対象を拾う（クラス名の見た目変更に強く、役割が読み取りやすいため）。
+  const modal = document.querySelector('[data-phone-modal]');
+  const openBtns = document.querySelectorAll('[data-phone-open]');
+  const closeEls = document.querySelectorAll('[data-phone-close]');
+
+  // モーダルが無いページでは何もしない（この部品を置いていないページで誤動作させない安全策）
+  if (modal) {
+    // 開く：is-open を付けると CSS 側で opacity/visibility が切り替わる
+    // 開く：is-open を付けると CSS 側で opacity/visibility が切り替わる
+    // ※ function宣言だと巻き上げで modal の null 絞り込みが効かず ts(18047) になる。
+    //   アロー関数にすると if(modal) の絞り込みが中まで引き継がれる。
+    const openModal = () => {
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+    };
+    // 閉じる
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+    };
+
+    // トリガーボタン→開く、×と黒背景→閉じる
+    openBtns.forEach(btn => btn.addEventListener('click', openModal));
+    closeEls.forEach(el => el.addEventListener('click', closeModal));
+
+    // Escキーで閉じる（開いている時だけ反応）
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+  }
+</script>
