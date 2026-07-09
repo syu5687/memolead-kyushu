@@ -18,6 +18,7 @@ export interface PricingPlan {
   time?: string;           // 任意:作業時間目安
   note?: string;           // 任意:備考
   popular?: boolean;       // 任意:人気バッジ
+  qty?: boolean; // 任意:trueなら「台数×単価」の数量入力式プラン
 }
 
 export interface ServicePricing {
@@ -77,8 +78,7 @@ export const pricing: ServicePricing[] = [
     serviceUrl: '/services/estate/',
     questionLabel: '回収量・追加サービスをお選びください',
     plans: [
-      { id: 'junk-angel-1',   label: 'エンゼル号1台',  size: '軽トラック1台分',  price: 11000, popular: true },
-      { id: 'junk-angel-2',   label: 'エンゼル号2台',  size: '軽トラック2台分',  price: 22000 },
+      { id: 'junk-angel',     label: 'エンゼル号',      size: '軽トラック1台あたり',  price: 11000, popular: true, qty: true },
       { id: 'junk-otakiage',  label: '仏壇お焚き上げ供養', size: '閉眼供養つき',   price: 33000 },
       { id: 'junk-doll',      label: '人形・節句人形供養', size: '1セット',         price: 16500 },
       { id: 'junk-cleaning',  label: 'ハウスクリーニング(1K相当)', size: '清掃のみ',  price: 27500 },

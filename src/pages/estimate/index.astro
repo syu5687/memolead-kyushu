@@ -3,9 +3,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
-import { pricing, formatYenWithTax } from '../../data/pricing';
+import { Image } from 'astro:assets';
+import { pricing, formatYen, formatYenWithTax } from '../../data/pricing';
 import { SITE } from '../../data/site';
+import ktraImg from '../../_assets/img/estimate/ktra.png';
+const estatePricing = pricing.find(s => s.serviceKey === 'estate');
+const estatePlans = estatePricing?.plans ?? []; // 見つからない場合は空配列
 
+// シミュレーターに出す「選べるサービス」= estate 以外。
+const simulatorServices = pricing
+  .map((s, i) => ({ ...s, no: i + 1 })) // no: 1,2,3,4
+  .filter(s => s.serviceKey !== 'estate');
 ---
 
 <BaseLayout
@@ -51,9 +59,10 @@ import { SITE } from '../../data/site';
         <!-- 左側:質問エリア -->
         <div class="sim-questions">
 
-          {pricing.map((service, idx) => (
+{simulatorServices.map((service) => (
+          <>
             <div class="q-block" data-service={service.serviceKey}>
-
+        
               <!-- サービス選択チェックボックス -->
               <label class="q-head">
                 <input
@@ -63,44 +72,115 @@ import { SITE } from '../../data/site';
                 />
                 <span class="q-check-box" aria-hidden="true"></span>
                 <span class="q-head-text">
-                  <span class="q-num">SERVICE 0{idx + 1}</span>
+                  <span class="q-num">SERVICE 0{service.no}</span>
                   <span class="q-title">{service.serviceLabel}</span>
                 </span>
                 <a href={service.serviceUrl} class="q-detail-link" target="_blank" rel="noopener">サービス詳細</a>
               </label>
-
+        
               <!-- プラン選択(チェックボックスがONの時のみ表示) -->
               <div class="q-body" data-body={service.serviceKey} hidden>
+              <span class="ref-table-title">参考料金</span>
+                {/* サービス2(不用品回収)のときだけ、プラン一覧の上に遺品整理の参考ブロックを出す */}
+                {service.serviceKey === 'junk' && (
+                  <div class="ref-block">
+                    {/* 参考写真 */}
+                    <figure class="ref-photo">
+                      <Image
+                        src={ktraImg}
+                        alt="遺品整理の作業風景（参考）"
+                        widths={[400, 800]}
+                        sizes="(max-width:768px) 100vw, 340px"
+                        class="ref-photo-img"
+                      />
+                    </figure>
+
+                    {/* 遺品整理の参考料金表（estatePlans から生成） */}
+                    <div class="ref-table-wrap">
+                      <table class="ref-table">
+                        <thead>
+                          <tr>
+                            <th>間取り</th>
+                            <th>広さ</th>
+                            <th>料金（税込）</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {estatePlans.map(plan => (
+                            <tr>
+                              <td>{plan.label}</td>
+                              <td class="ref-td-sub">{plan.size}</td>
+                              <td class="ref-td-price">{formatYen(plan.price)}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <p class="ref-table-note">※遺品整理は内容により変動します。詳しくはお問い合わせください。</p>
+                    </div>
+                  </div>
+                )}
                 <p class="q-label">{service.questionLabel}</p>
                 <div class="plan-list">
                   {service.plans.map(plan => (
-                    <label class="plan-item">
-                      <input
-                        type="radio"
-                        name={`plan-${service.serviceKey}`}
-                        value={plan.id}
-                        data-price={plan.price}
-                        data-plan={plan.id}
-                        data-service-key={service.serviceKey}
-                      />
-                      <span class="plan-radio" aria-hidden="true"></span>
-                      <span class="plan-content">
-                        <span class="plan-label-row">
-                          <span class="plan-label">{plan.label}</span>
-                          {plan.popular && <span class="plan-popular">人気</span>}
+                    plan.qty ? (
+                      // 数量入力式プラン（エンゼル号）：単価 × 台数
+                      <div class="plan-item plan-item-qty" data-qty-plan={plan.id}>
+                        <span class="plan-content">
+                          <span class="plan-label-row">
+                            <span class="plan-label">{plan.label}</span>
+                            {plan.popular && <span class="plan-popular">人気</span>}
+                          </span>
+                          {plan.size && <span class="plan-size">{plan.size}</span>}
+                          <span class="plan-unit-price">1台あたり {formatYenWithTax(plan.price)}</span>
+                          <span class="plan-subtotal" data-qty-subtotal></span>
                         </span>
-                        {plan.size && <span class="plan-size">{plan.size}</span>}
-                        {plan.time && <span class="plan-time">{plan.time}</span>}
-                      </span>
-                      <span class="plan-price">{formatYenWithTax(plan.price)}</span>
-                    </label>
+                        <span class="qty-control">
+                          <button type="button" class="qty-btn" data-qty-minus aria-label="1台減らす">−</button>
+                          <input
+                            type="number"
+                            class="qty-input"
+                            value="1"
+                            min="0"
+                            inputmode="numeric"
+                            data-price={plan.price}
+                            data-plan={plan.id}
+                            data-service-key={service.serviceKey}
+                            aria-label="台数"
+                          />
+                          <button type="button" class="qty-btn" data-qty-plus aria-label="1台増やす">＋</button>
+                          <span class="qty-suffix">台</span>
+                        </span>
+                      </div>
+                    ) : (
+                      // 通常プラン：チェックボックス（複数選択で合算）
+                      <label class="plan-item">
+                        <input
+                          type="checkbox"
+                          name={`plan-${service.serviceKey}`}
+                          value={plan.id}
+                          data-price={plan.price}
+                          data-plan={plan.id}
+                          data-service-key={service.serviceKey}
+                        />
+                        <span class="plan-check" aria-hidden="true"></span>
+                        <span class="plan-content">
+                          <span class="plan-label-row">
+                            <span class="plan-label">{plan.label}</span>
+                            {plan.popular && <span class="plan-popular">人気</span>}
+                          </span>
+                          {plan.size && <span class="plan-size">{plan.size}</span>}
+                          {plan.time && <span class="plan-time">{plan.time}</span>}
+                        </span>
+                        <span class="plan-price">{formatYenWithTax(plan.price)}</span>
+                      </label>
+                    )
                   ))}
                 </div>
               </div>
             </div>
-          ))}
-
-        </div>
+            </>
+        ))}                
+                </div>
 
         <!-- 右側:結果サマリー(sticky) -->
         <aside class="sim-result">
@@ -203,12 +283,21 @@ import { SITE } from '../../data/site';
   .plan-list{display:flex;flex-direction:column;gap:.5rem}
 
   .plan-item{display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:center;padding:.85rem 1rem;background:var(--white);border:1px solid var(--border);border-radius:var(--corner);cursor:pointer;transition:.15s}
-  .plan-item:hover{border-color:var(--gd);background:var(--gl)}
+.plan-item:not(.plan-item-qty):hover {
+    border-color: var(--gd);
+    background: var(--gl);
+  }
   .plan-item input{position:absolute;opacity:0;pointer-events:none}
   .plan-radio{width:18px;height:18px;border:2px solid var(--border);border-radius:50%;flex-shrink:0;position:relative;transition:.2s;background:var(--white)}
   .plan-item input:checked + .plan-radio{border-color:var(--gd)}
   .plan-item input:checked + .plan-radio::after{content:'';position:absolute;inset:3px;background:var(--gd);border-radius:50%}
-  .plan-item:has(input:checked){border-color:var(--gd);background:var(--gl)}
+
+  .plan-check{width:18px;height:18px;border:2px solid var(--border);border-radius:var(--corner);flex-shrink:0;position:relative;transition:.2s;background:var(--white)}
+  .plan-item input:checked + .plan-check{border-color:var(--gd);background:var(--gd)}
+  .plan-item input:checked + .plan-check::after{content:'';position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid var(--white);border-width:0 2px 2px 0;transform:rotate(45deg)}
+
+  .plan-item:has(input:checked),
+  .plan-item.is-selected{border-color:var(--gd);background:var(--gl)}
 
   .plan-content{display:flex;flex-direction:column;gap:.15rem;min-width:0}
   .plan-label-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
@@ -218,34 +307,48 @@ import { SITE } from '../../data/site';
   .plan-time{font-size:.7rem;color:var(--light)}
   .plan-price{font-family:var(--num);font-size:.95rem;color:var(--gd);font-weight:500;white-space:nowrap}
 
+  .plan-item-qty{grid-template-columns:1fr auto;cursor:default}
+  .plan-item-qty:not(.is-selected),
+  .plan-item-qty:not(.is-selected):hover{border-color:var(--border);background:var(--white)}
+  .plan-unit-price{font-family:var(--num);font-size:.8rem;color:var(--gd)}
+  .plan-subtotal{font-family:var(--num);font-size:.85rem;color:var(--gd);font-weight:500}
+  .qty-control{display:flex;align-items:center;gap:.4rem}
+  .qty-btn{width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.1rem;line-height:1;color:var(--gd);background:var(--white);border:1px solid var(--border);border-radius:var(--corner);cursor:pointer;transition:.15s}
+  .qty-btn:hover{border-color:var(--gd);background:var(--gl)}
+  .qty-input{width:48px;height:32px;text-align:center;font-family:var(--num);font-size:.95rem;color:var(--text);border:1px solid var(--border);border-radius:var(--corner);background:var(--white)}
+  .qty-suffix{font-size:.8rem;color:var(--mid)}
+  .qty-input::-webkit-outer-spin-button,
+  .qty-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .qty-input[type=number]{-moz-appearance:textfield}
+
   /* 右:結果サマリー(sticky) */
-  .sim-result{position:sticky;top:1.5rem}
-  .result-card{background:linear-gradient(135deg,#2d5a3d,#1e3d2a);color:#fff;padding:1.85rem 1.5rem;border-radius:var(--corner)}
-  .result-label{font-family:var(--roman);font-size:.72rem;letter-spacing:0;opacity:.6;margin-bottom:.45rem}
-  .result-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;letter-spacing:.06em;margin-bottom:1.2rem;padding-bottom:1.1rem;border-bottom:1px solid rgba(255,255,255,.18)}
+  :global(.sim-result){position:sticky;top:1.5rem}
+  :global(.result-card){background:linear-gradient(135deg,#2d5a3d,#1e3d2a);color:#fff;padding:1.85rem 1.5rem;border-radius:var(--corner)}
+  :global(.result-label){font-family:var(--roman);font-size:.72rem;letter-spacing:0;opacity:.6;margin-bottom:.45rem}
+  :global(.result-title){font-family:var(--serif);font-size:1.2rem;font-weight:400;letter-spacing:.06em;margin-bottom:1.2rem;padding-bottom:1.1rem;border-bottom:1px solid rgba(255,255,255,.18)}
 
-  .result-empty{font-size:.85rem;opacity:.6;line-height:1.85;text-align:center;padding:1.5rem 0}
+  :global(.result-empty){font-size:.85rem;opacity:.6;line-height:1.85;text-align:center;padding:1.5rem 0}
 
-  .result-items{margin-bottom:1.1rem;display:flex;flex-direction:column;gap:.65rem}
-  .result-item{display:flex;flex-direction:column;gap:.15rem;padding:.7rem .85rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:var(--corner);font-size:.82rem}
-  .result-item-service{font-size:.7rem;opacity:.6;letter-spacing:.04em}
-  .result-item-row{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-top:.18rem}
-  .result-item-plan{font-family:var(--serif);font-size:.85rem;letter-spacing:.02em}
-  .result-item-price{font-family:var(--num);font-size:.92rem;color:var(--yellow,#f5c842);white-space:nowrap}
+  :global(.result-items){margin-bottom:1.1rem;display:flex;flex-direction:column;gap:.65rem}
+  :global(.result-item){display:flex;flex-direction:column;gap:.15rem;padding:.7rem .85rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:var(--corner);font-size:.82rem}
+  :global(.result-item-service){font-size:.7rem;opacity:.6;letter-spacing:.04em}
+  :global(.result-item-row){display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-top:.18rem}
+ :global( .result-item-plan){font-family:var(--serif);font-size:.85rem;letter-spacing:.02em}
+  :global(.result-item-price){font-family:var(--num);font-size:.92rem;color:var(--yellow,#f5c842);white-space:nowrap}
 
-  .result-total{border-top:1px solid rgba(255,255,255,.18);padding-top:1.1rem;text-align:center}
-  .total-label{font-family:var(--roman);font-size:.72rem;opacity:.7;letter-spacing:0;margin-bottom:.3rem}
-  .total-price{margin-bottom:.55rem}
-  .total-num{font-family:var(--num);font-size:2.4rem;color:var(--yellow,#f5c842);font-weight:300;letter-spacing:.02em;line-height:1}
-  .total-unit{font-size:.85rem;opacity:.85;margin-left:.18rem}
-  .total-note{font-size:.7rem;opacity:.55}
+ :global(.result-total){border-top:1px solid rgba(255,255,255,.18);padding-top:1.1rem;text-align:center}
+ :global(.total-label){font-family:var(--roman);font-size:.72rem;opacity:.7;letter-spacing:0;margin-bottom:.3rem}
+ :global(.total-price){margin-bottom:.55rem}
+ :global(.total-num){font-family:var(--num);font-size:2.4rem;color:var(--yellow,#f5c842);font-weight:300;letter-spacing:.02em;line-height:1}
+:global(.total-unit){font-size:.85rem;opacity:.85;margin-left:.18rem}
+:global(.total-note){font-size:.7rem;opacity:.55}
 
-  .result-cta{margin-top:1.5rem;display:flex;flex-direction:column;gap:.55rem}
-  .result-summary[hidden]{display:none}
-  .cta-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--yellow,#f5c842);color:var(--gd);padding:.85rem 1.25rem;font-size:.88rem;font-weight:500;letter-spacing:0;transition:.2s;border-radius:var(--corner)}
-  .cta-primary:hover{background:#e8b835}
-  .cta-secondary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.85rem 1.25rem;font-size:.85rem;letter-spacing:0;transition:.2s;border-radius:var(--corner)}
-  .cta-secondary:hover{background:rgba(255,255,255,.1)}
+  :global(.result-cta){margin-top:1.5rem;display:flex;flex-direction:column;gap:.55rem}
+  :global(.result-summary[hidden]){display:none}
+  :global(.cta-primary){display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--yellow,#f5c842);color:var(--gd);padding:.85rem 1.25rem;font-size:.88rem;font-weight:500;letter-spacing:0;transition:.2s;border-radius:var(--corner)}
+  :global(.cta-primary:hover){background:#e8b835}
+  :global(.cta-secondary){display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.85rem 1.25rem;font-size:.85rem;letter-spacing:0;transition:.2s;border-radius:var(--corner)}
+  :global(.cta-secondary:hover){background:rgba(255,255,255,.1)}
 
   /* NOTICE */
   .notice-inner{background:#fffbf0;border-left:3px solid var(--gold,#c8a84b);padding:1.5rem 1.75rem;border-radius:var(--corner)}
@@ -264,6 +367,21 @@ import { SITE } from '../../data/site';
   .cta-tel-btn:hover{background:var(--gl)}
   .cta-web-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.5rem;font-size:.9rem;letter-spacing:0;transition:.2s;border-radius:var(--corner)}
   .cta-web-btn:hover{background:rgba(255,255,255,.1)}
+  .ref-block{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;align-items:start;margin-bottom:1.5rem;padding:1.35rem;background:var(--white);border:1px solid var(--border);border-radius:var(--corner)}
+  
+  .ref-photo{margin:0}
+  .ref-photo :global(.ref-photo-img){width:100%;height:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--corner);display:block}
+  .ref-table-wrap{min-width:0}
+  .ref-table-head{display:flex;flex-direction:column;gap:.15rem;margin-bottom:.7rem}
+  .ref-table-num{font-family:var(--roman);font-size:.7rem;letter-spacing:0;color:var(--light)}
+  .ref-table-title{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--text);letter-spacing:.04em}
+  .ref-table{width:100%;border-collapse:collapse;font-size:.82rem;background:var(--white);border:1px solid var(--border);border-radius:var(--corner);overflow:hidden}
+  .ref-table th{background:var(--gd);color:#fff;padding:.5rem .7rem;text-align:left;font-weight:400;font-size:.78rem;letter-spacing:0}
+  .ref-table td{padding:.5rem .7rem;border-bottom:1px solid var(--border)}
+  .ref-table tbody tr:last-child td{border-bottom:none}
+  .ref-td-sub{font-size:.72rem;color:var(--light)}
+  .ref-td-price{font-family:var(--num);color:var(--gd);white-space:nowrap}
+  .ref-table-note{font-size:.72rem;color:var(--light);margin-top:.6rem;line-height:1.7}
   
   @media(max-width:1024px){
     .sim-layout{grid-template-columns:1fr;gap:1.5rem}
@@ -302,6 +420,7 @@ import { SITE } from '../../data/site';
     .sim-form {
       padding-bottom: 92px;
     }
+    .ref-block{grid-template-columns:1fr}
   }
 </style>
 
@@ -312,14 +431,23 @@ import { SITE } from '../../data/site';
   // 2. プランがラジオで選択される → 選択状態を保存
   // 3. 全選択を集計 → 合計金額と内訳をリアルタイム表示
 
+  // 動作:
+  // 1. サービスチェックがON → 該当サービスのプラン選択エリアを開く
+  // 2. プランをチェックボックスで複数選択 / エンゼル号は台数入力 → 選択状態を保存
+  // 3. 全選択を集計 → 合計金額と内訳をリアルタイム表示
+
   type SelectedPlan = {
+    planId: string;      // プランID（state のキーに使う）
     serviceKey: string;
     serviceLabel: string;
-    planLabel: string;
-    price: number;
+    planLabel: string;   // 表示用（エンゼル号は「エンゼル号 2台」のように台数入り）
+    price: number;       // 小計（台数入力プランは 単価 × 台数）
   };
 
-  const state = new Map<string, SelectedPlan>(); // key: serviceKey, val: 選択中プラン
+  // キーを serviceKey → plan.id に変更。
+  // 理由: チェックボックスで複数プランを同時選択して合算するため、
+  //       プラン単位で別々のエントリとして保持する必要がある。
+  const state = new Map<string, SelectedPlan>(); // key: plan.id, val: 選択中プラン // key: serviceKey, val: 選択中プラン
 
   // チェックボックス(サービス選択)の挙動
   const serviceChecks = document.querySelectorAll<HTMLInputElement>('.q-check');
@@ -331,41 +459,128 @@ import { SITE } from '../../data/site';
 
       if (check.checked) {
         body?.removeAttribute('hidden');
-        // チェックONにしたら、最初のプランを自動選択(人気優先)
-        const radios = document.querySelectorAll<HTMLInputElement>(`input[name="plan-${key}"]`);
-        const popular = Array.from(radios).find(r => {
-          const item = r.closest('.plan-item');
-          return item?.querySelector('.plan-popular');
-        });
-        const target = popular ?? radios[0];
-        if (target && !target.checked) {
-          target.checked = true;
-          target.dispatchEvent(new Event('change', { bubbles: true }));
-        }
+        // 開いた時点で、このサービス配下の「台数入力プラン」を明細へ反映する。
+        // エンゼル号は初期値1台なので、開くと計上される（＝旧・人気プラン自動選択に相当）。
+        // 計上したくない場合は markup 側の value="1" を value="0" にするだけでよい。
+        body?.querySelectorAll<HTMLInputElement>('.qty-input').forEach(syncQtyPlan);
       } else {
         body?.setAttribute('hidden', '');
-        state.delete(key);
-        // ラジオもクリア
-        const radios = document.querySelectorAll<HTMLInputElement>(`input[name="plan-${key}"]`);
-        radios.forEach(r => { r.checked = false; });
+        // このサービス配下の選択をすべて解除する。
+        // 旧コードは1件しか消していなかったが、キーが plan.id になったので配下全部を消す。
+        clearService(key, body);
       }
       updateResult();
     });
   });
 
-  // ラジオボタン(プラン選択)の挙動
-  const planRadios = document.querySelectorAll<HTMLInputElement>('.plan-item input[type="radio"]');
-  planRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (!radio.checked) return;
-      const serviceKey = radio.dataset.serviceKey ?? '';
-      const price = Number(radio.dataset.price ?? '0');
-      const planLabel = radio.closest('.plan-item')?.querySelector('.plan-label')?.textContent?.trim() ?? '';
-      const serviceLabel = radio.closest('.q-block')?.querySelector('.q-title')?.textContent?.trim() ?? '';
-      state.set(serviceKey, { serviceKey, serviceLabel, planLabel, price });
+  // サービスを閉じたとき、その配下のプランを state から全部消す + チェックの見た目もリセット
+  function clearService(key: string, body: HTMLElement | null) {
+    // このサービスに属する全プラン入力（チェックボックス + 台数入力）を集める
+    const inputs = body
+      ? body.querySelectorAll<HTMLInputElement>('input[data-plan]')
+      : document.querySelectorAll<HTMLInputElement>(`input[data-service-key="${key}"][data-plan]`);
+    inputs.forEach(input => {
+      const planId = input.dataset.plan;
+      if (planId) state.delete(planId);
+      if (input.type === 'checkbox') input.checked = false; // チェックの見た目もオフに戻す
+    });
+  }
+
+  // ── 通常プラン（チェックボックス）: 複数選択して合算 ──
+  const planChecks = document.querySelectorAll<HTMLInputElement>('.plan-item input[type="checkbox"]');
+  planChecks.forEach(box => {
+    box.addEventListener('change', () => {
+      const planId = box.dataset.plan ?? '';
+      if (!planId) return;
+      if (box.checked) {
+        state.set(planId, buildPlan(box));   // ONで明細に追加
+      } else {
+        state.delete(planId);                // OFFで明細から削除
+      }
       updateResult();
     });
   });
+
+  // チェックボックスのプラン入力から、明細1件分のデータを作る
+  function buildPlan(input: HTMLInputElement): SelectedPlan {
+    const planId = input.dataset.plan ?? '';
+    const serviceKey = input.dataset.serviceKey ?? '';
+    const price = Number(input.dataset.price ?? '0');
+    const planLabel = input.closest('.plan-item')?.querySelector('.plan-label')?.textContent?.trim() ?? '';
+    const serviceLabel = input.closest('.q-block')?.querySelector('.q-title')?.textContent?.trim() ?? '';
+    return { planId, serviceKey, serviceLabel, planLabel, price };
+  }
+
+  // ── 台数入力プラン（エンゼル号）: 単価 × 台数 ──
+  // 入力欄への直接入力に反応
+  const qtyInputs = document.querySelectorAll<HTMLInputElement>('.qty-input');
+  qtyInputs.forEach(input => {
+    input.addEventListener('input', () => { syncQtyPlan(input); updateResult(); });
+  });
+
+  // ＋ / − ボタン
+  const qtyButtons = document.querySelectorAll<HTMLButtonElement>('[data-qty-plus], [data-qty-minus]');
+  qtyButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = btn.closest('.qty-control')?.querySelector<HTMLInputElement>('.qty-input');
+      if (!input) return;
+      const current = Number(input.value || '0');
+      const min = Number(input.min || '0');
+      // ＋なら+1、−なら-1（下限 min を下回らない）
+      const next = btn.hasAttribute('data-qty-plus') ? current + 1 : Math.max(min, current - 1);
+      input.value = String(next);
+      // value をJSで書き換えても input イベントは発火しないので、手動で同期する
+      syncQtyPlan(input);
+      updateResult();
+    });
+  });
+
+  // 台数入力プランの現在値を state に反映する（0台なら明細から消す）
+  function syncQtyPlan(input: HTMLInputElement) {
+    const planId = input.dataset.plan ?? '';
+    if (!planId) return;
+    const serviceKey = input.dataset.serviceKey ?? '';
+    const unitPrice = Number(input.dataset.price ?? '0');
+    const min = Number(input.min || '0');
+    let qty = Number(input.value || '0');
+    if (isNaN(qty) || qty < min) qty = min;   // 不正入力・下限割れを補正
+
+    if (qty <= 0) {
+    state.delete(planId);                    // 0台は明細から消す
+    // カード側の表示も元に戻す（ラベルを素の名前へ、小計は空に）
+    const item = input.closest('.plan-item');
+    item?.classList.remove('is-selected');   // 0台は選択中の見た目（薄緑）も解除する
+      const labelEl = item?.querySelector<HTMLElement>('.plan-label');
+      if (labelEl && labelEl.dataset.baseLabel) labelEl.textContent = labelEl.dataset.baseLabel;
+      const subtotalEl = item?.querySelector<HTMLElement>('[data-qty-subtotal]');
+      if (subtotalEl) subtotalEl.textContent = '';
+      return;
+    }
+    const item = input.closest('.plan-item');
+    const labelEl = item?.querySelector<HTMLElement>('.plan-label');
+    // 元のラベル名（「エンゼル号」）を初回だけ data-base-label に退避。
+    // これをしないと「エンゼル号（2台）（3台）」のように書き換えが積み重なって壊れる。
+    if (labelEl && !labelEl.dataset.baseLabel) {
+      labelEl.dataset.baseLabel = labelEl.textContent?.trim() ?? '';
+    }
+    const baseLabel = labelEl?.dataset.baseLabel ?? '';
+    const serviceLabel = input.closest('.q-block')?.querySelector('.q-title')?.textContent?.trim() ?? '';
+    const subtotal = unitPrice * qty;          // 小計 = 単価 × 台数
+
+    // --- カード側の表示を更新（明細だけでなく選択肢カードにも台数を映す）---
+    item?.classList.add('is-selected');                                    // 1台以上は選択中の見た目に
+    if (labelEl) labelEl.textContent = `${baseLabel}（${qty}台）`;         // 例: エンゼル号（2台）
+    const subtotalEl = item?.querySelector<HTMLElement>('[data-qty-subtotal]');
+    if (subtotalEl) subtotalEl.textContent = `小計 ${subtotal.toLocaleString('ja-JP')}円`;
+
+    state.set(planId, {
+      planId,
+      serviceKey,
+      serviceLabel,
+      planLabel: `${baseLabel} ${qty}台`,      // 明細用（例: エンゼル号 2台）
+      price: subtotal,
+    });
+  }
 
   // 結果表示を更新
   function updateResult() {
