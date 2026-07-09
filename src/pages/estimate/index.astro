@@ -175,10 +175,19 @@ const simulatorServices = pricing
                       </label>
                     )
                   ))}
-                </div>
-              </div>
-            </div>
-            </>
+                      </div>
+                  
+                      {/* このサービスに notes があるときだけ、料金表下の注意書きを ※ 付きで表示する */}
+                      {service.notes && service.notes.length > 0 && (
+                        <ul class="plan-notes">
+                          {service.notes.map(note => (
+                            <li>{note}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                  </>
         ))}                
                 </div>
 
@@ -383,6 +392,25 @@ const simulatorServices = pricing
   .ref-td-price{font-family:var(--num);color:var(--gd);white-space:nowrap}
   .ref-table-note{font-size:.72rem;color:var(--light);margin-top:.6rem;line-height:1.7}
   
+  /* サービスごとの注意書き（pricing.ts の notes を表示） */
+  .plan-notes {
+    margin: 0.85rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .plan-notes li {
+    position: relative;
+    padding-left: 1.1em;          /* ※ の分だけ字下げ */
+    font-size: 0.78rem;
+    line-height: 1.85;
+    color: var(--light);          /* 薄めの文字色で控えめに */
+  }
+  .plan-notes li::before {
+    content: "※";                 /* 各行の頭に ※ を自動で付ける */
+    position: absolute;
+    left: 0;
+  }
+  
   @media(max-width:1024px){
     .sim-layout{grid-template-columns:1fr;gap:1.5rem}
     .sim-result{position:relative;top:auto;order:-1}
@@ -425,31 +453,15 @@ const simulatorServices = pricing
 </style>
 
 <script>
-  // 仮見積りシミュレーション ロジック
-  // 動作:
-  // 1. サービスチェックがON → 該当サービスのプラン選択エリアを開く
-  // 2. プランがラジオで選択される → 選択状態を保存
-  // 3. 全選択を集計 → 合計金額と内訳をリアルタイム表示
-
-  // 動作:
-  // 1. サービスチェックがON → 該当サービスのプラン選択エリアを開く
-  // 2. プランをチェックボックスで複数選択 / エンゼル号は台数入力 → 選択状態を保存
-  // 3. 全選択を集計 → 合計金額と内訳をリアルタイム表示
-
   type SelectedPlan = {
-    planId: string;      // プランID（state のキーに使う）
+    planId: string;
     serviceKey: string;
     serviceLabel: string;
-    planLabel: string;   // 表示用（エンゼル号は「エンゼル号 2台」のように台数入り）
-    price: number;       // 小計（台数入力プランは 単価 × 台数）
+    planLabel: string;
+    price: number;
   };
 
-  // キーを serviceKey → plan.id に変更。
-  // 理由: チェックボックスで複数プランを同時選択して合算するため、
-  //       プラン単位で別々のエントリとして保持する必要がある。
-  const state = new Map<string, SelectedPlan>(); // key: plan.id, val: 選択中プラン // key: serviceKey, val: 選択中プラン
-
-  // チェックボックス(サービス選択)の挙動
+  const state = new Map<string, SelectedPlan>(); 
   const serviceChecks = document.querySelectorAll<HTMLInputElement>('.q-check');
   serviceChecks.forEach(check => {
     check.addEventListener('change', () => {
@@ -459,30 +471,24 @@ const simulatorServices = pricing
 
       if (check.checked) {
         body?.removeAttribute('hidden');
-        // 開いた時点で、このサービス配下の「台数入力プラン」を明細へ反映する。
-        // エンゼル号は初期値1台なので、開くと計上される（＝旧・人気プラン自動選択に相当）。
-        // 計上したくない場合は markup 側の value="1" を value="0" にするだけでよい。
         body?.querySelectorAll<HTMLInputElement>('.qty-input').forEach(syncQtyPlan);
       } else {
         body?.setAttribute('hidden', '');
-        // このサービス配下の選択をすべて解除する。
-        // 旧コードは1件しか消していなかったが、キーが plan.id になったので配下全部を消す。
         clearService(key, body);
       }
       updateResult();
     });
   });
 
-  // サービスを閉じたとき、その配下のプランを state から全部消す + チェックの見た目もリセット
+  
   function clearService(key: string, body: HTMLElement | null) {
-    // このサービスに属する全プラン入力（チェックボックス + 台数入力）を集める
     const inputs = body
       ? body.querySelectorAll<HTMLInputElement>('input[data-plan]')
       : document.querySelectorAll<HTMLInputElement>(`input[data-service-key="${key}"][data-plan]`);
     inputs.forEach(input => {
       const planId = input.dataset.plan;
       if (planId) state.delete(planId);
-      if (input.type === 'checkbox') input.checked = false; // チェックの見た目もオフに戻す
+      if (input.type === 'checkbox') input.checked = false;
     });
   }
 
@@ -493,9 +499,9 @@ const simulatorServices = pricing
       const planId = box.dataset.plan ?? '';
       if (!planId) return;
       if (box.checked) {
-        state.set(planId, buildPlan(box));   // ONで明細に追加
+        state.set(planId, buildPlan(box));
       } else {
-        state.delete(planId);                // OFFで明細から削除
+        state.delete(planId);
       }
       updateResult();
     });
@@ -512,7 +518,7 @@ const simulatorServices = pricing
   }
 
   // ── 台数入力プラン（エンゼル号）: 単価 × 台数 ──
-  // 入力欄への直接入力に反応
+
   const qtyInputs = document.querySelectorAll<HTMLInputElement>('.qty-input');
   qtyInputs.forEach(input => {
     input.addEventListener('input', () => { syncQtyPlan(input); updateResult(); });
@@ -526,16 +532,16 @@ const simulatorServices = pricing
       if (!input) return;
       const current = Number(input.value || '0');
       const min = Number(input.min || '0');
-      // ＋なら+1、−なら-1（下限 min を下回らない）
+      
       const next = btn.hasAttribute('data-qty-plus') ? current + 1 : Math.max(min, current - 1);
       input.value = String(next);
-      // value をJSで書き換えても input イベントは発火しないので、手動で同期する
+      
       syncQtyPlan(input);
       updateResult();
     });
   });
 
-  // 台数入力プランの現在値を state に反映する（0台なら明細から消す）
+  
   function syncQtyPlan(input: HTMLInputElement) {
     const planId = input.dataset.plan ?? '';
     if (!planId) return;
@@ -546,10 +552,10 @@ const simulatorServices = pricing
     if (isNaN(qty) || qty < min) qty = min;   // 不正入力・下限割れを補正
 
     if (qty <= 0) {
-    state.delete(planId);                    // 0台は明細から消す
-    // カード側の表示も元に戻す（ラベルを素の名前へ、小計は空に）
+    state.delete(planId);
+    
     const item = input.closest('.plan-item');
-    item?.classList.remove('is-selected');   // 0台は選択中の見た目（薄緑）も解除する
+    item?.classList.remove('is-selected'); 
       const labelEl = item?.querySelector<HTMLElement>('.plan-label');
       if (labelEl && labelEl.dataset.baseLabel) labelEl.textContent = labelEl.dataset.baseLabel;
       const subtotalEl = item?.querySelector<HTMLElement>('[data-qty-subtotal]');
@@ -558,8 +564,6 @@ const simulatorServices = pricing
     }
     const item = input.closest('.plan-item');
     const labelEl = item?.querySelector<HTMLElement>('.plan-label');
-    // 元のラベル名（「エンゼル号」）を初回だけ data-base-label に退避。
-    // これをしないと「エンゼル号（2台）（3台）」のように書き換えが積み重なって壊れる。
     if (labelEl && !labelEl.dataset.baseLabel) {
       labelEl.dataset.baseLabel = labelEl.textContent?.trim() ?? '';
     }
@@ -568,8 +572,8 @@ const simulatorServices = pricing
     const subtotal = unitPrice * qty;          // 小計 = 単価 × 台数
 
     // --- カード側の表示を更新（明細だけでなく選択肢カードにも台数を映す）---
-    item?.classList.add('is-selected');                                    // 1台以上は選択中の見た目に
-    if (labelEl) labelEl.textContent = `${baseLabel}（${qty}台）`;         // 例: エンゼル号（2台）
+    item?.classList.add('is-selected');
+    if (labelEl) labelEl.textContent = `${baseLabel}（${qty}台）`;
     const subtotalEl = item?.querySelector<HTMLElement>('[data-qty-subtotal]');
     if (subtotalEl) subtotalEl.textContent = `小計 ${subtotal.toLocaleString('ja-JP')}円`;
 
@@ -577,7 +581,7 @@ const simulatorServices = pricing
       planId,
       serviceKey,
       serviceLabel,
-      planLabel: `${baseLabel} ${qty}台`,      // 明細用（例: エンゼル号 2台）
+      planLabel: `${baseLabel} ${qty}台`,
       price: subtotal,
     });
   }
@@ -634,28 +638,26 @@ const simulatorServices = pricing
     if (check) {
       check.checked = true;
       check.dispatchEvent(new Event('change', { bubbles: true }));
-      // スクロール
+      
       check.closest('.q-block')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
   
-  // 「この内容で問い合わせる」を押したとき、選んだ内容を sessionStorage に保存して /contact/ へ渡す
-  // #resultCta の中の .cta-primary に限定（ページ下部のCTAボタンと取り違えないため）
+  
   const ctaPrimary = document.querySelector('#resultCta .cta-primary');
   
   if (ctaPrimary) {
     ctaPrimary.addEventListener('click', () => {
-      // state（選択中のプラン）を配列にして扱いやすくする
+     
       const items = Array.from(state.values());
   
-      // 念のため：未選択なら保存せず、通常の遷移だけに任せる
+      
       if (items.length === 0) return;
   
-      // 合計（税込）を計算（表示と同じ計算式に合わせる）
+      // 合計（税込）を計算
       const total = items.reduce((sum, i) => sum + i.price, 0);
   
-      // メール本文 / textarea にそのまま入れられる整形テキストを作る
-      // 例: ・遺品整理（1LDK）：132,000円
+      
       const lines = items.map(
         (i) => `・${i.serviceLabel}（${i.planLabel}）：${i.price.toLocaleString('ja-JP')}円`
       );
@@ -665,11 +667,11 @@ const simulatorServices = pricing
         `合計（税込）：${total.toLocaleString('ja-JP')}円〜\n` +
         '※本シミュレーションの概算です。';
   
-      // contact 側で後から細かく使えるよう、生データ(JSON)も一緒に持たせる
+      
       const payload = {
-        text,                       // textarea にそのまま入れる用の整形テキスト
-        total,                      // 数値の合計（後で hidden 等に使える）
-        items: items.map((i) => ({  // 内訳（将来 service select の自動選択などに使える）
+        text,
+        total,
+        items: items.map((i) => ({  
           serviceKey: i.serviceKey,
           serviceLabel: i.serviceLabel,
           planLabel: i.planLabel,
@@ -677,11 +679,8 @@ const simulatorServices = pricing
         })),
       };
   
-      // sessionStorage は文字列しか保存できないので JSON 文字列にして保存
       sessionStorage.setItem('estimateData', JSON.stringify(payload));
   
-      // preventDefault はしない → <a href="/contact/"> の通常遷移にそのまま任せる
-      // （sessionStorage への保存は同期処理なので、遷移より先に確実に終わる）
     });
   }
 

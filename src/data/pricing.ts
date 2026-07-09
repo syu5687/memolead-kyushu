@@ -127,9 +127,31 @@ export const pricing: ServicePricing[] = [
       'すべてのプランにご遺骨の粉骨費用が含まれます。',
       '散骨証明書を発行いたします。',
       '天候によりお日にちの変更をお願いする場合があります。',
-    ],
-  },
-];
+          ],
+        },
+      
+        // ─── 07 仏壇リメイク ───（B社・金額未確定のため price:0＝要相談で表示）
+        {
+          serviceKey: 'altar-remake',           // ?service=altar-remake の自動選択に使うslug
+          serviceLabel: '仏壇リメイク',
+          serviceUrl: '/services/altar-remake/',
+          questionLabel: 'リメイクのタイプをお選びください',
+          plans: [
+            // price:0 は formatYen 側で「要相談」と表示される。金額が確定したら数値へ差し替えるだけ
+            { id: 'remake-compact', label: 'コンパクト型リメイク',     size: '元仏壇のサイズによる', price: 0 },
+            { id: 'remake-modern',  label: 'モダン家具型リメイク',     size: 'デザインにより変動',   price: 0 },
+            { id: 'remake-stage',   label: 'ステージ型リメイク',       size: 'シンプル仕様',         price: 0 },
+            { id: 'remake-wood',    label: '木材活用リメイク（小物）', size: '写真立て・小箱など',   price: 0 },
+          { id: 'remake-transport', label: '搬出・搬入費',             size: '長崎県内',             price: 0 },
+            { id: 'remake-ceremony',  label: '閉眼・開眼供養手配',       size: 'お寺様のお布施含む',   price: 0 },
+          ],
+          notes: [
+            '料金はリメイクのタイプ・元仏壇のサイズ・使用材料により変動いたします。',
+            '製作期間は1〜3ヶ月が目安です。',
+            '詳細は現地確認のうえ、お見積もりさせていただきます。',
+          ],
+        },
+      ];
 
 // ─────────────────────────────────────────────
 // ヘルパー関数
