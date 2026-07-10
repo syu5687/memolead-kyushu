@@ -178,11 +178,11 @@ const simulatorServices = pricing
                     </div>
                   </div>
                   </>
-        ))}                
-                </div>
-
-        <!-- 右側:結果サマリー(sticky) -->
-        <aside class="sim-result">
+                  ))}                
+                  </div>
+                  
+                  <!-- 右側:結果サマリー(sticky) -->
+                  <aside class="sim-result">
           <div class="result-card">
             <p class="result-label">YOUR ESTIMATE</p>
             <h2 class="result-title">お見積り概算</h2>
@@ -197,47 +197,35 @@ const simulatorServices = pricing
                 </p>
                 <p class="total-note">※あくまで概算金額です</p>
               </div>
+
+              
               <div class="result-cta" id="resultCta">
                 <a href="/contact/#contact-form" class="cta-primary">
                   <Icon name="mail" size={16} />
                   この内容で問い合わせる
                 </a>
                 <a href="tel:0958654400" class="cta-secondary">
-                  <Icon name="phone" size={16} />
-                  電話で相談する
-                </a>
-              </div>
-            </div>
-            <!-- PC/TBはsticky追従、SPはヘッダー下の固定バー（タップで開閉） -->
-            <div class="sim-notice" data-notice>
-              <!-- 見出し。SPではこのバーをタップして開閉する（button＝キーボードでも押せる） -->
-              <button
-                type="button"
-                class="sim-notice-head"
-                data-notice-toggle
-                aria-expanded="true"
-                aria-controls="simNoticeBody"
-              >
-                <span class="notice-title">シミュレーションについてのご注意</span>
-                <span class="sim-notice-arrow" aria-hidden="true"></span>
-              </button>
-              <!-- 中身。SPではこの部分が開閉対象になる -->
-              <div class="sim-notice-body" id="simNoticeBody">
-                <ul class="sim-notice-list">
-                  <li>表示金額は概算であり、実際の料金は現地確認後の正式お見積りにて確定いたします</li>
-                  <li>お部屋の状況・搬出経路・お墓の立地などにより、追加費用が発生する場合があります</li>
-                  <li>リサイクル料金が必要な家電・特殊な廃棄物は別途料金を申し受けます</li>
-                  <li>長崎県内は出張費無料です(離島・遠隔地はご相談ください)</li>
-                  <li>※停車場所から御当家まで距離がある場合、人件費をいただく場合があります。</li>
-                  <li>※リサイクル料金・人件費等の別途料金が発生する場合があります。<br>詳細についてはおたずねください。</li>
-                  <li>※少量の回収品においては、金額等ご相談に応じます。</li>
-                  <li>※なお、生ゴミ等についてはご遠慮ください。</li>
-                  <li>※「不要品」については【当日処分】となりますのでご了承ください。</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </aside>
+                          <Icon name="phone" size={16} />
+                          電話で相談する
+                        </a>
+                      </div>
+                    </div>
+                
+                    <!-- 未選択でも常に表示 -->
+                    <div class="sim-notice">
+                      <h3 class="notice-title">シミュレーションについてのご注意</h3>
+                      <ul class="sim-notice-list">
+                        <li><p class="bold">表示金額は概算</p>であり、<p class="under">実際の料金は現地確認後の正式お見積りにて確定</p>いたします</li>
+                        <li>お部屋の状況・搬出経路・お墓の立地などにより、追加費用が発生する場合があります</li>
+                        <li>停車場所から御当家まで距離がある場合、人件費をいただく場合があります。</li>
+                        <li>リサイクル料金・人件費等の別途料金が発生する場合があります。詳細についてはおたずねください。</li>
+                        <li>少量の回収品においては、金額等ご相談に応じます。</li>
+                        <li>なお、<p class="under">生ゴミ等</p>についてはご遠慮ください。</li>
+                        <li>「不要品」については【当日処分】となりますのでご了承ください。</li>
+                      </ul>
+                    </div>
+                  </div>
+                </aside>
       </div>
       <!-- 注意事項 -->
     </section>
@@ -252,6 +240,16 @@ const simulatorServices = pricing
         <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
       </div>
     </section>
+
+    <!-- SP専用：問い合わせ前に注意事項を確認するモーダル。本文はJSでパネルの注意書きを複製して入れる -->
+    <div class="estimate-modal" data-estimate-modal aria-hidden="true">
+      <div class="estimate-modal-panel" role="dialog" aria-modal="true" aria-labelledby="estimateModalTitle">
+        <button type="button" class="estimate-modal-close" data-estimate-modal-close aria-label="閉じる">×</button>
+        <h2 class="estimate-modal-title" id="estimateModalTitle">お問い合わせ前にご確認ください</h2>
+        <div class="estimate-modal-body"><!-- ここにJSで注意書きが入ります --></div>
+        <a href="/contact/#contact-form" class="estimate-modal-cta">この内容で問い合わせる</a>
+      </div>
+    </div>
 
   </main>
   <Footer />
@@ -425,25 +423,33 @@ const simulatorServices = pricing
     left: 0rem;
   }
   .sim-notice{margin-top:1rem;background:#fffbf0;border-left:3px solid var(--gold,#c8a84b);border-radius:var(--corner);padding:1.1rem 1.25rem}
-.sim-notice-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;padding:0;background:none;border:none;text-align:left;cursor:default}
-.sim-notice-head .notice-title{font-size:.9rem;margin-bottom:0}
-.sim-notice-arrow{display:none}
-.sim-notice-body{margin-top:.55rem}
-.sim-notice-list{list-style:none;padding:0;margin:0}
-.sim-notice-list li{position:relative;padding-left:1em;font-size:.78rem;color:var(--mid);line-height:1.8}
-.sim-notice-list li::before{content:'・';position:absolute;left:0;color:var(--gd);font-weight:700}
   .sim-notice .notice-title{font-size:.9rem;margin-bottom:.55rem}
   .sim-notice-list{list-style:none;padding:0;margin:0}
   .sim-notice-list li{position:relative;padding-left:1em;font-size:.78rem;color:var(--mid);line-height:1.8}
   .sim-notice-list li::before{content:'・';position:absolute;left:0;color:var(--gd);font-weight:700}
+  .result-card .sim-notice{margin-top:1.2rem;background:rgba(255,255,255,.08);border-left-color:var(--yellow,#f5c842)}
+  .result-card .sim-notice .notice-title{color:#fff}
+  .result-card .sim-notice-list li{color:rgba(255,255,255,.85)}
+  .result-card .sim-notice-list li::before{color:var(--yellow,#f5c842)}
   
-  .sim-notice{display:none}
+  .bold{font-weight:bold;text-decoration:underline;display:inline;}
+  .under{text-decoration:underline;display:inline;}
   
+  .estimate-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease}
+  .estimate-modal.is-open{opacity:1;visibility:visible}
+  .estimate-modal-panel{position:relative;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;background:var(--white);border-radius:var(--corner) var(--corner) 0 0;padding:1.85rem 1.35rem 1.5rem}
+  .estimate-modal-close{position:absolute;top:.5rem;right:.7rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;line-height:1;color:var(--mid);background:none;border:none;cursor:pointer}
+  .estimate-modal-title{font-family:var(--serif);font-size:1.1rem;font-weight:400;color:var(--gd);margin-bottom:1rem;padding-right:2rem}
+  .estimate-modal-body{margin-bottom:1.35rem}
+  .estimate-modal-cta{display:flex;align-items:center;justify-content:center;background:var(--gd);color:#fff;padding:.95rem 1.25rem;font-size:.95rem;font-weight:500;border-radius:var(--corner);width:100%}
+  .estimate-modal-cta:hover{background:var(--gm)}
+  @media (prefers-reduced-motion: reduce){.estimate-modal{transition:none}}
   @media(max-width:1024px){
     .sim-layout{grid-template-columns:1fr;gap:1.5rem}
     .sim-result{position:relative;top:auto;order:-1}
   }
   @media(max-width:768px){
+    .sim-notice{display:none}
     .sim-result { display: block; position: static; order: 0; }
     .result-summary {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
@@ -463,7 +469,7 @@ const simulatorServices = pricing
     .sim-layout { padding-bottom: 96px; }
     .page-head{padding:2.75rem 1rem 2.25rem}
     .sim-sec{padding:2rem 1rem 3.5rem;--sp-notice-top:0px}
-    .sim-notice{display:block;position:fixed;top:var(--sp-notice-top);left:0;right:0;z-index:60;margin:0;padding:0;border-left:none;border-bottom:1px solid var(--gold,#c8a84b);border-radius:0;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+    .sim-notice{display:none}
     .sim-notice-head{padding:.7rem 1rem;cursor:pointer}
     .sim-notice-arrow{display:block;width:0;height:0;flex-shrink:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--gd);transition:transform .2s ease}
     .sim-notice.is-open .sim-notice-arrow{transform:rotate(180deg)}
@@ -517,24 +523,7 @@ const simulatorServices = pricing
     });
   });
 
-  // ── SP: 注意書きの開閉（コンパクト固定バー）──
-  const notice = document.querySelector<HTMLElement>('[data-notice]');
-  // notice が無ければ何もしない。?? null で「見つからない時は null」に揃える
-  const noticeToggle = notice?.querySelector<HTMLButtonElement>('[data-notice-toggle]') ?? null;
-  
-  // 両方そろっている時だけ処理（この if の中では null でないと確定するので ts(18047) を回避できる）
-  if (notice && noticeToggle) {
-    // 到着時は開いた状態にする（詳細ページから飛んできても内容が一度は見えるように）
-    notice.classList.add('is-open');
-    noticeToggle.setAttribute('aria-expanded', 'true');
-  
-    // バーのタップで開閉。PC/TBは中身が常時表示なので、この開閉はSPの見た目にだけ効く
-    noticeToggle.addEventListener('click', () => {
-      const open = notice.classList.toggle('is-open'); // toggle は付いたら true / 外れたら false を返す
-      noticeToggle.setAttribute('aria-expanded', String(open));
-    });
-  }
-  
+
   function clearService(key: string, body: HTMLElement | null) {
     const inputs = body
       ? body.querySelectorAll<HTMLInputElement>('input[data-plan]')
@@ -697,11 +686,50 @@ const simulatorServices = pricing
     }
   }
   
+  // ── SP: 「この内容で問い合わせる」→ 確認モーダル ──
+  const estimateModal = document.querySelector<HTMLElement>('[data-estimate-modal]');
+  // いまSP幅かどうかを判定（CSSのブレークポイントと同じ768pxに揃える）
+  const isSP = () => window.matchMedia('(max-width:768px)').matches;
+  
+  // モーダル本文に、パネルの注意書きリストを複製して入れる（文言を2か所で管理しないため）
+  const panelNoticeList = document.querySelector('.result-card .sim-notice-list');
+  const modalBody = estimateModal?.querySelector('.estimate-modal-body');
+  if (panelNoticeList && modalBody) {
+    modalBody.innerHTML = `<ul class="sim-notice-list">${panelNoticeList.innerHTML}</ul>`;
+  }
+  
+  // アロー関数で書くのは、estimateModal の null 絞り込みを効かせて ts(18047) を避けるため（資料11章17番）
+  const openEstimateModal = () => {
+    estimateModal?.classList.add('is-open');
+    estimateModal?.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';   // 背景のスクロールを止める
+  };
+  const closeEstimateModal = () => {
+    estimateModal?.classList.remove('is-open');
+    estimateModal?.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+  
+  if (estimateModal) {
+    // × ボタン、または背景（パネルの外側）クリックで閉じる
+    estimateModal.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target === estimateModal || target.closest('[data-estimate-modal-close]')) {
+        closeEstimateModal();
+      }
+    });
+    // Escキーで閉じる
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && estimateModal.classList.contains('is-open')) {
+        closeEstimateModal();
+      }
+    });
+  }
   
   const ctaPrimary = document.querySelector('#resultCta .cta-primary');
   
   if (ctaPrimary) {
-    ctaPrimary.addEventListener('click', () => {
+    ctaPrimary.addEventListener('click', (e) => {
      
       const items = Array.from(state.values());
   
@@ -734,7 +762,12 @@ const simulatorServices = pricing
       };
   
       sessionStorage.setItem('estimateData', JSON.stringify(payload));
-  
+
+      // SPのときだけ、直接遷移せず確認モーダルを開く（PC/TBはそのまま /contact/ へ遷移）
+      if (isSP()) {
+        e.preventDefault();
+        openEstimateModal();
+      }
     });
   }
 
