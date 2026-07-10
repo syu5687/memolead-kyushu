@@ -11,18 +11,19 @@ import ServicePageStyles from '../../components/ServicePageStyles.astro';
 import { SITE,companyOf } from '../../data/site';
 const company = companyOf('ocean'); 
 
+// FEATURES: 海洋散骨が選ばれる理由（3項目）
 const features = [
-  { icon: 'tree',     title: '自然に還る、新しい供養',     desc: '広い海原へお見送りする海洋散骨は、自然と一体化したい方や、お墓を継承する方がいないご家族に選ばれています。' },
-  { icon: 'document', title: 'ガイドラインに沿った対応',   desc: '厚生労働省のガイドラインに沿って、適切な海域・方法で散骨を執り行います。ご遺骨の粉骨も含めて適正に対応。' },
-  { icon: 'home',     title: 'ご家族の想いに寄り添う',     desc: '貸切のチャータープランから、複数家族で行う合同プランまで、ご予算とご希望に合わせてお選びいただけます。' },
-  { icon: 'photo',    title: '散骨証明書を発行',           desc: '散骨完了後、散骨日時・海域を記した散骨証明書を発行いたします。' },
+  { icon: 'home',     title: '本人とご家族の想いに寄り添う', desc: '「海が好きだった」「自然に還りたい」という故人様の想い、それを叶えたいというご家族の願い。宗教や形式にとらわれず、その人らしいお見送りを大切にできる供養です。' },
+  { icon: 'tree',     title: 'どこにいても故人を偲べる',     desc: '特定の場所に縛られず、広い海そのものが故人様の眠る場所に。旅行先や近くの海辺など、どこにいても手を合わせられます。遠方でお墓参りが難しい方にも選ばれています。' },
+  { icon: 'document', title: '承継や管理の負担を軽くする',   desc: '「お墓を継ぐ人がいない」「管理の負担を残したくない」。海洋散骨は維持管理が不要で、墓石の建立費や年間管理費もかかりません。心と費用の両面で負担を抑えられます。' },
 ];
 
+// PLANS: 選べる4つのプラン
 const plans = [
-  { icon: 'home',  title: 'チャータープラン',  desc: 'ご家族・ご親族で船を貸し切り、ゆっくりと故人をお見送りいただけます。10名様までご乗船可能。費用 000,000円〜。' },
-  { icon: 'tree',  title: '合同プラン',        desc: '他のご家族と合同で乗船し、それぞれのご遺骨を散骨いたします。ご家族2〜4名様まで。費用 000,000円〜。' },
-  { icon: 'box',   title: '委託プラン',        desc: 'ご乗船されず、当社スタッフが代行して散骨いたします。後日、散骨証明書と写真をお送りします。費用 00,000円〜。' },
-  { icon: 'lotus', title: '部分散骨プラン',    desc: 'ご遺骨の一部を海洋散骨し、残りはお墓・納骨堂・手元供養などへ。柔軟な供養を希望される方に。費用 00,000円〜。' },
+  { icon: 'home',  title: 'チャーター散骨プラン',            desc: 'ご家族・ご親族だけで船を貸し切り、周囲を気にせずゆっくりとお見送りいただけます。日時・乗船人数を自由に設定可能（1〜8名様乗船／追加乗船料あり）。費用264,000円〜（税込）。' },
+  { icon: 'tree',  title: '合同散骨プラン',                  desc: '指定日に他のご家族と乗り合いで行う合同プラン。費用を抑えつつ、丁寧なセレモニーでお見送りいただけます（1〜2名様乗船／最大4名まで追加可）。費用187,000円〜（税込）。' },
+  { icon: 'box',   title: '代行散骨プラン',                  desc: 'ご乗船されず、当社スタッフが心を込めて代行して散骨いたします。後日、散骨証明書とお写真をお届け。粉骨も含みます。費用77,000円〜（税込・ご遺骨1柱につき）。' },
+  { icon: 'lotus', title: '真珠散骨プラン（Pearl Memory）',  desc: '代行散骨と、ご遺骨から真珠をつくる手元供養「Pearl Memory」を組み合わせた特別プラン。海へ還しつつ、お手元にも故人様を残せます。費用440,000円〜（税込・ご遺骨1柱につき）。' },
 ];
 
 const steps = [
@@ -37,7 +38,7 @@ const steps = [
 
 <BaseLayout
   title={`海洋散骨 | ${SITE.fullName}`}
-  description="長崎の海へ、故人を自然に還す海洋散骨。チャーター・合同・委託・部分散骨の4プランをご用意。厚生労働省ガイドラインに沿った適切な対応。"
+  description="長崎の海へ、故人を自然に還す海洋散骨。チャーター・合同・代行・真珠散骨の4プランをご用意。ご予算・ご希望に合わせて選べます。"
 >
   <ServicePageStyles />
   <Header />
@@ -66,12 +67,12 @@ const steps = [
         <p class="page-hero-catch">広い海原へ。新しいお見送りのかたち。</p>
         <p class="page-hero-desc">
           長崎の海へ、故人を自然に還す供養のかたち。<br>
-          チャーター・合同・委託・部分散骨と、<br>
+          チャーター・合同・代行・真珠散骨と、<br>
           ご家族のご希望に合わせた4つのプランをご用意しています。
         </p>
         <div class="page-hero-badge">
           <Icon name="tree" size={16} />
-          <span>委託プラン<strong style="font-family:var(--num);font-size:1.1rem">00,000円〜</strong>（税込）</span>
+          <span>代行散骨プラン<strong style="font-family:var(--num);font-size:1.1rem">77,000円〜</strong>（税込）</span>
         </div>
       </div>
     </section>
@@ -79,7 +80,7 @@ const steps = [
     <section class="sec bg-cream">
       <div class="sec-inner">
         <div class="sec-head fi"><p class="sec-label">FEATURES</p><h2 class="sec-title">海洋散骨の特徴</h2></div>
-        <div class="features fi">
+        <div class="features cols-3 fi">
           {features.map(f => (
             <div class="feature">
               <div class="feature-icon"><Icon name={f.icon} size={28} /></div>
