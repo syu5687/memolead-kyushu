@@ -58,3 +58,9 @@ export function companyOf(slug: string) {
 	const key = SERVICE_COMPANY[slug as keyof typeof SERVICE_COMPANY];
 	return key ? COMPANIES[key] : null;
 }
+
+export const ESTATE_PERMITS = [
+  { name: '長崎市', permit: '長崎市 第471号' },
+  { name: '時津町', permit: '時津 指令第15号' },
+  { name: '長与町', permit: '長与 一廃許可65号' },
+];

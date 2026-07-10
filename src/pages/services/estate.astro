@@ -8,7 +8,7 @@ import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/estate/hero-image.jpg';
 import { getServicePricing, formatYen } from '../../data/pricing';
-import { SITE,companyOf } from '../../data/site';
+import { SITE, companyOf, ESTATE_PERMITS } from '../../data/site';
 const company = companyOf('estate');
 
 // 料金データを一元管理(src/data/pricing.ts)から取得
@@ -21,7 +21,7 @@ const minPrice = priceRows.length > 0 ? Math.min(...priceRows.map(p => p.price))
 
 // 4つの特徴(features) - estate独自の信頼訴求
 const features = [
-  { icon: 'document', title: '遺品整理士の有資格者が対応', desc: '一般社団法人遺品整理士認定協会の認定資格を持つスタッフが、故人様の品を一品一品丁寧に扱います。経験豊富な専門家にお任せください。' },
+  { icon: 'document', title: '経験豊富なスタッフが対応　', desc: '一般社団法人遺品整理士認定協会の認定資格を持つスタッフが、故人様の品を一品一品丁寧に扱います。経験豊富な専門家にお任せください。' },
   { icon: 'lotus',    title: '故人を想う、丁寧な仕分け', desc: '貴重品・思い出の品・買取可能な品・処分品に分類。ご家族のご意向を伺いながら、慎重に進めます。大切な品が紛れないよう、複数人で確認します。' },
   { icon: 'home',     title: '仕分けから処分まで一括対応', desc: '買取査定・不用品回収・お焚き上げ・ハウスクリーニングまで、窓口をひとつにまとめて対応。複数業者への連絡は不要です。' },
   { icon: 'tag',      title: '安心の事前見積もり',       desc: '現地調査のうえ、明確なお見積りをご提示いたします。作業当日の追加料金は一切いただきません。ご納得いただいてからの作業開始です。' },
@@ -50,13 +50,7 @@ const items = [
   { icon: 'lotus',     title: '貴重品の捜索',          desc: '通帳・印鑑・宝飾品・現金など、見逃しがないよう複数人で確認のうえ必ずご家族にお渡しします。' },
   { icon: 'tag',       title: '不動産関連書類',        desc: '権利証・登記書類・契約書など、相続手続きに必要な書類を整理してお渡しいたします。' },
 ];
-
-// 対応エリア
-const areas = [
-  { name: '長崎市', permit: '一般廃棄物収集運搬許可<br>長崎市 第471号' },
-  { name: '時津町', permit: '一般廃棄物収集運搬許可<br>時津 指令第15号' },
-  { name: '長与町', permit: '一般廃棄物収集運搬許可<br>長与 一廃許可65号' },
-];
+const areas = ESTATE_PERMITS;
 ---
 
 <BaseLayout

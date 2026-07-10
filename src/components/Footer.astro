@@ -1,5 +1,5 @@
 ---
-import { SITE } from '../data/site.ts';
+import {SITE, ESTATE_PERMITS } from '../data/site.ts';
 // true→通常リンク / false→準備中のグレーアウト表示
 const services = [
   { href: '/services/estate/',         label: '遺品整理・不用品回収',           available: true },
@@ -31,6 +31,13 @@ const company = [
       <p class="f-logo-en">{SITE.name.sub}</p>
       <p class="f-logo-ja">{SITE.name.main}</p>
       <p class="f-tag">葬儀後の供養事をトータルでサポートする<br>専門の窓口サービスです。</p>
+      <!-- 遺品整理・不用品回収の許可番号（site.ts の ESTATE_PERMITS を参照＝estateページと一元管理） -->
+      <div class="f-permits">
+        
+        {ESTATE_PERMITS.map(p => (
+          <span class="f-permit-item">{p.permit}</span>
+        ))}
+      </div>
       <address class="f-addr" style="display:none;">
         〒850-0046<br>
         長崎県長崎市幸町4-13<br>
@@ -62,6 +69,8 @@ const company = [
       </div>
     </div>
   </div>
+  
+  
   <div class="f-btm">&#169;{` 2026 ${SITE.fullName} All Rights Reserved.`}</div>
 </footer>
 
@@ -94,6 +103,15 @@ const company = [
 }
 
 .f-btm{border-top:1px solid rgba(255,255,255,.12);text-align:center;padding-top:1.25rem;font-size:.875rem;color:rgba(255,255,255,.45);max-width:1100px;margin:0 auto}
+
+.f-permits{
+border-top:1px solid rgba(255,255,255,.45);
+ padding:.5rem 0rem;margin:0 auto 1.25rem;
+  display:flex;flex-direction:row;justify-content:flex-start;align-items:center;gap:.4rem .5rem;
+  font-size:.72rem;color:rgba(255,255,255,.45);line-height:1.7;
+}
+.f-permit-item{white-space:nowrap}
+.f-permit-item:not(:first-of-type){border-left:1px solid rgba(255,255,255,.45);padding-left:.5rem;}
 @media(max-width:1024px){.footer-inner{grid-template-columns:1fr}}
 @media(max-width:768px){
   .footer{padding:3rem 1rem 1.25rem}
