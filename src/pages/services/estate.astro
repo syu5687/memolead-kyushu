@@ -11,12 +11,12 @@ import { getServicePricing, formatYen } from '../../data/pricing';
 import { SITE, companyOf, ESTATE_PERMITS } from '../../data/site';
 const company = companyOf('estate');
 
-// 料金データを一元管理(src/data/pricing.ts)から取得
-// このファイルを変更すると、サービスページと仮見積りシミュレーション両方に反映されます
-const estatePricing = getServicePricing('estate');
-const priceRows = estatePricing?.plans ?? [];
-const priceNotes = estatePricing?.notes ?? [];
-// 最低価格をヒーローバッジに表示する用(全プランの中の最安値)
+// 変更後：料金データを junk から取得（不用品回収＝エンゼル号の料金）
+// pricing.ts の 'junk' はシミュレーターでも使うため残し、参照キーだけ変更
+const junkPricing = getServicePricing('junk');
+const priceRows = junkPricing?.plans ?? [];
+const priceNotes = junkPricing?.notes ?? [];
+// ヒーローバッジ・price-hero に出す最低価格（エンゼル号1台の基本料金＝11,000円）
 const minPrice = priceRows.length > 0 ? Math.min(...priceRows.map(p => p.price)) : 0;
 
 // 4つの特徴(features) - estate独自の信頼訴求
@@ -27,28 +27,32 @@ const features = [
   { icon: 'tag',      title: '安心の事前見積もり',       desc: '現地調査のうえ、明確なお見積りをご提示いたします。作業当日の追加料金は一切いただきません。ご納得いただいてからの作業開始です。' },
 ];
 
-// 8つのSTEP - 遺品整理の流れ
-const steps = [
-  { num: 1, title: 'お電話・Webでお問合せ', desc: 'お電話・Webフォームでお気軽にご相談ください。ご状況を簡単にお伺いします。' },
-  { num: 2, title: '現地お見積り(無料)',    desc: '専門スタッフがお部屋を拝見し、お見積りをご提示いたします。出張費・見積り費用は一切いただきません。' },
-  { num: 3, title: 'お見積りのご確認',       desc: 'お見積り内容をご確認いただき、ご不明な点はその場で解消いたします。' },
-  { num: 4, title: 'ご契約・作業日決定',    desc: 'ご納得いただきましたらご契約。ご都合のよい作業日をお決めいただきます。' },
-  { num: 5, title: 'ご親族立ち会いで作業開始', desc: '作業当日はご親族のお立ち会いをおすすめします。貴重品の確認をご一緒に行います。' },
-  { num: 6, title: '仕分け・梱包・搬出',    desc: 'スタッフ複数名で丁寧に仕分け。貴重品は必ずご家族にお渡しいたします。' },
-  { num: 7, title: '清掃・お焚き上げ',       desc: '搬出後の簡易清掃まで対応。仏壇・人形などは閉眼供養のうえお焚き上げいたします。' },
-  { num: 8, title: '完了報告・お引渡し',     desc: '作業完了後、お部屋の状態をご確認いただき、お引渡しとなります。' },
+// エンゼルセット（供養袋セット）- PDF「エンゼルセットのご利用について」より
+const angelSet = [
+  { badge: '標準セット', name: '衣類供養袋',     size: '大きさ：350 × 650 × 240 mm',  desc: '故人が愛用された着物・衣類・背広などをお入れください。専用供養祭壇にてお寺様に御供養していただきます。ご希望があれば、御供養終了後に供養証明書を発行・郵送いたします。' },
+  { badge: '大型用',     name: '予備供養袋',     size: '大きさ：900 × 450 × 450 mm',  desc: '「衣類供養袋」に入りきれない品をお入れください。燃やせるもの・燃やせないもの混在可。リサイクル家電・生物を入れるのはご遠慮ください。' },
+  { badge: '必須',       name: '供養袋名札 2枚', size: '各供養袋に取り付けてください', desc: '各供養袋にお名前等をご記入の上、取り付けてください。供養証明書が必要な方は名札の最後の列の「供養証明書の要」に忘れずに○印をお付けください。' },
 ];
 
-// 対応品目
+const steps = [
+  { num: 1, title: 'ご遺族のお手元に',   desc: '御葬儀代精算時、葬儀社担当者が速やかに御供養遺品収納ケースをお持参します。' },
+  { num: 2, title: '名札の記入',         desc: 'ご遺族様に、名札の記入をお願いいたします。供養証明書の発行に必要です。' },
+  { num: 3, title: 'パッケージ',         desc: 'ご遺族様に、ご供養したい品物を御供養袋にお入れいただきます（実用新案登録 第3154655号）。' },
+  { num: 4, title: '回収・保管',         desc: 'エンゼルセンター担当者がお預かりして、所定の場所に保管いたします。' },
+  { num: 5, title: '御供養（合同供養）', desc: '当社指定の寺院の僧侶により、読経・御供養をしていただきます。' },
+  { num: 6, title: '輸送',               desc: '御供養終了後、都道府県知事許可の運搬作業車にて輸送いたします。' },
+  { num: 7, title: '焼却（完全焼却）',   desc: '都道府県知事許可の焼却炉に委託し完全焼却します。一部位牌・人形などは当社の焼却炉にて焼却いたします。' },
+  { num: 8, title: '供養証明書の発行',   desc: 'ご希望のご遺族に「供養証明書」を郵送いたします。' },
+];
+
+// 変更後：対応品目 - PDF「お焚き上げ品の一例」の内容に準拠
 const items = [
-  { icon: 'bag',       title: '衣類・着物・布団',      desc: '故人が愛用されたお着物・衣類は買取・寄付・供養のいずれかをご相談のうえ対応いたします。' },
-  { icon: 'furniture', title: '家具・家電',            desc: 'タンス・ソファ・ベッドなど大型家具から、テレビ・冷蔵庫・洗濯機などの家電まで一括搬出。' },
-  { icon: 'box',       title: '食器・調理器具',        desc: '価値のある陶磁器・茶器は買取査定。普段使いの食器は丁寧に処分いたします。' },
-  { icon: 'document',  title: '書籍・書類',            desc: '重要書類(契約書・保険証券など)は必ずお渡しいたします。古書・専門書は買取査定可能です。' },
-  { icon: 'photo',     title: '写真・思い出の品',      desc: 'アルバム・写真・手紙などはご家族でご確認いただける形で整理いたします。' },
-  { icon: 'altar',     title: '仏壇・神棚・人形',     desc: '閉眼供養のうえ、お焚き上げいたします。供養証明書の発行も承ります(別途料金)。' },
-  { icon: 'lotus',     title: '貴重品の捜索',          desc: '通帳・印鑑・宝飾品・現金など、見逃しがないよう複数人で確認のうえ必ずご家族にお渡しします。' },
-  { icon: 'tag',       title: '不動産関連書類',        desc: '権利証・登記書類・契約書など、相続手続きに必要な書類を整理してお渡しいたします。' },
+  { icon: 'doll',      title: '人形・ぬいぐるみ',      desc: '魂が宿るとされる人形・ぬいぐるみ・節句人形などを、お寺様の御供養のうえ丁寧にお焚き上げいたします。供養証明書の発行も可能です。' },
+  { icon: 'altar',     title: '仏壇・神棚',            desc: '大切にされてきた仏壇・神棚を、閉眼供養（魂抜き）のうえ、責任を持ってお焚き上げいたします。' },
+  { icon: 'photo',     title: '写真・置物・剥製',      desc: '故人が大切にされていた写真・位牌・置物・剥製など、思い出の品を丁寧に御供養したうえで処分いたします。' },
+  { icon: 'lotus',     title: '神事に関する物',        desc: '神札・御守・神棚・松飾・結納品など、神事に関する品を粗末にすることなくお焚き上げいたします。' },
+  { icon: 'bag',       title: '衣類・着物・バッグ',    desc: '故人が愛用された着物・衣類・背広などを衣類供養袋にお入れいただき、専用供養祭壇にてお寺様に御供養していただきます。' },
+  { icon: 'home',      title: '故人が大切にした物',    desc: '故人が大切にしていた品や、処分に困っている日用品・雑貨などもお気軽にご相談ください。お布団の引き取りも可能です（有料1枚550円）。' },
 ];
 const areas = ESTATE_PERMITS;
 ---
@@ -91,7 +95,7 @@ const areas = ESTATE_PERMITS;
         </p>
         <div class="page-hero-badge">
           <Icon name="tag" size={16} />
-          <span>1K〜一軒家 <strong style="font-family:var(--num);font-size:1.1rem">{minPrice.toLocaleString('ja-JP')}円〜</strong>（税込）</span>
+          <span>エンゼル号 1台 <strong style="font-family:var(--num);font-size:1.1rem">{minPrice.toLocaleString('ja-JP')}円〜</strong>（税込）</span>
         </div>
       </div>
     </section>
@@ -118,16 +122,16 @@ const areas = ESTATE_PERMITS;
     <!-- PRICE HERO -->
     <div class="price-hero fi">
       <div class="price-hero-inner">
-        <p class="price-hero-label">PRICE PLAN — 間取り別の料金プラン</p>
-        <p class="price-hero-name">明朗な料金体系</p>
+        <p class="price-hero-label">ANGEL 号（エンゼル号）</p>
+        <p class="price-hero-name">遺品・不用品回収車</p>
         <div class="price-big">{minPrice.toLocaleString('ja-JP')}円<span class="price-unit">〜（税込）</span></div>
-        <p style="font-size:.875rem;opacity:.85">1K(15㎡)〜 / 遺品整理士が在籍</p>
+        <p style="font-size:.875rem;opacity:.85">トラックがご自宅横付けの場合 / 1台あたり</p>
         <ul class="price-notes">
-          <li>お部屋の状態・残置物の量により料金が変動する場合があります</li>
-          <li>仏壇・人形などのお焚き上げ供養は別途料金を申し受けます</li>
-          <li>買取可能な品がある場合は料金から差し引きいたします</li>
-          <li>出張費・現地見積もり費用は無料です</li>
-          <li>追加料金が発生する場合は事前にご相談・ご承諾の上で進めます</li>
+          <li>停車場所からご自宅まで距離がある場合、人件費をいただく場合があります</li>
+          <li>リサイクル料金・人件費等の別途料金が発生する場合があります</li>
+          <li>少量の回収品においては、金額等ご相談に応じます</li>
+          <li>生ゴミについてはご遠慮ください</li>
+          <li>「不要品」については【当日処分】となります</li>
         </ul>
       </div>
     </div>
@@ -137,8 +141,8 @@ const areas = ESTATE_PERMITS;
       <div class="sec-inner">
         <div class="sec-head fi">
           <p class="sec-label">PROCESS</p>
-          <h2 class="sec-title">遺品整理の流れ</h2>
-          <p class="sec-desc">お問合せから作業完了まで、8つのステップで丁寧に対応いたします。</p>
+          <h2 class="sec-title">遺品御供養サービスの流れ</h2>
+          <p class="sec-desc">ご葬儀終了後から供養証明書の発行まで、8つのステップで丁寧に対応いたします。</p>
         </div>
         <div class="steps-grid fi">
           {steps.map(s => (
@@ -157,8 +161,8 @@ const areas = ESTATE_PERMITS;
       <div class="sec-inner">
         <div class="sec-head fi">
           <p class="sec-label">ITEMS</p>
-          <h2 class="sec-title">対応品目</h2>
-          <p class="sec-desc">日用品から貴重品・思い出の品まで、すべてのお品に対して心を込めて対応いたします。</p>
+          <h2 class="sec-title">回収・お焚き上げ対応品目</h2>
+          <p class="sec-desc">大切なものだから、ただ処分するのではなく、心を込めた御供養のあとに処分いたします。</p>
         </div>
         <div class="items-grid fi">
           {items.map(it => (
@@ -171,37 +175,94 @@ const areas = ESTATE_PERMITS;
             </div>
           ))}
         </div>
+        <!-- ↓ ここから追加：コラム「お焚き上げとは」 -->
+        <div class="otakiage-column fi">
+          <p class="otakiage-column-label">COLUMN</p>
+          <h3 class="otakiage-column-title">お焚き上げとは</h3>
+          <p>思いが込められたもの、魂が宿るとされているものに、これまでの礼を尽くし、浄火によって天界へ還す…その行いを「お焚き上げ」といいます。</p>
+          <p>日本では古代から、神仏化した品物や擬人化した品物などを丁重に扱う風習がありました。とくに神棚や仏壇、人形などを粗末にしてはいけないと伝えられており、お焚き上げの儀式は神社や寺院に依頼するのが一般的でした。</p>
+          <p>当センターでは、<strong>お寺様の御供養後、当社が責任を持ってお焚き上げ</strong>をさせていただきます。九州初のお焚き上げ専用焼却炉を完備しております。</p>
+        </div>
+        
+        <!-- 注意書き（お焚き上げ品の条件） -->
+        <div class="note-block fi" style="margin-top:1.5rem">
+          ※お焚き上げ品によっては、燃納出来ない場合がございます。その場合はご供養後、法条例などに基づいた処理をさせていただきます。<br>
+          ※リサイクル家電（テレビ・冷蔵庫・洗濯機・空調機）を入れるのはご遠慮ください。
+        </div>
+        <!-- ↑ ここまで追加 -->
+      </div>
+    </section>
+    
+    <!-- OTAKIAGE(お焚き上げとは) -->
+    <section class="sec">
+      <div class="sec-inner" style="max-width:820px">
+        <div class="sec-head fi">
+          <p class="sec-label">OTAKIAGE</p>
+          <h2 class="sec-title">お焚き上げとは</h2>
+        </div>
+        <div class="okiage-lead fi">
+          <p>思いが込められたもの、魂が宿るとされているものに、これまでの礼を尽くし、浄火によって天界へ還す…その行いを「お焚き上げ」といいます。</p>
+          <p>日本では古代から、神仏化した品物や擬人化した品物などを丁重に扱う風習がありました。とくに神棚や仏壇、人形などを粗末にしてはいけないと伝えられており、お焚き上げの儀式は神社や寺院に依頼するのが一般的でした。</p>
+          <p>当センターでは、<strong>お寺様の御供養後、当社が責任を持ってお焚き上げ</strong>をさせていただきます。九州初のお焚き上げ専用焼却炉を完備しております。</p>
+        </div>
+        <div class="note-block fi" style="margin-top:1.75rem">
+          ※お焚き上げ品によっては、燃納出来ない場合がございます。その場合はご供養後、法条例などに基づいた処理をさせていただきます。<br>
+          ※リサイクル家電（テレビ・冷蔵庫・洗濯機・空調機）を入れるのはご遠慮ください。
+        </div>
+      </div>
+    </section>
+    
+    <!-- ANGEL SET(エンゼルセット) -->
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">ANGEL SET</p>
+          <h2 class="sec-title">エンゼルセットのご利用について</h2>
+          <p class="sec-desc">御葬儀の際にお渡しする専用の供養袋セットです。ご供養したい品物をお入れください。</p>
+        </div>
+        <div class="angel-set fi">
+          {angelSet.map(set => (
+            <div class="set-card">
+              <span class="set-badge">{set.badge}</span>
+              <h3 class="set-name">{set.name}</h3>
+              <p class="set-size">{set.size}</p>
+              <p class="set-desc">{set.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div class="note-block fi" style="margin-top:1.5rem">
+          上記の衣類・予備供養袋に関しましては無料で回収に伺いますので、お気軽にエンゼルセンターまでご連絡ください。<br>
+          ※お布団の引取りも可能です。御用命ください。（有料1枚550円［税込］）<br>
+          ※供養袋回収後、遺品返還の希望がありましたら、1週間以内にご連絡ください。1・3・5・7・9・11月の10日前後に執り行われる供養祭終了後は供養品のご返却は出来かねますのでご了承ください。
+        </div>
       </div>
     </section>
 
-    <!-- PRICE TABLE(間取り別の詳細料金) -->
+    <!-- PRICE TABLE(詳細料金) -->
     <section class="sec">
       <div class="sec-inner">
         <div class="sec-head fi">
           <p class="sec-label">PRICE TABLE</p>
-          <h2 class="sec-title">間取り別 料金表</h2>
-          <p class="sec-desc">お部屋の広さ別に料金の目安をご案内いたします。詳細は現地お見積りにてご確認ください。</p>
+          <h2 class="sec-title">料金表</h2>
+          <p class="sec-desc">明確な料金体系で、いきなり高額な請求はありません。詳細は現地お見積り・仮見積りにてご確認ください。</p>
         </div>
-        <div class="price-table-wrap fi">
+<div class="price-table-wrap fi">
           <table class="price-table">
             <thead>
               <tr>
-                <th>間取り</th>
-                <th>広さ</th>
-                <th>料金(税込)</th>
-                <th>作業時間</th>
+                <th style="width:40%">サービス内容</th>
+                <th style="width:20%">内容</th>
+                <th style="width:30%">料金（税込）</th>
+                <th style="width:10%">人気</th>
               </tr>
             </thead>
             <tbody>
               {priceRows.map(row => (
                 <tr class={row.popular ? 'row-popular' : ''}>
-                  <td>
-                    {row.label}
-                    {row.popular && <span class="popular-badge">人気</span>}
-                  </td>
+                  <td>{row.label}</td>
                   <td class="note-cell">{row.size}</td>
                   <td><strong>{formatYen(row.price)}</strong></td>
-                  <td class="note-cell">{row.time}</td>
+                  <td>{row.popular && <span class="popular-badge">人気</span>}</td>
                 </tr>
               ))}
             </tbody>
@@ -250,7 +311,7 @@ const areas = ESTATE_PERMITS;
       desc="現地お見積り・ご相談は無料です。「遺品整理の件で…」とお伝えください。<br>遺品整理士が丁寧にご案内いたします。"
       tel={company?.tel}
       hours=`受付時間 ${company?.hours}`
-      estimateHref="/estimate/?service=estate"
+      estimateHref="/estimate/?service=junk"
       contactHref="/#contact"
     />
 
@@ -459,6 +520,34 @@ const areas = ESTATE_PERMITS;
     border-radius:var(--corner);
   }
   .note-block strong{color:var(--gd);display:block;margin-bottom:.5rem;font-family:var(--serif);font-size:1rem}
+  
+  .okiage-lead{max-width:820px;margin:0 auto}
+  .okiage-lead p{font-size:.95rem;line-height:2.1;color:var(--mid);margin-bottom:1.1rem}
+  .okiage-lead p:last-child{margin-bottom:0}
+  .okiage-lead strong{color:var(--gd);font-weight:500}
+  
+  /* OTAKIAGE COLUMN(お焚き上げとは・コラム) */
+  .otakiage-column{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-top:3px solid var(--gd);
+    border-radius:var(--corner);
+    max-width:900px;
+    margin:2.5rem auto 0;
+    padding:2rem 2.25rem;
+  }
+  .otakiage-column-label{font-family:var(--roman);font-size:.72rem;letter-spacing:.1em;color:var(--gm);margin-bottom:.4rem}
+  .otakiage-column-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--gd);letter-spacing:.08em;margin-bottom:1rem}
+  .otakiage-column p{font-size:.9rem;line-height:2.05;color:var(--mid);margin-bottom:.9rem}
+  .otakiage-column p:last-child{margin-bottom:0}
+  .otakiage-column strong{color:var(--gd);font-weight:500}
+  /* ANGEL SET */
+  .angel-set{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-bottom:1.75rem}
+  .set-card{background:var(--white);border:1px solid var(--border);padding:1.5rem;border-radius:var(--corner)}
+  .set-badge{display:inline-block;background:var(--gd);color:#fff;font-size:.72rem;padding:.22rem .7rem;margin-bottom:.75rem;letter-spacing:.05em;border-radius:var(--corner)}
+  .set-name{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--gd);margin-bottom:.5rem}
+  .set-size{font-size:.85rem;color:var(--light);margin-bottom:.6rem}
+  .set-desc{font-size:.875rem;line-height:1.9;color:var(--mid)}
 
   /* CTA SEC */
   .cta-sec{background:var(--gd);color:#fff;padding:5rem 1.5rem;text-align:center}
@@ -491,6 +580,7 @@ const areas = ESTATE_PERMITS;
     .features{grid-template-columns:repeat(2,1fr)}
     .steps-grid{grid-template-columns:repeat(2,1fr)}
     .area-cards{grid-template-columns:repeat(3,1fr)}
+    .angel-set{grid-template-columns:1fr 1fr}
   }
   @media(max-width:768px){
     .page-hero{padding:3.5rem 1.25rem;min-height:auto}
@@ -499,10 +589,12 @@ const areas = ESTATE_PERMITS;
     .steps-grid{grid-template-columns:1fr}
     .items-grid{grid-template-columns:1fr}
     .area-cards{grid-template-columns:1fr}
+    .angel-set{grid-template-columns:1fr}
     .sec{padding:3.5rem 1rem}
     .price-table{font-size:.85rem}
     .price-table th,.price-table td{padding:.7rem .8rem}
     .cta-btns{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}
+    .otakiage-column{padding:1.5rem 1.35rem}
   }
 </style>
 
