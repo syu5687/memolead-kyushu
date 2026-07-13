@@ -7,10 +7,6 @@ import FixedCta from '../../components/FixedCta.astro';
 import PhoneConsultModal from '../../components/PhoneConsultModal.astro';
 import { SITE, COMPANIES } from '../../data/site'; // COMPANIES＝A社/B社の会社データ（住所・電話・営業時間など）
 
-const mapEmbeds = [
-  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3356.332817197784!2d129.8272426!3d32.7303522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3515526e262ff8bf%3A0xbf9c354d7c1dfa1b!2z44CSODUwLTAwNzcg6ZW35bSO55yM6ZW35bSO5biC5bCP54Cs5oi455S677yY77yQ77yZ4oiS77yR77yS!5e0!3m2!1sja!2sjp!4v1783391180256!5m2!1sja!2sjp', // A社
-  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3355.3299010380197!2d129.8661348!3d32.756979799999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3515532f8507bac1%3A0x12a38646aaaefa79!2z44CSODUwLTAwNDYg6ZW35bSO55yM6ZW35bSO5biC5bm455S677yU4oiS77yR77yT!5e0!3m2!1sja!2sjp!4v1783391238933!5m2!1sja!2sjp', // B社
-];
 ---
 
 <BaseLayout
@@ -49,7 +45,7 @@ const mapEmbeds = [
         <div class="contact-cards fi">
 
           <!-- TEL -->
-          <div class="contact-card">
+          <div class="contact-card" id="phone-consult">
             <div class="contact-icon"><Icon name="phone" size={32} /></div>
             <h3 class="contact-card-title">お電話でのご相談</h3>
             <p class="contact-card-desc">
@@ -84,7 +80,7 @@ const mapEmbeds = [
         </div>
 
         <div class="access-wrap fi">
-        {[COMPANIES.A, COMPANIES.B].map((c, i) => (
+        {[COMPANIES.A, COMPANIES.B].map((c) =>  (
           <div class="access-info">
             <h3 class="access-name">{c.name}</h3>
             <dl class="access-list">
@@ -115,7 +111,7 @@ const mapEmbeds = [
             </dl>
                 <div class="access-map">
                   <iframe
-                    src={mapEmbeds[i]}
+                    src={c.mapEmbed}
                     width="100%"
                     height="100%"
                     style="border:0"
@@ -136,7 +132,7 @@ const mapEmbeds = [
         <div class="sec-head fi">
           <p class="sec-label">CONTACT FORM</p>
           <h2 class="sec-title">お問合せフォーム</h2>
-          <p class="sec-desc">下記のフォームよりお問合せください。<br>1営業日以内にご返信いたします。</p>
+          <p class="sec-desc">下記のフォームよりお問合せください。</p>
         </div>
 
         <!-- 仮フォーム(送信機能は未実装)
@@ -145,10 +141,10 @@ const mapEmbeds = [
           <p>
             <Icon name="document" size={16} />
             お問合せフォームは現在準備中です。<br>
-            お急ぎの方はお電話(<a href="tel:0958654400">095-865-4400</a>)もしくはメールにて直接ご連絡ください。
+            {/* 番号は直書きせず、上の電話相談カード(#phone-consult)へアンカーリンクで誘導。モーダルは1ページ1つが前提のため増やさない（11章16番） */}
+            お急ぎの方は<a href="#phone-consult">お電話でのご相談</a>、もしくは下記フォームにて直接ご連絡ください。
           </p>
         </div>
-
         <form class="contact-form fi" onsubmit="return false">
           <div class="form-row">
             <label for="name">お名前 <span class="required">必須</span></label>
@@ -169,15 +165,13 @@ const mapEmbeds = [
             <label for="service">ご相談内容</label>
             <select id="service" name="service" disabled>
               <option>選択してください</option>
-              <option>遺品整理</option>
-              <option>不用品回収</option>
+              <option>遺品整理・不用品回収</option>
               <option>古物買取</option>
               <option>仏壇・仏具販売</option>
               <option>墓地・霊園紹介</option>
               <option>仏壇（神棚）じまい</option>
               <option>仏壇リメイク</option>
               <option>墓じまい</option>
-              <option>墓守代行</option>
               <option>海洋散骨</option>
               <option>手元供養品販売</option>
               <option>相続（不動産）相談</option>
@@ -206,6 +200,12 @@ const mapEmbeds = [
 </BaseLayout>
 
 <style>
+html {
+  scroll-behavior: smooth;
+}
+#phone-consult {
+  scroll-margin-top: 100px; /* 着地時にこのぶん上に余白を作る。固定ヘッダーの高さに合わせて調整 */
+}
   /* HERO */
   .page-hero{position:relative;min-height:380px;overflow:hidden;background:linear-gradient(135deg, var(--gd), var(--gm));color:#fff;display:flex;align-items:center;padding:5rem 1.5rem}
   .breadcrumb{position:absolute;top:1.25rem;left:0;right:0;z-index:4;max-width:1100px;margin:0 auto;padding:.5rem 1.5rem;font-size:.78rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
@@ -255,9 +255,9 @@ const mapEmbeds = [
   .access-map iframe{display:block}
 
   /* FORM NOTICE */
-  .form-notice{background:#fffbf0;border-left:3px solid #c8a84b;padding:1.25rem 1.5rem;margin-bottom:2.5rem;border-radius:var(--corner)}
-  .form-notice p{font-size:.875rem;color:var(--mid);line-height:2;display:flex;align-items:flex-start;gap:.5rem;flex-wrap:wrap}
-  .form-notice a{color:var(--gd);text-decoration:underline;text-underline-offset:3px;font-weight:500}
+  .form-notice{background:#fffbf0;border-left:3px solid #c8a84b;padding:1.25rem 1.5rem;margin:0 auto 2.5rem;border-radius:var(--corner);text-align:center;}
+  .form-notice p{font-size:.875rem;color:var(--mid);line-height:2;display:block;text-align:center;}
+  .form-notice a{color:var(--gm);display:inline;text-decoration:underline;}
 
   /* CONTACT FORM */
   .contact-form{display:flex;flex-direction:column;gap:1.5rem}
