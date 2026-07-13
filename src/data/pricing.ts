@@ -108,6 +108,28 @@ export const pricing: ServicePricing[] = [
       '詳細は現地確認のうえ、お見積もりさせていただきます。',
     ],
   },
+  // ─── 06 仏壇（神棚）じまい ───（A社・金額未確定のため price:0＝要相談で表示）
+  {
+    serviceKey: 'altar-closing',            // ?service=altar-closing の自動選択に使うslug
+    serviceLabel: '仏壇（神棚）じまい',
+    serviceUrl: '/services/altar-closing/',
+    questionLabel: '供養・処分をご希望の品目をお選びください',
+    plans: [
+      // price:0 は formatYenWithTax 側で「要相談」と表示される。金額確定後は数値へ差し替えるだけ
+      { id: 'altar-standard', label: '仏壇供養処分（標準）',       size: '高さ50cm以上',   price: 0, popular: true },
+      { id: 'altar-compact',  label: '小型仏壇供養処分',           size: '高さ50cm以下',   price: 0 },
+      { id: 'altar-kamidana', label: '神棚供養処分',               size: '一般的なサイズ', price: 0 },
+      { id: 'altar-ihai',     label: '位牌供養処分',               size: '1基あたり',      price: 0 },
+      { id: 'altar-doll',     label: '人形・節句人形供養',         size: '1セット',        price: 0 },
+      { id: 'altar-visit',    label: '出張閉眼供養（僧侶料含む）', size: '長崎県内',       price: 0 },
+    ],
+    notes: [
+      '上記は目安です。仏壇のサイズ・状態により金額は変動いたします。',
+      '出張供養の場合、長崎県内は出張費無料です。県外は別途ご相談ください。',
+      '供養証明書をご希望の場合、発行料は料金に含まれます。',
+    ],
+  },
+
 
 
   // ─── 09海洋散骨 ───
@@ -117,13 +139,12 @@ export const pricing: ServicePricing[] = [
     serviceUrl: '/services/ocean/',
     questionLabel: 'ご希望のプランをお選びください',
     plans: [
-      { id: 'ocean-charter',   label: 'チャータープラン',    size: 'ご家族貸切・10名様まで',  price: 300000 },
-      { id: 'ocean-joint',     label: '合同プラン',          size: '2〜4名様',                price: 100000, popular: true },
-      { id: 'ocean-consign',   label: '委託プラン',          size: 'スタッフが代行',          price: 50000 },
-      { id: 'ocean-partial',   label: '部分散骨プラン',      size: 'ご遺骨の一部のみ',        price: 35000 },
+    { id: 'ocean-charter', label: 'チャーター散骨プラン',           size: '1〜8名様乗船',             price: 264000 },
+    { id: 'ocean-joint',   label: '合同散骨プラン',                 size: '1〜2名様乗船',             price: 187000, popular: true },
+    { id: 'ocean-agency',  label: '代行散骨プラン',                 size: 'ご遺骨1柱につき・粉骨含む', price: 77000 },
+    { id: 'ocean-pearl',   label: '真珠散骨プラン（Pearl Memory）', size: 'ご遺骨1柱につき',           price: 440000 },
     ],
     notes: [
-      'すべてのプランにご遺骨の粉骨費用が含まれます。',
       '散骨証明書を発行いたします。',
       '天候によりお日にちの変更をお願いする場合があります。',
           ],

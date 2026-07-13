@@ -6,6 +6,7 @@ import Icon from '../../components/Icon.astro';
 import { Image } from 'astro:assets';
 import { pricing, formatYen, formatYenWithTax } from '../../data/pricing';
 import { SITE } from '../../data/site';
+import PhoneConsultModal from '../../components/PhoneConsultModal.astro'; // 電話相談モーダル（1ページ1つ）
 import ktraImg from '../../_assets/img/estimate/ktra.png';
 const estatePricing = pricing.find(s => s.serviceKey === 'estate');
 const estatePlans = estatePricing?.plans ?? []; // 見つからない場合は空配列
@@ -195,6 +196,7 @@ const simulatorServices = pricing
                 <p class="total-price">
                   <span class="total-num js-total" id="totalNum">0</span><span class="total-unit">円〜</span>
                 </p>
+                <p class="total-consult" id="totalConsult" hidden>別途「要相談」の項目があります</p>
                 <p class="total-note">※あくまで概算金額です</p>
               </div>
 
@@ -204,11 +206,12 @@ const simulatorServices = pricing
                   <Icon name="mail" size={16} />
                   この内容で問い合わせる
                 </a>
-                <a href="tel:0958654400" class="cta-secondary">
-                          <Icon name="phone" size={16} />
-                          電話で相談する
-                        </a>
-                      </div>
+                {/* tel: 直書きを廃止。data-phone-open を付け、下部の PhoneConsultModal を開くトリガーにする（本体は1つ・トリガーは複数OK／5章） */}
+                <button type="button" class="cta-secondary" data-phone-open>
+                  <Icon name="phone" size={16} />
+                  電話で相談する
+                </button>
+              </div>
                     </div>
                 
                     <!-- 未選択でも常に表示 -->
@@ -234,9 +237,10 @@ const simulatorServices = pricing
     <section class="cta-sec" id="contact-form">
       <h2 class="cta-title">この内容でお問合せ・正式見積りをご依頼ください</h2>
       <p class="cta-desc">シミュレーション結果をもとに、現地確認のうえ正式なお見積りをご提示いたします。<br>「シミュレーション結果を見ました」とお伝えいただければスムーズです。</p>
-      <p class="cta-hours">受付時間 10:00〜17:00（店休日無し）</p>
+      {/* 受付時間・電話番号の直書きは廃止。電話はモーダル（site.ts の COMPANIES 参照）に一本化 */}
       <div class="cta-btns">
-        <a href="tel:0958654400" class="cta-tel-btn"><Icon name="phone" size={18} />今すぐ電話する</a>
+        {/* このモーダルがページ唯一の PhoneConsultModal。結果パネルの電話ボタンはこれを開くトリガーにする（11章16番：1ページ1つ） */}
+        <PhoneConsultModal />
         <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
       </div>
     </section>
@@ -357,6 +361,7 @@ const simulatorServices = pricing
  :global(.total-num){font-family:var(--num);font-size:2.4rem;color:var(--yellow,#f5c842);font-weight:300;letter-spacing:.02em;line-height:1}
 :global(.total-unit){font-size:.85rem;opacity:.85;margin-left:.18rem}
 :global(.total-note){font-size:.7rem;opacity:.55}
+:global(.total-consult){font-size:.72rem;color:var(--yellow,#f5c842);margin-top:.35rem}
 
   :global(.result-cta){margin-top:1.5rem;display:flex;flex-direction:column;gap:.55rem}
   :global(.result-summary[hidden]){display:none}
@@ -378,8 +383,6 @@ const simulatorServices = pricing
   .cta-desc{font-size:.9rem;opacity:.85;margin-bottom:.75rem;line-height:2}
   .cta-hours{font-size:.78rem;opacity:.7;margin-bottom:2.25rem}
   .cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
-  .cta-tel-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;background:#fff;color:var(--gd);padding:.95rem 2.5rem;font-size:.95rem;font-family:var(--roman);letter-spacing:0;transition:.2s;border-radius:var(--corner)}
-  .cta-tel-btn:hover{background:var(--gl)}
   .cta-web-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.5rem;font-size:.9rem;letter-spacing:0;transition:.2s;border-radius:var(--corner)}
   .cta-web-btn:hover{background:rgba(255,255,255,.1)}
   .ref-block{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;align-items:start;margin-bottom:1.5rem;padding:1.35rem;background:var(--white);border:1px solid var(--border);border-radius:var(--corner)}
@@ -462,7 +465,8 @@ const simulatorServices = pricing
     .total-label { margin-bottom: 0; font-size: .9rem;font-weight:bold; }
     .total-price { margin-bottom: 0; }
     .total-num { font-size: 2rem;color:var(--gm);font-weight:bold; }
-    .total-note { display: none; }
+   .total-note { display: none; }
+    .total-consult { display: none; }
     .result-cta { margin: 0 0 0 auto; flex-direction: row;}
     .cta-secondary { display: none; }
     .cta-primary { padding: .7rem 1.1rem; white-space: nowrap;background:var(--yellow); color:var(--gm);}
@@ -490,9 +494,20 @@ const simulatorServices = pricing
     .notice-inner ul{padding:0rem;}
     .cta-sec{padding:3.5rem 1rem}
     .cta-btns{flex-direction:column;align-items:stretch;max-width:320px;margin:0 auto}
-    
     .ref-block{grid-template-columns:1fr}
   }
+  
+  /* 下部CTA(.cta-sec)内の電話相談ボタンだけ、白背景×濃緑文字に上書き。
+     PhoneConsultModal は共通部品なので .cta-sec 配下に限定し、他ページ(contact等)には影響させない */
+  :global(.cta-sec .phone-consult-btn){
+    background:#fff;
+    color:var(--gd);
+    border:1px solid #fff;
+  }
+  :global(.cta-sec .phone-consult-btn:hover){
+    background:var(--gl);
+  }
+  
 </style>
 
 <script>
@@ -645,21 +660,40 @@ const simulatorServices = pricing
       return;
     }
 
-    // 内訳のHTML生成
+    // 内訳のHTML生成（price:0 は「要相談」、それ以外は「◯円」で表示）
     itemsEl.innerHTML = items.map(item => `
       <div class="result-item">
         <span class="result-item-service">${escapeHtml(item.serviceLabel)}</span>
         <div class="result-item-row">
           <span class="result-item-plan">${escapeHtml(item.planLabel)}</span>
-          <span class="result-item-price">${item.price.toLocaleString('ja-JP')}円</span>
+          <span class="result-item-price">${item.price > 0 ? item.price.toLocaleString('ja-JP') + '円' : '要相談'}</span>
         </div>
       </div>
     `).join('');
 
-    // 合計
-    const total = items.reduce((sum, i) => sum + i.price, 0);
-   totalNumEl.textContent = total.toLocaleString('ja-JP');
-   summaryEl.removeAttribute('hidden');
+    // 合計は「金額のあるプラン(price>0)」だけを足す。要相談(price:0)は合計に含めない
+    const pricedItems = items.filter(i => i.price > 0);
+    const total = pricedItems.reduce((sum, i) => sum + i.price, 0);
+    const hasConsult = items.some(i => i.price === 0); // 要相談プランが混ざっているか
+
+    // 「円〜」の単位ラベルと、要相談の注記を取得
+    const unitEl = summaryEl.querySelector('.total-unit');
+    const consultEl = document.getElementById('totalConsult');
+
+    if (total > 0) {
+      // 金額のあるプランがある：合計金額を表示し、単位は「円〜」
+      totalNumEl.textContent = total.toLocaleString('ja-JP');
+      if (unitEl) unitEl.textContent = '円〜';
+    } else {
+      // 選ばれたのが要相談プランだけ：金額の代わりに「要相談」を出し、「円〜」は消す
+      totalNumEl.textContent = '要相談';
+      if (unitEl) unitEl.textContent = '';
+    }
+
+    // 金額の合計があり、かつ要相談プランも混ざっているときだけ注記を出す
+    if (consultEl) consultEl.hidden = !(hasConsult && total > 0);
+
+    summaryEl.removeAttribute('hidden');
   }
 
   // HTMLエスケープ(XSS対策・プラン名にHTML特殊文字が混じった場合の保険)
