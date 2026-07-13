@@ -12,7 +12,7 @@ const estatePlans = estatePricing?.plans ?? []; // 見つからない場合は�
 
 // シミュレーターに出す「選べるサービス」= estate 以外。
 const simulatorServices = pricing
-  .map((s, i) => ({ ...s, no: i + 1 })) // no: 1,2,3,4
+  .map((s, i) => ({ ...s, no: i + 0 })) // no: 1,2,3,4
   .filter(s => s.serviceKey !== 'estate');
 ---
 

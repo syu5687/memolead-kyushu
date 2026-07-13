@@ -7,6 +7,10 @@ import FixedCta from '../../components/FixedCta.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../../_assets/img/ocean/hero-image.jpg';
+import pearlImg from '../../_assets/img/ocean/pearl-memory.jpg';
+import pearlFeat1 from '../../_assets/img/ocean/pearl-feature-1.jpg';
+import pearlFeat2 from '../../_assets/img/ocean/pearl-feature-2.jpg';
+import pearlFeat3 from '../../_assets/img/ocean/pearl-feature-3.jpg';
 import ServicePageStyles from '../../components/ServicePageStyles.astro';
 import { SITE,companyOf } from '../../data/site';
 const company = companyOf('ocean'); 
@@ -24,6 +28,28 @@ const plans = [
   { icon: 'tree',  title: '合同散骨プラン',                  desc: '指定日に他のご家族と乗り合いで行う合同プラン。費用を抑えつつ、丁寧なセレモニーでお見送りいただけます（1〜2名様乗船／最大4名まで追加可）。費用187,000円〜（税込）。' },
   { icon: 'box',   title: '代行散骨プラン',                  desc: 'ご乗船されず、当社スタッフが心を込めて代行して散骨いたします。後日、散骨証明書とお写真をお届け。粉骨も含みます。費用77,000円〜（税込・ご遺骨1柱につき）。' },
   { icon: 'lotus', title: '真珠散骨プラン（Pearl Memory）',  desc: '代行散骨と、ご遺骨から真珠をつくる手元供養「Pearl Memory」を組み合わせた特別プラン。海へ還しつつ、お手元にも故人様を残せます。費用440,000円〜（税込・ご遺骨1柱につき）。' },
+];
+
+// PEARL MEMORY （文言は自社向けリライト）
+const pearlFeatures = [
+  {
+    img: pearlFeat1,
+    imgAlt: 'ご遺骨から生まれた真珠のペンダント',
+    title: 'たった1gのご遺骨から、その人だけの真珠を',
+    desc: 'Pearl Memory づくりに必要なご遺骨は、わずか約1g。分骨の一部など、お手元に残る少量のご遺骨からでも安全におつくりできます。お預かりしたご遺骨を母貝に託し、豊かな海でじっくりと育てることで、約1年後には8mm以上の美しい輝きをもつ真珠が生まれます。',
+  },
+  {
+    img: pearlFeat2,
+    imgAlt: '真珠を育てる海の養殖いかだ',
+    title: 'すべての工程を国内で、安心してお預けいただけます',
+    desc: '真珠が生まれるまでの工程は、すべて日本国内で行います。ご遺骨を納める真珠核にはICチップを内蔵し、トレーサビリティ（追跡管理）を徹底。かけがえのないご遺骨が、確実にご家族のもとへ戻るよう、一つひとつ丁寧に管理しています。',
+  },
+  {
+    img: pearlFeat3,
+    imgAlt: 'ご自宅へ届いた真珠を手にする様子',
+    title: '郵送だけで受付。全国どこからでもお申し込みいただけます',
+    desc: '大切な方を亡くされたあとは、心も体も大きな負担を抱えています。Pearl Memory はお申し込みからお受け取りまで郵送で完結し、ご自宅で穏やかにお待ちいただけます。お申し込み前のご不安は、お電話やオンラインで何度でもご相談いただけます。',
+  },
 ];
 
 // PROCESS: ご利用までの流れ（8ステップ）
@@ -112,6 +138,48 @@ const steps = [
       </div>
     </section>
 
+    <!-- PEARL MEMORY: 真珠散骨（Pearl Memory）詳細紹介＋特長 -->
+    <section class="sec bg-cream">
+      <div class="sec-inner">
+        <div class="sec-head fi">
+          <p class="sec-label">PEARL MEMORY</p>
+          <h2 class="sec-title">真珠散骨（Pearl Memory）とは</h2>
+        </div>
+        <div class="pearl-block fi">
+        <div class="pearl-photo">
+          <Image src={pearlImg} alt={`真珠散骨 Pearl Memory - ${SITE.fullName}`} widths={[400, 600, 800]} sizes="(max-width:768px) 100vw, 320px" loading="lazy" class="pearl-img" />
+        </div>
+        <div class="pearl-body">
+            <p class="pearl-desc">
+              大切な方のご遺骨から真珠を生み出す「Pearl Memory（パールメモリー）」。海へお還しするだけでなく、故人様の面影を真珠という形に託し、いつもおそばで偲んでいただける供養のかたちです。
+            </p>
+            <p class="pearl-desc">
+              真珠は身につけたり、お手元で保管したり、暮らしのなかで自然に故人様を感じていただけます。海洋散骨とあわせて、「還す」と「遺す」の両方を叶える選択肢としてお選びいただけます。
+            </p>
+            <!-- 外部リンク。target=_blank で別タブ、rel=noopener noreferrer は別タブから元ページを操作されない/参照元を渡さないための安全対策 -->
+            <a href="https://wataselica.co.jp/service/pearl-memory" class="pearl-more" target="_blank" rel="noopener noreferrer">
+                  Pearl Memory の詳細はこちら（外部サイト ワタセリカへ移動します）
+                </a>
+              </div>
+            </div>
+            
+            <h3 class="pearl-feat-head fi">Pearl Memory の特長</h3>
+            <div class="pearl-feat-list">
+          {pearlFeatures.map(f => (
+            <div class="pearl-feat fi">
+              <div class="pearl-feat-photo">
+                <Image src={f.img} alt={f.imgAlt} widths={[400, 600, 800]} sizes="(max-width:768px) 100vw, 440px" loading="lazy" class="pearl-feat-img" />
+              </div>
+              <div class="pearl-feat-body">
+                <h3 class="pearl-feat-title">{f.title}</h3>
+                <p class="pearl-feat-desc">{f.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <section class="sec bg-cream">
       <div class="sec-inner">
         <div class="sec-head fi"><p class="sec-label">PROCESS</p><h2 class="sec-title">散骨までの流れ</h2><p class="sec-desc">ご相談から散骨完了まで、8つのステップで丁寧に対応いたします。</p></div>
@@ -148,6 +216,31 @@ const steps = [
   <!-- モバイル固定CTAバー(共通コンポーネント) -->
   <FixedCta />
 </BaseLayout>
+
+<style>
+.pearl-block { display: flex; gap: 2rem; align-items: center; max-width: 820px; margin: 0 auto; background: var(--white); border-radius: var(--corner); padding: 2rem; }
+.pearl-photo { flex: 0 0 320px; }
+.pearl-img { width: 100%; height: auto; display: block; border-radius: var(--corner);aspect-ratio: 1 / 1;object-fit:cover;object-position: 70% center;}
+.pearl-body { flex: 1 1 0; }
+.pearl-desc { margin: 0 0 1rem; line-height: 1.9; color: var(--text); }
+.pearl-more { display: inline-block; margin-top: .5rem; color: var(--gd); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 768px) {
+  .pearl-block { flex-direction: column; padding: 1.25rem; }
+  .pearl-photo { flex: none; width: 100%; }
+}
+.pearl-feat-head { max-width: 820px; margin: 3rem auto 1.5rem; text-align: center; font-size: 1.5rem; color: var(--gd); }
+.pearl-feat-list { display: flex; flex-direction: column; gap: 2.5rem; }
+.pearl-feat { display: flex; gap: 2rem; align-items: center; }
+.pearl-feat-photo { flex: 0 0 300px; }
+.pearl-feat-img { width: 100%; height: auto; display: block; border-radius: var(--corner);aspect-ratio: 1 / 1;object-fit:cover;}
+.pearl-feat-body { flex: 1 1 0; }
+.pearl-feat-title { margin: 0 0 1rem; font-size: 1.25rem; line-height: 1.6; color: var(--gd); }
+.pearl-feat-desc { margin: 0; line-height: 1.9; color: var(--text); }
+@media (max-width: 768px) {
+  .pearl-feat { flex-direction: column; gap: 1rem; }
+  .pearl-feat-photo { flex: none; width: 100%; }
+}
+</style>
 
 <script>
 const obs = new IntersectionObserver(e => { e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('fade-in'); obs.unobserve(x.target); }}); }, { threshold: 0.1 });
