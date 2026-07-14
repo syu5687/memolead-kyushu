@@ -206,7 +206,7 @@ const simulatorServices = pricing
                   <Icon name="mail" size={16} />
                   この内容で問い合わせる
                 </a>
-                {/* tel: 直書きを廃止。data-phone-open を付け、下部の PhoneConsultModal を開くトリガーにする（本体は1つ・トリガーは複数OK／5章） */}
+                
                 <button type="button" class="cta-secondary" data-phone-open>
                   <Icon name="phone" size={16} />
                   電話で相談する
@@ -214,7 +214,7 @@ const simulatorServices = pricing
               </div>
                     </div>
                 
-                    <!-- 未選択でも常に表示 -->
+                    
                     <div class="sim-notice">
                       <h3 class="notice-title">シミュレーションについてのご注意</h3>
                       <ul class="sim-notice-list">
@@ -230,22 +230,22 @@ const simulatorServices = pricing
                   </div>
                 </aside>
       </div>
-      <!-- 注意事項 -->
+      
     </section>
 
-    <!-- CONTACT FORM ANCHOR(将来お問合せフォームを設置する場所) -->
+    
     <section class="cta-sec" id="contact-form">
       <h2 class="cta-title">この内容でお問合せ・正式見積りをご依頼ください</h2>
       <p class="cta-desc">シミュレーション結果をもとに、現地確認のうえ正式なお見積りをご提示いたします。<br>「シミュレーション結果を見ました」とお伝えいただければスムーズです。</p>
-      {/* 受付時間・電話番号の直書きは廃止。電話はモーダル（site.ts の COMPANIES 参照）に一本化 */}
+      
       <div class="cta-btns">
-        {/* このモーダルがページ唯一の PhoneConsultModal。結果パネルの電話ボタンはこれを開くトリガーにする（11章16番：1ページ1つ） */}
+        
         <PhoneConsultModal />
         <a href="/#contact" class="cta-web-btn"><Icon name="mail" size={18} />Webで相談する</a>
       </div>
     </section>
 
-    <!-- SP専用：問い合わせ前に注意事項を確認するモーダル。本文はJSでパネルの注意書きを複製して入れる -->
+    
     <div class="estimate-modal" data-estimate-modal aria-hidden="true">
       <div class="estimate-modal-panel" role="dialog" aria-modal="true" aria-labelledby="estimateModalTitle">
         <button type="button" class="estimate-modal-close" data-estimate-modal-close aria-label="閉じる">×</button>
@@ -497,8 +497,6 @@ const simulatorServices = pricing
     .ref-block{grid-template-columns:1fr}
   }
   
-  /* 下部CTA(.cta-sec)内の電話相談ボタンだけ、白背景×濃緑文字に上書き。
-     PhoneConsultModal は共通部品なので .cta-sec 配下に限定し、他ページ(contact等)には影響させない */
   :global(.cta-sec .phone-consult-btn){
     background:#fff;
     color:var(--gd);
