@@ -341,6 +341,14 @@ const simulatorServices = pricing
   .qty-input[type=number]{-moz-appearance:textfield}
 
   /* 右:結果サマリー(sticky) */
+  :global(.cta-sec .phone-consult-btn){
+    background:#fff !important;
+    color:var(--gd) !important;
+    border:1px solid #fff !important;
+  }
+  :global(.cta-sec .phone-consult-btn:hover){
+    background:var(--gl);
+  }
   :global(.sim-result){position:sticky;top:1.5rem}
   :global(.result-card){background:linear-gradient(135deg,#2d5a3d,#1e3d2a);color:#fff;padding:1.85rem 1.5rem;border-radius:var(--corner)}
   :global(.result-label){font-family:var(--roman);font-size:.72rem;letter-spacing:0;opacity:.6;margin-bottom:.45rem}
@@ -498,14 +506,7 @@ const simulatorServices = pricing
     .ref-block{grid-template-columns:1fr}
   }
   
-  :global(.cta-sec .phone-consult-btn){
-    background:#fff;
-    color:var(--gd);
-    border:1px solid #fff;
-  }
-  :global(.cta-sec .phone-consult-btn:hover){
-    background:var(--gl);
-  }
+  
   
 </style>
 
